@@ -1,0 +1,15 @@
+.table-view .cell {
+    -fx-font-size: 16px; /* Tamanho do texto */
+    -fx-padding: 10px;   /* Espaçamento dentro da célula */
+}
+
+.status-em-vigor {
+    -fx-text-fill: green;
+    -fx-font-weight: bold;
+}
+
+.status-cancelada {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+

@@ -1,0 +1,15 @@
+.btn {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-pref-height: 35px;
+    -fx-pref-width: 370px;
+    -fx-text-fill: #1e3a8a;
+    -fx-font-size: 14px;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 10, 0, 0, 3),
+                innershadow(three-pass-box, rgba(0, 0, 0, 1), 5, 0, 2, 2);
+}
+
+.button:hover {
+    -fx-background-color: #2980b9; /* Cor de fundo ao passar o mouse */
+}
