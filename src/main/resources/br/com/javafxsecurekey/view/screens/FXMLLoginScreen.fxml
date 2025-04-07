@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane id="borderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLLoginScreenController">
+   <center>
+      <AnchorPane fx:id="loginScreen" prefHeight="730.0" prefWidth="620.0" style="-fx-background-color: #15CE52; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="VBoxFields" layoutX="70.0" layoutY="147.0" prefHeight="258.0" prefWidth="259.0" spacing="40.0" AnchorPane.bottomAnchor="44.0">
+               <children>
+                  <TextField fx:id="textFieldUsername" prefHeight="60.0" prefWidth="259.0" style="-fx-background-radius: 15;">
+                     <font>
+                        <Font name="Arial" size="25.0" />
+                     </font>
+                     <effect>
+                        <InnerShadow height="6.0" radius="2.5" width="6.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <PasswordField fx:id="passFieldSenha" prefHeight="60.0" prefWidth="259.0" style="-fx-background-radius: 15;">
+                     <effect>
+                        <InnerShadow height="6.0" radius="2.5" width="6.0" />
+                     </effect>
+                     <font>
+                        <Font name="Arial" size="25.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </PasswordField>
+                  <Button fx:id="btnEntrar" mnemonicParsing="false" onMouseClicked="#btnEntrarOnMouseClicked" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #28ACF3; -fx-background-radius: 10;" text="Entrar" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="75.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" height="14.0" offsetY="4.0" radius="6.5" width="14.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </VBox>
+            <ImageView fx:id="logoImgView" fitHeight="200.0" fitWidth="200.0" focusTraversable="true" layoutX="100.0" layoutY="-85.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../imgs/logo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="usernameLabel" layoutX="70.0" layoutY="116.0" text="Username" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="senhaLabel" layoutX="72.0" layoutY="219.0" text="Senha" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Hyperlink fx:id="linkRecuperarSenha" layoutX="127.0" layoutY="304.0" onMouseClicked="#getEmailToRecoverPasswordScreen" text="Recuperar Senha" textFill="WHITE" underline="true">
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Hyperlink>
+         </children>
+         <effect>
+            <DropShadow height="25.0" offsetY="4.0" radius="12.0" width="25.0" />
+         </effect>
+      </AnchorPane>
+   </center>
+   <top>
+      <Pane fx:id="topPane" prefHeight="150.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <Pane fx:id="leftPane" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane fx:id="rightPane" prefHeight="371.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <Pane fx:id="bottomPane" prefHeight="150.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
