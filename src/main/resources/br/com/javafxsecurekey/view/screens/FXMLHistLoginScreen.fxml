@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLHistLoginController">
+   <children>
+      <TableView fx:id="tvHistLogin" fixedCellSize="50.0" layoutX="24.0" layoutY="51.0" prefHeight="675.0" prefWidth="957.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
+         <columns>
+            <TableColumn fx:id="tc_username" editable="false" prefWidth="245.6000270843506" resizable="false" sortable="false" text="USERNAME" />
+            <TableColumn fx:id="tc_role" prefWidth="165.60000610351562" sortable="false" text="NÍVEL DE ACESSO" />
+            <TableColumn fx:id="tc_login" editable="false" prefWidth="276.7999572753906" resizable="false" sortable="false" text="LOGIN" />
+            <TableColumn fx:id="tc_logout" editable="false" prefWidth="264.00006103515625" resizable="false" sortable="false" text="LOGOUT" />
+         </columns>
+      </TableView>
+   </children>
+</Pane>
