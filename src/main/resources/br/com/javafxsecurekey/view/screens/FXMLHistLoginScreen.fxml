@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLHistLoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLHistLoginController">
    <children>
       <TableView fx:id="tvHistLogin" fixedCellSize="50.0" layoutX="24.0" layoutY="51.0" prefHeight="675.0" prefWidth="957.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
          <columns>
