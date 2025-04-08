@@ -20,24 +20,121 @@
 
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLNavigationPanelController">
    <left>
-      <VBox fx:id="vbox" prefHeight="750.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: #15CE52;" BorderPane.alignment="CENTER">
+      <VBox fx:id="vbox" prefHeight="750.0" prefWidth="420.0" spacing="20.0" style="-fx-background-color: #15CE52;" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="100.0" prefWidth="500.0" style="-fx-border-color: #F3F4F6; -fx-border-width: 0px 0px 2px 0px;">
+            <Pane prefHeight="100.0" prefWidth="500.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <children>
-                  <Label fx:id="labelUsername" layoutX="120.0" layoutY="25.0" text="Username.usuário" textFill="#1e3a8a">
+                  <ImageView fitHeight="108.0" fitWidth="420.0" layoutY="-4.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../imgs/barra-de-fundo.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="labelUsername" layoutX="120.0" layoutY="25.0" prefHeight="30.0" prefWidth="229.0" text="Username.usuário" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial Bold" size="25.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelRole" layoutX="120.0" layoutY="49.0" text="cargo" textFill="#1e3a8a">
+                  <Label fx:id="labelRole" layoutX="120.0" layoutY="49.0" prefHeight="23.0" prefWidth="220.0" text="cargo" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>
                   </Label>
                   <Circle fx:id="imgCircle" fill="DODGERBLUE" layoutX="50.0" layoutY="50.0" radius="44.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <MenuButton fx:id="ConfigMenu" alignment="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="346.0" layoutY="23.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="37.0" style="-fx-background-radius: 50; -fx-background-color: transparent;" textAlignment="CENTER" textFill="#1e3a8a">
+                     <items>
+                        <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: transparent;">
+                           <content>
+                              <VBox prefHeight="320.0" prefWidth="360.0" spacing="20.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#getCadastroChaveScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF; -fx-border-width: 10; -fx-border-color: #000000;" text="Perfil" textAlignment="RIGHT" textFill="#1e3a8a">
+                                       <font>
+                                          <Font name="Arial Bold" size="26.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../imgs/perfil-editar-s-fundo.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#getChavesCadastradasScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Configurações" textAlignment="RIGHT" textFill="#1e3a8a">
+                                       <font>
+                                          <Font name="Arial Bold" size="26.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../imgs/configuracao.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#getEmprestimosFeitosScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Sobre o Secure Key" textAlignment="RIGHT" textFill="#1e3a8a">
+                                       <font>
+                                          <Font name="Arial Bold" size="26.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../imgs/informacoes-s-fundo.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button fx:id="btnSair1" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #EF4444;" text="Sair" textAlignment="RIGHT" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="26.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow offsetY="6.0">
+                                             <input>
+                                                <InnerShadow />
+                                             </input>
+                                          </DropShadow>
+                                       </effect>
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../imgs/logout-door.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </SeparatorMenuItem>
+                     </items>
+                     <font>
+                        <Font name="Arial Bold" size="1.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="64.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../imgs/configuracao.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuButton>
                </children>
             </Pane>
             <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
@@ -63,9 +160,9 @@
                   </DropShadow>
                </effect>
                <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/dash.png" />
+                        <Image url="@../imgs/dashboard.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -73,13 +170,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <MenuButton fx:id="GPMenu" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" popupSide="RIGHT" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Gestão de Pessoas" textAlignment="CENTER" textFill="#1e3a8a">
-              <items>
-                  <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16;">
+            <MenuButton fx:id="GCMenu" alignment="CENTER" focusTraversable="false" layoutX="25.0" layoutY="406.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Gestão de Chaves" textAlignment="CENTER" textFill="#1e3a8a">
+               <items>
+                  <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: transparent;">
                      <content>
-                        <VBox prefHeight="225.0" prefWidth="350.0" spacing="20.0">
+                        <VBox prefHeight="225.0" prefWidth="360.0" spacing="20.0">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#getCadastroUserScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Cadastro de Pessoa" textAlignment="RIGHT" textFill="#1e3a8a">
+                              <Button mnemonicParsing="false" onMouseClicked="#getCadastroChaveScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Cadastro de Chave" textAlignment="RIGHT" textFill="#1e3a8a">
                                  <font>
                                     <Font name="Arial Bold" size="26.0" />
                                  </font>
@@ -94,9 +191,110 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                                  <graphic>
-                                    <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../imgs/adduser.png" />
+                                          <Image url="@../imgs/adicionar-chave2.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#getChavesCadastradasScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Chaves Cadastradas" textAlignment="RIGHT" textFill="#1e3a8a">
+                                 <font>
+                                    <Font name="Arial Bold" size="26.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow offsetY="6.0">
+                                       <input>
+                                          <InnerShadow />
+                                       </input>
+                                    </DropShadow>
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="57.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../imgs/chaves-cadastradas.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#getEmprestimosFeitosScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Empréstimos Feitos" textAlignment="RIGHT" textFill="#1e3a8a">
+                                 <font>
+                                    <Font name="Arial Bold" size="26.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow offsetY="6.0">
+                                       <input>
+                                          <InnerShadow />
+                                       </input>
+                                    </DropShadow>
+                                 </effect>
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imgs/prancheta-de-historico-s-fundo.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </content>
+                  </SeparatorMenuItem>
+               </items>
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0">
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </DropShadow>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="56.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/historico-de-emprestimo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </MenuButton>
+            <MenuButton fx:id="GPMenu" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" popupSide="RIGHT" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Gestão de Pessoas" textAlignment="CENTER" textFill="#1e3a8a">
+              <items>
+                  <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: transparent;">
+                     <content>
+                        <VBox prefHeight="310.0" prefWidth="350.0" spacing="20.0">
+                           <children>
+                              <Button mnemonicParsing="false" onMouseClicked="#getCadastroPessoaScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Cadastro de Pessoa" textAlignment="RIGHT" textFill="#1e3a8a">
+                                 <font>
+                                    <Font name="Arial Bold" size="26.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow offsetY="6.0">
+                                       <input>
+                                          <InnerShadow />
+                                       </input>
+                                    </DropShadow>
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../imgs/adicionar-pessoa.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -116,9 +314,31 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                                  <graphic>
-                                    <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="40.0" fitWidth="55.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../imgs/adduser.png" />
+                                          <Image url="@../imgs/adicionar-usuario.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#getUsuariosCadastradosScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Usuários Cadastrados" textAlignment="RIGHT" textFill="#1e3a8a">
+                                 <font>
+                                    <Font name="Arial Bold" size="26.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow offsetY="6.0">
+                                       <input>
+                                          <InnerShadow />
+                                       </input>
+                                    </DropShadow>
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="55.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../imgs/usuarios-cadastrados.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -135,9 +355,9 @@
                                     </DropShadow>
                                  </effect>
                                  <graphic>
-                                    <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="40.0" fitWidth="55.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../imgs/histlog.png" />
+                                          <Image url="@../imgs/historico-login.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -174,7 +394,7 @@
                   </ImageView>
                </graphic>
             </MenuButton>
-            <Button fx:id="btnSair" layoutX="25.0" layoutY="596.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="70.0" prefWidth="130.0" style="-fx-background-radius: 16; -fx-background-color: #EF4444;" text="Sair" textAlignment="RIGHT" textFill="WHITE">
+            <Button fx:id="btnEmprestarChave" layoutX="25.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#getEmprestarChaveScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Emprestar Chave" textAlignment="CENTER" textFill="#1e3a8a">
                <font>
                   <Font name="Arial Bold" size="26.0" />
                </font>
@@ -185,19 +405,19 @@
                      </input>
                   </DropShadow>
                </effect>
-               <VBox.margin>
-                  <Insets left="130.0" />
-               </VBox.margin>
                <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../imgs/sair.png" />
+                        <Image url="@../imgs/emprestimo.png" />
                      </image>
                   </ImageView>
                </graphic>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
             </Button>
          </children>
       </VBox>
@@ -247,7 +467,7 @@
             </Pane>
             <ImageView fitHeight="373.0" fitWidth="441.0" layoutX="314.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="" />
+                  <Image url="@../imgs/chave 3.png" />
                </image>
             </ImageView>
          </children>

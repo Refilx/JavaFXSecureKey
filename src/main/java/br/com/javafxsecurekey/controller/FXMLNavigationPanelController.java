@@ -29,6 +29,10 @@ import java.util.ResourceBundle;
 public class FXMLNavigationPanelController implements Initializable {
 
     @FXML
+    private MenuButton ConfigMenu;
+    @FXML
+    private MenuButton GCMenu;
+    @FXML
     private MenuButton GPMenu;
     @FXML
     private BorderPane borderPane;
@@ -55,9 +59,27 @@ public class FXMLNavigationPanelController implements Initializable {
     private Log usuarioLogado;
 
     @FXML
+    void getCadastroChaveScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLCadastroChaveScreen");
+        GCMenu.hide();
+    }
+
+    @FXML
+    void getCadastroPessoaScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLCadastroPessoaScreen");
+        GPMenu.hide();
+    }
+
+    @FXML
     private void getCadastroUserScreen(MouseEvent event) throws IOException {
         loadPage("FXMLCadastroUserScreen");
         GPMenu.hide();
+    }
+
+    @FXML
+    void getChavesCadastradasScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLChavesCadastradasScreen");
+        GCMenu.hide();
     }
 
     @FXML
@@ -66,8 +88,25 @@ public class FXMLNavigationPanelController implements Initializable {
     }
 
     @FXML
+    void getEmprestarChaveScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLEmprestarChaveScreen");
+    }
+
+    @FXML
+    void getEmprestimosFeitosScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLEmprestimosFeitosScreen");
+        GCMenu.hide();
+    }
+
+    @FXML
     private void getHistLoginScreen(MouseEvent event) throws IOException {
         loadPage("FXMLHistLoginScreen");
+        GPMenu.hide();
+    }
+
+    @FXML
+    void getUsuariosCadastradosScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLUsuariosCadastradosScreen");
         GPMenu.hide();
     }
 
