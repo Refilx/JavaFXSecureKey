@@ -130,6 +130,10 @@ public class FXMLNavigationPanelController implements Initializable {
 
     @FXML
     private void logout(MouseEvent event) throws IOException {
+        ConfigMenu.hide();
+
+        // Forma de adicionar icone ( new ImageIcon(getClass().getResource("/br/com/javafxsecurekey/view/imgs/logout-door.png"), "logout") )
+        // Adicionar o código acima no espaço para icon, OBS a imagem deve ser pequena para ficar arrumado no JOptionPane
         int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Confirmação",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Sim", "Não"}, null);
 
@@ -161,8 +165,8 @@ public class FXMLNavigationPanelController implements Initializable {
         labelRole.setText(usuarioLogado.getRole());
         labelUsername.setText(usuarioLogado.getUsername());
 
-        Image img = new Image(getClass().getResource("/br/com/javafxsecurekey/view/imgs/lucas.jpg").toExternalForm(), false);
-        imgCircle.setFill(new ImagePattern(img));
+//            Image img = new Image(getClass().getResource("/br/com/javafxsecurekey/view/imgs/lucas.jpg").toExternalForm(), false);
+//            imgCircle.setFill(new ImagePattern(img));
 
     }
     
