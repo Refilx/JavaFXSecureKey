@@ -49,7 +49,7 @@
                            <content>
                               <VBox prefHeight="320.0" prefWidth="360.0" spacing="20.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onMouseClicked="#getCadastroChaveScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF; -fx-border-width: 10; -fx-border-color: #000000;" text="Perfil" textAlignment="RIGHT" textFill="#1e3a8a">
+                                    <Button mnemonicParsing="false" onMouseClicked="#getPerfilScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF; -fx-border-width: 10; -fx-border-color: #000000;" text="Perfil" textAlignment="RIGHT" textFill="#1e3a8a">
                                        <font>
                                           <Font name="Arial Bold" size="26.0" />
                                        </font>
@@ -64,7 +64,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button mnemonicParsing="false" onMouseClicked="#getChavesCadastradasScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Configurações" textAlignment="RIGHT" textFill="#1e3a8a">
+                                    <Button mnemonicParsing="false" onMouseClicked="#getConfiguracoesScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Configurações" textAlignment="RIGHT" textFill="#1e3a8a">
                                        <font>
                                           <Font name="Arial Bold" size="26.0" />
                                        </font>
@@ -79,7 +79,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button mnemonicParsing="false" onMouseClicked="#getEmprestimosFeitosScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Sobre o Secure Key" textAlignment="RIGHT" textFill="#1e3a8a">
+                                    <Button mnemonicParsing="false" onMouseClicked="#getSobreOSecureKeyScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Sobre o Secure Key" textAlignment="RIGHT" textFill="#1e3a8a">
                                        <font>
                                           <Font name="Arial Bold" size="26.0" />
                                        </font>

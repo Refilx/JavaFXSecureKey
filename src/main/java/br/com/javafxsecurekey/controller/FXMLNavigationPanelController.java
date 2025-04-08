@@ -83,6 +83,12 @@ public class FXMLNavigationPanelController implements Initializable {
     }
 
     @FXML
+    void getConfiguracoesScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLConfiguracoesScreen");
+        ConfigMenu.hide();
+    }
+
+    @FXML
     private void getDashboardScreen(MouseEvent event) {
         borderPane.setCenter(dashboardScreen);
     }
@@ -102,6 +108,18 @@ public class FXMLNavigationPanelController implements Initializable {
     private void getHistLoginScreen(MouseEvent event) throws IOException {
         loadPage("FXMLHistLoginScreen");
         GPMenu.hide();
+    }
+
+    @FXML
+    void getPerfilScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLPerfilScreen");
+        ConfigMenu.hide();
+    }
+
+    @FXML
+    void getSobreOSecureKeyScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLSobreOSecureKeyScreen");
+        ConfigMenu.hide();
     }
 
     @FXML
