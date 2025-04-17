@@ -8,6 +8,7 @@ import br.com.javafxsecurekey.model.domain.Historico;
 import br.com.javafxsecurekey.model.domain.Pessoa;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -52,6 +53,8 @@ public class FXMLEmprestarChaveController implements Initializable {
     private TextField tfSolicitante;
 
     private Historico historico = new Historico();
+    private Pessoa pessoaEscolhida = new Pessoa();
+    private Chave chaveEscolhida = new Chave();
 
     private LinkedList<Pessoa> listPessoas = new LinkedList<>();
     private LinkedList<Chave> listChaves = new LinkedList<>();
@@ -70,72 +73,30 @@ public class FXMLEmprestarChaveController implements Initializable {
 
         if(!tfSolicitante.getText().isEmpty() && !tfNumChave.getText().isEmpty())
         {
-            boolean pessoaNoBanco = false;
-            Pessoa pessoaEscolhida = null;
-            Chave chaveEscolhida = null;
+            historico.setIdPessoa(pessoaEscolhida.getIdPessoa());
+            historico.setIdChave(chaveEscolhida.getIdChave());
+            historico.setNome(pessoaEscolhida.getNome());
+            historico.setCargo(pessoaEscolhida.getCargo());
+            historico.setNumeroChave(chaveEscolhida.getNumeroChave());
+            historico.setObservacoes(taDescricao.getText());
+            historico.setStatus("EM ABERTO");
+            historico.setDataAbertura(new Timestamp(System.currentTimeMillis()));
 
-            for(Pessoa p : listPessoas)
+            ChaveDAO.emprestarChave(historico);
+
+            if(ChaveDAO.getResult())
             {
-                if((p.getNome()+" "+p.getCPF()).equals(tfSolicitante.getText()))
-                {
-                    pessoaNoBanco = true;
-                    pessoaEscolhida = p;
-                    break;
-                }
+                tfSolicitante.setText(null);
+                tfNumChave.setText(null);
+                taDescricao.setText(null);
+                scrollPaneNumeroChave.setVisible(false);
+                scrollPaneSolicitante.setVisible(false);
             }
-
-            if(pessoaNoBanco)
-            {
-                boolean chaveNoBanco = false;
-
-                for(Chave c : listChaves)
-                {
-                    if((c.getNumeroChave()+" "+c.getSala()).equals(tfNumChave.getText()))
-                    {
-                        chaveNoBanco = true;
-                        chaveEscolhida = c;
-                        break;
-                    }
-                }
-
-                if(chaveNoBanco)
-                {
-                    historico.setIdPessoa(pessoaEscolhida.getIdPessoa());
-                    historico.setIdChave(chaveEscolhida.getIdChave());
-                    historico.setNome(pessoaEscolhida.getNome());
-                    historico.setCargo(pessoaEscolhida.getCargo());
-                    historico.setNumeroChave(chaveEscolhida.getNumeroChave());
-                    historico.setObservacoes(taDescricao.getText());
-                    historico.setStatus("EM ABERTO");
-                    historico.setDataAbertura(new Timestamp(System.currentTimeMillis()));
-
-                    ChaveDAO.emprestarChave(historico);
-
-                    if(ChaveDAO.getResult())
-                    {
-                        tfSolicitante.setText(null);
-                        tfNumChave.setText(null);
-                        taDescricao.setText(null);
-                        scrollPaneNumeroChave.setVisible(false);
-                        scrollPaneSolicitante.setVisible(false);
-                    }
-                    ChaveDAO.setDefaultResult();
-                }
-                else
-                {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "A chave digitada para empréstimo não está cadastrada no sistema!");
-                    alert.showAndWait();
-                }
-            }
-            else
-            {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "A pessoa digitada como solicitante não está cadastrada no sistema!");
-                alert.showAndWait();
-            }
+            ChaveDAO.setDefaultResult();
         }
         else
         {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Preencha o campo de solicitante e da chave emprestada, por favor!");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Selecione o solicitante e a chave emprestada, por favor!");
             alert.showAndWait();
         }
     }
@@ -177,8 +138,66 @@ public class FXMLEmprestarChaveController implements Initializable {
         obsPessoas = FXCollections.observableArrayList(nomeCPF);
         obsChaves = FXCollections.observableArrayList(numChave);
 
-        lvSolicitante.setItems(obsPessoas);
-        lvNumChave.setItems(obsChaves);
+        // FilteredLists para filtragem dinâmica
+        FilteredList<String> filteredPessoas = new FilteredList<>(obsPessoas, p -> true);
+        FilteredList<String> filteredChaves = new FilteredList<>(obsChaves, p -> true);
+
+        // Associa as listas filtradas às ListViews
+        lvSolicitante.setItems(filteredPessoas);
+        lvNumChave.setItems(filteredChaves);
+
+        // Listener para o filtro dinâmico conforme o usuário digita no TextField
+        tfSolicitante.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredPessoas.setPredicate(item -> {
+                if (newVal == null || newVal.isEmpty()) return true;
+                String lower = newVal.toLowerCase();
+                return item.toLowerCase().contains(lower);
+            });
+        });
+
+        tfNumChave.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredChaves.setPredicate(item -> {
+                if (newVal == null || newVal.isEmpty()) return true;
+                String lower = newVal.toLowerCase();
+                return item.toLowerCase().contains(lower);
+            });
+        });
+
+        // Preenchendo o TextField ao clicar em um item da ListView
+        lvSolicitante.setOnMouseClicked(e -> {
+            String selected = lvSolicitante.getSelectionModel().getSelectedItem();
+
+            for(Pessoa p : listPessoas)
+            {
+                if((p.getNome()+" "+p.getCPF()).equals(selected))
+                {
+                    pessoaEscolhida = p;
+                    break;
+                }
+            }
+
+            if (selected != null) {
+                tfSolicitante.setText(selected);
+            }
+        });
+
+        lvNumChave.setOnMouseClicked(e -> {
+            String selected = lvNumChave.getSelectionModel().getSelectedItem();
+
+            for(Chave c : listChaves)
+            {
+                if((c.getNumeroChave()+" "+c.getSala()).equals(tfNumChave.getText()))
+                {
+                    chaveEscolhida = c;
+                    break;
+                }
+            }
+
+            if (selected != null) {
+                tfNumChave.setText(selected);
+            }
+        });
+
     }
 
     @Override
