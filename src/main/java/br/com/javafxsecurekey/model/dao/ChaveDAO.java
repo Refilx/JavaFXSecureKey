@@ -39,6 +39,18 @@ import java.util.LinkedList;
  */
 public class ChaveDAO {
 
+    public static boolean result;
+
+    public static boolean getResult()
+    {
+        return result;
+    }
+
+    public static void setDefaultResult()
+    {
+        result = false;
+    }
+
     /**
      * O método executa o INSERT no banco de dados
      */
@@ -313,16 +325,16 @@ public class ChaveDAO {
      *
      * verificar a classe de parâmetro para salvar o emprestimo no histórico
      */
-    public void emprestarChave(Historico historico){
+    public static void emprestarChave(Historico historico){
 
         VerifyDAO verifyDAO = new VerifyDAO();
+
+        result = false;
 
         //
         if(verifyDAO.verifyStatusChave(historico.getIdChave())){
 
             String sql = "UPDATE chaves SET quantChave = quantChave - 1 WHERE idChave = ?";
-
-            HistoricoDAO historicoDAO = new HistoricoDAO();
 
             Connection conn = null;
 
@@ -341,12 +353,25 @@ public class ChaveDAO {
                 //Executa a Query
                 int rowsUpdated = pstm.executeUpdate();
 
-                if(rowsUpdated > 0) {
+                if(rowsUpdated > 0)
+                {
                     //Após executar a query que realiza o empréstimo da chave, salvamos a transação no histórico
-                    historicoDAO.save(historico);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "A chave foi emprestáda com sucesso!");
-                    alert.showAndWait();
-                } else {
+                    HistoricoDAO.save(historico);
+
+                    if(HistoricoDAO.getResult())
+                    {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "A chave foi emprestáda com sucesso!");
+                        alert.showAndWait();
+                    }
+                    else
+                    {
+                        Alert alert = new Alert(Alert.AlertType.WARNING, "Não foi possível salvar o histórico do empréstimo!\nOcorreu algum erro!");
+                        alert.showAndWait();
+                    }
+                    HistoricoDAO.setDefaultResult();
+                }
+                else
+                {
                     Alert alert = new Alert(Alert.AlertType.WARNING, "Não foi possível emprestár a chave!\nOcorreu algum erro!");
                     alert.showAndWait();
                 }

@@ -40,17 +40,31 @@ import java.util.List;
  */
 public class HistoricoDAO {
 
+    public static boolean result;
+
+    public static boolean getResult()
+    {
+        return result;
+    }
+
+    public static void setDefaultResult()
+    {
+        result = false;
+    }
+
     /**
      *
      * @param historico
      */
-    public void save(Historico historico){
+    public static void save(Historico historico){
 
         String sql = "INSERT INTO historico(idChave, idPessoa, observacoes, status, dataAbertura) VALUES (?, ?, ?, ?, ?)";
 
         Connection conn = null;
 
         PreparedStatement pstm = null;
+
+        result = false;
 
         try{
             //
@@ -69,6 +83,7 @@ public class HistoricoDAO {
             //
             pstm.execute();
 
+            result = true;
         }catch(Exception e){
             e.printStackTrace();
         }finally{

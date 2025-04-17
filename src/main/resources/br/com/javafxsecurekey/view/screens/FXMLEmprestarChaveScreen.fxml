@@ -90,7 +90,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnCadastrar" mnemonicParsing="false" onMouseClicked="#btnCadastrarMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Emprestar" textFill="WHITE">
+                  <Button fx:id="btnEmprestar" mnemonicParsing="false" onMouseClicked="#btnEmprestarMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Emprestar" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="100.0" />
                      </HBox.margin>
