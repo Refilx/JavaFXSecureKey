@@ -42,7 +42,7 @@ public class ChaveDAO {
     /**
      * O método executa o INSERT no banco de dados
      */
-    public void save(Chave chave) {
+    public static void save(Chave chave) {
 
         String sql = "INSERT INTO chaves(numeroChave, sala, observacoes, quantChave, status, bloco_predio, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
