@@ -31,8 +31,7 @@ import javafx.scene.control.Alert;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Essa Classe faz a manipulação dos dados sobre chaves com o banco de dados
@@ -91,11 +90,11 @@ public class ChaveDAO {
     }
 
     //O método executa o READ no banco de dados
-    public List<Chave> getChave() {
+    public static LinkedList<Chave> getChave() {
 
         String sql = "SELECT * FROM chaves";
 
-        List<Chave> listaChave = new ArrayList<Chave>();
+        LinkedList<Chave> listaChave = new LinkedList<>();
 
         Connection conn = null;
 

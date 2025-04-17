@@ -28,7 +28,6 @@ import br.com.javafxsecurekey.model.domain.Pessoa;
 
 import java.sql.*;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Essa Classe faz a manipulação dos dados sobre pessoas com o banco de dados
@@ -95,11 +94,11 @@ public class PessoaDAO {
     /**
      * O método executa o SELECT no banco de dados
      */
-    public List<Pessoa> getPessoa(){
+    public static LinkedList<Pessoa> getPessoa(){
 
         String sql = "SELECT * FROM pessoa";
 
-        List<Pessoa> listaPessoa = new LinkedList<>();
+        LinkedList<Pessoa> listaPessoa = new LinkedList<>();
 
         Connection conn = null;
 
