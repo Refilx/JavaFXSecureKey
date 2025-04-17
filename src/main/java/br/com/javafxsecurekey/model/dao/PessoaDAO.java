@@ -38,7 +38,7 @@ public class PessoaDAO {
     /**
      * O método executa o INSERT no banco de dados
      */
-    public void save(Pessoa pessoa){
+    public static void save(Pessoa pessoa){
 
         String sql = "INSERT INTO pessoa(nome, cpf, email, telefone, endereco, empresa, cargo, cidade, cep, dtNascimento, dtRegistro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
