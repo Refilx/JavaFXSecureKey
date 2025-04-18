@@ -56,7 +56,7 @@ public class ChaveDAO {
      */
     public static void save(Chave chave) {
 
-        String sql = "INSERT INTO chaves(numeroChave, sala, observacoes, quantChave, status, bloco_predio, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO chaves(numeroChave, sala, observacoes, quantChave, status, bloco_predio, possuiReserva) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
 
@@ -77,7 +77,7 @@ public class ChaveDAO {
             pstm.setInt(4, chave.getQuantChave());
             pstm.setString(5, chave.getStatus());
             pstm.setString(6, chave.getBloco());
-            pstm.setString(7, chave.getTipo());
+            pstm.setString(7, chave.getPossuiReserva());
 
             //Executa a Query
             pstm.execute();
@@ -150,7 +150,7 @@ public class ChaveDAO {
                 chave.setStatus(rset.getString("status"));
 
                 //Recupera o tipo da chave
-                chave.setTipo(rset.getString("tipo"));
+                chave.setPossuiReserva(rset.getString("possuiReserva"));
 
                 //Adiciona a chave com todos os dados registrados à lista de chaves
                 listaChave.add(chave);
@@ -185,7 +185,7 @@ public class ChaveDAO {
      */
     public void update(Chave chave){
 
-        String sql = "UPDATE chaves SET numeroChave = ?, sala = ?, observacoes = ?, quantChave = ?, status = ?, bloco-predio = ?, tipo = ? WHERE idChave = ?";
+        String sql = "UPDATE chaves SET numeroChave = ?, sala = ?, observacoes = ?, quantChave = ?, status = ?, bloco-predio = ?, possuiReserva = ? WHERE idChave = ?";
 
         Connection conn = null;
 
@@ -205,7 +205,7 @@ public class ChaveDAO {
             pstm.setInt(4, chave.getQuantChave());
             pstm.setString(5, chave.getStatus());
             pstm.setString(6, chave.getBloco());
-            pstm.setString(7, chave.getTipo());
+            pstm.setString(7, chave.getPossuiReserva());
 
             //Qual o ID do registro que deseja atualizar?
             pstm.setInt(8, chave.getIdChave());

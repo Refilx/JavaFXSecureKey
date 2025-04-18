@@ -36,7 +36,7 @@ public class Chave{
     private String observacoes;
     private int quantChave;
     private String status;
-    private String tipo;
+    private String possuiReserva;
 
     public int getIdChave() {
         return idChave;
@@ -94,11 +94,11 @@ public class Chave{
         return status;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setPossuiReserva(String possuiReserva) {
+        this.possuiReserva = possuiReserva;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getPossuiReserva() {
+        return possuiReserva;
     }
 }
