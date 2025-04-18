@@ -14,14 +14,14 @@
 
 <Pane fx:id="cadastroUserScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLCadastroPessoaController">
    <children>
-      <VBox layoutX="129.0" layoutY="38.0" prefHeight="690.0" prefWidth="750.0" style="-fx-background-color: #15CE52; -fx-background-radius: 10;">
+      <VBox layoutX="129.0" layoutY="38.0" prefHeight="690.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #15CE52; -fx-background-radius: 10;">
          <children>
             <Label prefHeight="54.0" prefWidth="258.0" text="Cadastro de Pessoa" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="25.0" />
                </font>
                <VBox.margin>
-                  <Insets left="240.0" />
+                  <Insets left="180.0" />
                </VBox.margin>
             </Label>
             <Separator prefWidth="200.0" />
@@ -69,43 +69,6 @@
                   <Insets left="50.0" right="50.0" top="25.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="tfEndereco" prefHeight="46.0" prefWidth="224.0" style="-fx-background-radius: 10;">
-               <font>
-                  <Font name="Arial" size="20.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-               <VBox.margin>
-                  <Insets left="50.0" right="50.0" top="25.0" />
-               </VBox.margin>
-            </TextField>
-            <HBox prefHeight="48.0" prefWidth="612.0">
-               <children>
-                  <TextField fx:id="tfCidade" layoutX="60.0" layoutY="10.0" prefHeight="46.0" prefWidth="225.0" style="-fx-background-radius: 10;">
-                     <font>
-                        <Font name="Arial" size="20.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="tfCEP" onKeyReleased="#tfCEPKeyReleased" prefHeight="46.0" prefWidth="225.0" style="-fx-background-radius: 10;">
-                     <font>
-                        <Font name="Arial" size="20.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="50.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets left="120.0" top="25.0" />
-               </VBox.margin>
-            </HBox>
             <HBox layoutX="10.0" layoutY="374.0" prefHeight="45.0" prefWidth="500.0">
                <children>
                   <TextField fx:id="tfCPF" onKeyReleased="#tfCPFKeyReleased" prefHeight="46.0" prefWidth="225.0" style="-fx-background-radius: 10;">
@@ -119,7 +82,7 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </TextField>
-                  <TextField fx:id="tfTelefone" onKeyReleased="#tfTelefoneOnKeyReleased" prefHeight="46.0" prefWidth="224.0" style="-fx-background-radius: 10;">
+                  <TextField fx:id="tfTelefone" onKeyReleased="#tfTelefoneOnKeyReleased" prefHeight="46.0" prefWidth="225.0" style="-fx-background-radius: 10;">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>
@@ -132,12 +95,12 @@
                   </TextField>
                </children>
                <VBox.margin>
-                  <Insets left="120.0" top="25.0" />
+                  <Insets left="50.0" top="25.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="46.0" prefWidth="612.0">
                <VBox.margin>
-                  <Insets left="120.0" top="60.0" />
+                  <Insets left="50.0" top="60.0" />
                </VBox.margin>
                <children>
                   <Button fx:id="btnCancelar" mnemonicParsing="false" onMouseClicked="#btnCancelarMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #EF4444; -fx-background-radius: 10;" text="Cancelar" textFill="WHITE">
@@ -175,92 +138,62 @@
             <DropShadow offsetY="5.0" />
          </effect>
       </VBox>
-      <Label layoutX="190.0" layoutY="105.0" text="Nome Completo" textFill="WHITE">
+      <Label layoutX="186.0" layoutY="124.0" text="Nome Completo" textFill="WHITE">
          <font>
-            <Font name="Arial Bold" size="15.0" />
+            <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="195.0" layoutY="314.0" text="Cargo" textFill="WHITE">
+      <Label layoutX="189.0" layoutY="362.0" text="Cargo" textFill="WHITE">
          <font>
-            <Font name="Arial Bold" size="15.0" />
+            <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="192.0" layoutY="176.0" text="E-mail" textFill="WHITE">
+      <Label layoutX="188.0" layoutY="203.0" text="E-mail" textFill="WHITE">
          <font>
-            <Font name="Arial Bold" size="15.0" />
+            <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="257.0" layoutY="529.0" text="CPF" textFill="WHITE">
+      <Label layoutX="190.0" layoutY="444.0" text="CPF" textFill="WHITE">
          <font>
-            <Font name="Arial Bold" size="15.0" />
+            <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="534.0" layoutY="455.0" text="CEP" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="312.0" layoutY="449.0" text="*" textFill="#ff4949">
+      <Label layoutX="228.0" layoutY="437.0" text="*" textFill="#ff4949">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="565.0" layoutY="448.0" text="*" textFill="#ff4949">
+      <Label layoutX="243.0" layoutY="195.0" text="*" textFill="#ff4949">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="288.0" layoutY="522.0" text="*" textFill="#ff4949">
+      <Label layoutX="241.0" layoutY="357.0" text="*" textFill="#ff4949">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="167.0" text="*" textFill="#ff4949">
+      <Label layoutX="323.0" layoutY="118.0" text="*" textFill="#ff4949">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="239.0" layoutY="307.0" text="*" textFill="#ff4949">
+      <Label layoutX="467.0" layoutY="444.0" text="Telefone" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="541.0" layoutY="435.0" text="*" textFill="#ff4949">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="306.0" layoutY="99.0" text="*" textFill="#ff4949">
+      <Label layoutX="186.0" layoutY="284.0" text="Nome da Empresa" textFill="WHITE">
          <font>
-            <Font name="Arial Bold" size="20.0" />
+            <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="537.0" layoutY="528.0" text="Telefone" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="599.0" layoutY="521.0" text="*" textFill="#ff4949">
-         <font>
-            <Font name="Arial Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="190.0" layoutY="245.0" text="Nome da Empresa" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="322.0" layoutY="241.0" text="*" textFill="#ff4949">
-         <font>
-            <Font name="Arial Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="190.0" layoutY="385.0" text="Endereço: Rua / Número / Bairro" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="260.0" layoutY="455.0" text="Cidade" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="423.0" layoutY="378.0" text="*" textFill="#ff4949">
+      <Label layoutX="343.0" layoutY="278.0" text="*" textFill="#ff4949">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>

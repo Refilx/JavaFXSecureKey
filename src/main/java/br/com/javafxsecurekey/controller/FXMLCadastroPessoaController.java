@@ -20,37 +20,20 @@ public class FXMLCadastroPessoaController {
 
     @FXML
     private Button btnCadastrar;
-
     @FXML
     private Button btnCancelar;
-
     @FXML
     private Pane cadastroUserScreen;
-
-    @FXML
-    private TextField tfCEP;
-
     @FXML
     private TextField tfCPF;
-
     @FXML
     private TextField tfCargo;
-
-    @FXML
-    private TextField tfCidade;
-
     @FXML
     private TextField tfEmail;
-
     @FXML
     private TextField tfEmpresa;
-
-    @FXML
-    private TextField tfEndereco;
-
     @FXML
     private TextField tfNome;
-
     @FXML
     private TextField tfTelefone;
 
@@ -64,9 +47,6 @@ public class FXMLCadastroPessoaController {
                 !tfEmail.getText().isEmpty() &&
                 !tfEmpresa.getText().isEmpty() &&
                 !tfCargo.getText().isEmpty() &&
-                !tfEndereco.getText().isEmpty() &&
-                !tfCidade.getText().isEmpty() &&
-                !tfCEP.getText().isEmpty() &&
                 !tfCPF.getText().isEmpty() &&
                 !tfTelefone.getText().isEmpty()
         ) {
@@ -91,9 +71,6 @@ public class FXMLCadastroPessoaController {
                                 pessoa.setEmail(tfEmail.getText());
                                 pessoa.setEmpresa(tfEmpresa.getText());
                                 pessoa.setCargo(tfCargo.getText());
-                                pessoa.setEndereco(tfEndereco.getText());
-                                pessoa.setCidade(tfCidade.getText());
-                                pessoa.setCep(tfCEP.getText());
                                 pessoa.setCPF(tfCPF.getText());
                                 pessoa.setTelefone(tfTelefone.getText());
 
@@ -103,9 +80,6 @@ public class FXMLCadastroPessoaController {
                                 tfEmail.setText(null);
                                 tfEmpresa.setText(null);
                                 tfCargo.setText(null);
-                                tfEndereco.setText(null);
-                                tfCidade.setText(null);
-                                tfCEP.setText(null);
                                 tfCPF.setText(null);
                                 tfTelefone.setText(null);
 
@@ -147,20 +121,8 @@ public class FXMLCadastroPessoaController {
         tfEmail.setText(null);
         tfEmpresa.setText(null);
         tfCargo.setText(null);
-        tfEndereco.setText(null);
-        tfCidade.setText(null);
-        tfCEP.setText(null);
         tfCPF.setText(null);
         tfTelefone.setText(null);
-    }
-
-    @FXML
-    void tfCEPKeyReleased(KeyEvent event) {
-        TextFieldFormatter tff = new TextFieldFormatter();
-        tff.setMask("#####-###");
-        tff.setCaracteresValidos("0123456789");
-        tff.setTf(tfCEP);
-        tff.formatter();
     }
 
     @FXML
