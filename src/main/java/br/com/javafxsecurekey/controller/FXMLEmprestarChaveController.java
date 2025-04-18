@@ -21,34 +21,20 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class FXMLEmprestarChaveController implements Initializable {
-
     @FXML
     private Button btnEmprestar;
-
     @FXML
     private Button btnCancelar;
-
     @FXML
     private Pane cadastroUserScreen;
-
     @FXML
     private ListView<String> lvNumChave;
-
     @FXML
     private ListView<String> lvSolicitante;
-
-    @FXML
-    private ScrollPane scrollPaneNumeroChave;
-
-    @FXML
-    private ScrollPane scrollPaneSolicitante;
-
     @FXML
     private TextArea taDescricao;
-
     @FXML
     private TextField tfNumChave;
-
     @FXML
     private TextField tfSolicitante;
 
@@ -68,8 +54,8 @@ public class FXMLEmprestarChaveController implements Initializable {
     @FXML
     void btnEmprestarMouseClicked(MouseEvent event)
     {
-        scrollPaneSolicitante.setVisible(false);
-        scrollPaneNumeroChave.setVisible(false);
+        lvSolicitante.setVisible(false);
+        lvNumChave.setVisible(false);
 
         if(!tfSolicitante.getText().isEmpty() && !tfNumChave.getText().isEmpty())
         {
@@ -89,8 +75,8 @@ public class FXMLEmprestarChaveController implements Initializable {
                 tfSolicitante.setText(null);
                 tfNumChave.setText(null);
                 taDescricao.setText(null);
-                scrollPaneNumeroChave.setVisible(false);
-                scrollPaneSolicitante.setVisible(false);
+                lvNumChave.setVisible(false);
+                lvSolicitante.setVisible(false);
             }
             ChaveDAO.setDefaultResult();
         }
@@ -103,38 +89,44 @@ public class FXMLEmprestarChaveController implements Initializable {
 
     @FXML
     void btnCancelarMouseClicked(MouseEvent event) {
-        scrollPaneSolicitante.setVisible(false);
-        scrollPaneNumeroChave.setVisible(false);
+        lvSolicitante.setVisible(false);
+        lvNumChave.setVisible(false);
+        tfSolicitante.setText(null);
+        tfNumChave.setText(null);
+        taDescricao.setText(null);
     }
 
     @FXML
     void taDescricaoOnMouseClicked(MouseEvent event) {
-        scrollPaneSolicitante.setVisible(false);
-        scrollPaneNumeroChave.setVisible(false);
+        lvSolicitante.setVisible(false);
+        lvNumChave.setVisible(false);
     }
 
     @FXML
     void tfNumChaveOnMouseClicked(MouseEvent event) {
-        scrollPaneSolicitante.setVisible(false);
-        scrollPaneNumeroChave.setVisible(true);
+        lvSolicitante.setVisible(false);
+        lvNumChave.setVisible(true);
     }
 
     @FXML
     void tfSolicitanteOnMouseClicked(MouseEvent event) {
-        scrollPaneSolicitante.setVisible(true);
-        scrollPaneNumeroChave.setVisible(false);
+        lvSolicitante.setVisible(true);
+        lvNumChave.setVisible(false);
     }
 
     private void carregarDados() {
+        // Listas principais recebem os dados do banco
         listPessoas = PessoaDAO.getPessoa();
         listChaves = ChaveDAO.getChave();
 
+        // Passando alguns dados específicos para listas auxiliares que exibirão os dados na ListView
         for(Pessoa p : listPessoas)
-            nomeCPF.add(p.getNome()+" "+p.getCPF());
+            nomeCPF.add(p.getNome()+" - "+p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)); // formatando a exibição dos dados: Nome da pessoa + CPF: 000.***.***-00
 
         for(Chave c : listChaves)
-            numChave.add(c.getNumeroChave()+" "+c.getSala());
+            numChave.add("Chave: "+c.getNumeroChave()+" - Sala: "+c.getSala());
 
+        // Carregamos as listas auxiliares com os dados exibíveis
         obsPessoas = FXCollections.observableArrayList(nomeCPF);
         obsChaves = FXCollections.observableArrayList(numChave);
 
@@ -155,6 +147,7 @@ public class FXMLEmprestarChaveController implements Initializable {
             });
         });
 
+        // Listener para o filtro dinâmico conforme o usuário digita no TextField
         tfNumChave.textProperty().addListener((obs, oldVal, newVal) -> {
             filteredChaves.setPredicate(item -> {
                 if (newVal == null || newVal.isEmpty()) return true;
@@ -167,9 +160,9 @@ public class FXMLEmprestarChaveController implements Initializable {
         lvSolicitante.setOnMouseClicked(e -> {
             String selected = lvSolicitante.getSelectionModel().getSelectedItem();
 
-            for(Pessoa p : listPessoas)
+            for(Pessoa p : listPessoas) // Procurando o item na lista, se for encontrado, armazenamos os dados da pessoa escolhida
             {
-                if((p.getNome()+" "+p.getCPF()).equals(selected))
+                if((p.getNome()+" - "+p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)).equals(selected)) // Comparando a formatação do item da vez com o item selecionado
                 {
                     pessoaEscolhida = p;
                     break;
@@ -177,16 +170,18 @@ public class FXMLEmprestarChaveController implements Initializable {
             }
 
             if (selected != null) {
-                tfSolicitante.setText(selected);
+                tfSolicitante.setText(selected); // TextField
+                lvSolicitante.setVisible(false); // ListView
             }
         });
 
+        // Preenchendo o TextField ao clicar em um item da ListView
         lvNumChave.setOnMouseClicked(e -> {
             String selected = lvNumChave.getSelectionModel().getSelectedItem();
 
-            for(Chave c : listChaves)
+            for(Chave c : listChaves) // Procurando o item na lista, se for encontrado, armazenamos os dados da chave escolhida
             {
-                if((c.getNumeroChave()+" "+c.getSala()).equals(tfNumChave.getText()))
+                if(("Chave: "+c.getNumeroChave()+" - Sala: "+c.getSala()).equals(selected))
                 {
                     chaveEscolhida = c;
                     break;
@@ -194,7 +189,8 @@ public class FXMLEmprestarChaveController implements Initializable {
             }
 
             if (selected != null) {
-                tfNumChave.setText(selected);
+                tfNumChave.setText(selected); // TextField
+                lvNumChave.setVisible(false); // ListView
             }
         });
 
