@@ -397,17 +397,17 @@ public class VerifyDAO {
             chave.setQuantChave(rset.getInt("quantChave"));
 
             //Variável que armazenará o tipo da chave (chave principal ou chave reserva) armazenada no banco de dados
-            chave.setTipo(rset.getString("tipo"));
+            chave.setPossuiReserva(rset.getString("possuiReserva"));
 
             //Se o status da chave for disponível, a quantidade for maior ou igual que 1 (um), o resultado recebe um valor true
             if (
                     (chave.getQuantChave() > 1 &&
                             chave.getStatus().equalsIgnoreCase("DISPONÍVEL") &&
-                            chave.getTipo().equalsIgnoreCase("CHAVE RESERVA"))
+                            chave.getPossuiReserva().equalsIgnoreCase("Sim"))
                     ||
                     (chave.getQuantChave() == 1 &&
                             chave.getStatus().equalsIgnoreCase("DISPONÍVEL") &&
-                            chave.getTipo().equalsIgnoreCase("CHAVE COMUM"))
+                            chave.getPossuiReserva().equalsIgnoreCase("Não"))
 
 
             ) {
@@ -428,7 +428,7 @@ public class VerifyDAO {
                         "ERRO AO EMPRESTAR CHAVE!", JOptionPane.ERROR_MESSAGE);
             }
             //Tratamento de emprestimo de chave reserva
-            else if(chave.getQuantChave() == 1 && chave.getTipo().equalsIgnoreCase("Chave Reserva")){
+            else if(chave.getQuantChave() == 1 && chave.getPossuiReserva().equalsIgnoreCase("Sim")){
 
                 //Mensagem de confirmação de emprestimo de chave reserva
                 int opcao = JOptionPane.showOptionDialog(null, "Você está emprestando uma Chave RESERVA! \n Tem certeza que deseja continuar?",
