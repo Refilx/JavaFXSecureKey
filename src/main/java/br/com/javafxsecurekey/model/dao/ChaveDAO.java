@@ -28,6 +28,7 @@ import br.com.javafxsecurekey.model.domain.Chave;
 import br.com.javafxsecurekey.model.domain.Historico;
 import javafx.scene.control.Alert;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,8 +83,11 @@ public class ChaveDAO {
             //Executa a Query
             pstm.execute();
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Chave cadastrada com sucesso!");
+            alert.showAndWait();
         }catch(Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao cadastrar a chave!\nDetalhes: "+e.getMessage(),
+                    "Erro de Cadastro", JOptionPane.WARNING_MESSAGE);
         }finally{
 
             //Fecha as conexões que foram abertas com o banco de dados
@@ -149,7 +153,7 @@ public class ChaveDAO {
                 //Recupera o status da chave
                 chave.setStatus(rset.getString("status"));
 
-                //Recupera o tipo da chave
+                //Recupera o possuiReserva da chave
                 chave.setPossuiReserva(rset.getString("possuiReserva"));
 
                 //Adiciona a chave com todos os dados registrados à lista de chaves
@@ -327,12 +331,10 @@ public class ChaveDAO {
      */
     public static void emprestarChave(Historico historico){
 
-        VerifyDAO verifyDAO = new VerifyDAO();
-
         result = false;
 
         //
-        if(verifyDAO.verifyStatusChave(historico.getIdChave())){
+        if(VerifyDAO.verifyStatusChave(historico.getIdChave())){
 
             String sql = "UPDATE chaves SET quantChave = quantChave - 1 WHERE idChave = ?";
 
@@ -362,6 +364,7 @@ public class ChaveDAO {
                     {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "A chave foi emprestáda com sucesso!");
                         alert.showAndWait();
+                        result = true;
                     }
                     else
                     {

@@ -25,7 +25,9 @@ package br.com.javafxsecurekey.model.dao;
 
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.domain.Pessoa;
+import javafx.scene.control.Alert;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.LinkedList;
 
@@ -34,6 +36,18 @@ import java.util.LinkedList;
  * @author Bruno Sousa da Silva
  */
 public class PessoaDAO {
+
+    public static boolean result;
+
+    public static boolean getResult()
+    {
+        return result;
+    }
+
+    public static void setDefaultResult()
+    {
+        result = false;
+    }
 
     /**
      * O método executa o INSERT no banco de dados
@@ -47,6 +61,8 @@ public class PessoaDAO {
         Connection conn = null;
 
         PreparedStatement pstm = null;
+
+        result = false;
 
         try{
             //Cria conexão com o banco
@@ -67,8 +83,12 @@ public class PessoaDAO {
             //Executa a Query
             pstm.execute();
 
+            result = true;
+            Alert sucesso = new Alert(Alert.AlertType.INFORMATION, "Pessoa cadastrada com sucesso!");
+            sucesso.showAndWait();
         }catch(Exception e){
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Ocorreru um erro ao tentar cadastrar a pessoa!\nDetalhes: "+e.getMessage(),
+                    "Erro de Cadastro", JOptionPane.WARNING_MESSAGE);
         }finally{
 
             //Fecha as conexões que foram abertas com o banco de dados

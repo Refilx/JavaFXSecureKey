@@ -3,10 +3,12 @@ package br.com.javafxsecurekey.controller;
 import br.com.javafxsecurekey.model.dao.PessoaDAO;
 import br.com.javafxsecurekey.model.dao.VerifyDAO;
 import br.com.javafxsecurekey.model.domain.Pessoa;
+import br.com.javafxsecurekey.model.util.CaseTextFormatter;
 import br.com.javafxsecurekey.model.util.TextFieldFormatter;
 import br.com.javafxsecurekey.model.validator.CPFValidator;
 import br.com.javafxsecurekey.model.validator.EmailValidator;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -14,9 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import javax.swing.*;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-public class FXMLCadastroPessoaController {
+public class FXMLCadastroPessoaController implements Initializable {
 
     @FXML
     private Button btnCadastrar;
@@ -38,6 +42,12 @@ public class FXMLCadastroPessoaController {
     private TextField tfTelefone;
 
     private Pessoa pessoa = new Pessoa();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        CaseTextFormatter.applyUpperCase(tfEmpresa);
+        CaseTextFormatter.applyUpperCase(tfCargo);
+    }
 
     @FXML
     void btnCadastrarMouseClicked(MouseEvent event) {
@@ -62,7 +72,7 @@ public class FXMLCadastroPessoaController {
                         // Verifica se já existe alguma pessoa usuária cadastrada com esse CPF no banco de dados
                         if (new VerifyDAO().verifyCPF(tfCPF.getText())) {
                             // Pergunto se a pessoa deseja mesmo realizar o cadastro
-                            int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja cadastrar um novo usuário?", "Confirmação final",
+                            int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja cadastrar uma nova pessoa?", "Confirmação final",
                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
 
                             // Se o botão sim for apertado, cadastramos o novo usuário
@@ -76,13 +86,16 @@ public class FXMLCadastroPessoaController {
 
                                 PessoaDAO.save(pessoa);
 
-                                tfNome.setText(null);
-                                tfEmail.setText(null);
-                                tfEmpresa.setText(null);
-                                tfCargo.setText(null);
-                                tfCPF.setText(null);
-                                tfTelefone.setText(null);
-
+                                if(PessoaDAO.getResult())
+                                {
+                                    tfNome.setText(null);
+                                    tfEmail.setText(null);
+                                    tfEmpresa.setText(null);
+                                    tfCargo.setText(null);
+                                    tfCPF.setText(null);
+                                    tfTelefone.setText(null);
+                                    PessoaDAO.setDefaultResult();
+                                }
                             }
                             else {
                                 JOptionPane.showMessageDialog(null, "Já existe um usuário com esse username cadastrado\n Digite um username diferente, por favor",
@@ -142,5 +155,4 @@ public class FXMLCadastroPessoaController {
         tff.setTf(tfTelefone);
         tff.formatter();
     }
-
 }

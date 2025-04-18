@@ -28,11 +28,11 @@ import br.com.javafxsecurekey.model.domain.Usuario;
 import javafx.scene.control.Alert;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,16 +42,30 @@ import java.util.List;
  */
 public class UsuarioDAO {
 
+    public static boolean result;
+
+    public static boolean getResult()
+    {
+        return result;
+    }
+
+    public static void setDefaultResult()
+    {
+        result = false;
+    }
+
     /**
      * O método executa o INSERT no banco de dados
      */
-    public void save(Usuario usuario){
+    public static void save(Usuario usuario){
 
         String sql = "INSERT INTO usuario(username, password, role, dtRegistro, idPessoa) VALUES (?, ?, ?, ?, ?)";
 
         Connection conn = null;
 
         PreparedStatement pstm = null;
+
+        result = false;
 
         try{
             //Cria uma conexão com o banco de dados
@@ -76,8 +90,12 @@ public class UsuarioDAO {
             //Executa a Query
             pstm.execute();
 
+            result = true;
+            Alert sucesso = new Alert(Alert.AlertType.INFORMATION, "Usuário cadastrado com sucesso!");
+            sucesso.showAndWait();
         }catch(Exception e){
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar salvar o usuário!\nDetalhes: "+e.getMessage(),
+                    "Erro de Cadastro", JOptionPane.WARNING_MESSAGE);
         }finally {
 
             try{

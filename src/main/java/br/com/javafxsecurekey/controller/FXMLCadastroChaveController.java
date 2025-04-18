@@ -2,12 +2,17 @@ package br.com.javafxsecurekey.controller;
 
 import br.com.javafxsecurekey.model.dao.ChaveDAO;
 import br.com.javafxsecurekey.model.domain.Chave;
+import br.com.javafxsecurekey.model.util.CaseTextFormatter;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class FXMLCadastroChaveController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class FXMLCadastroChaveController implements Initializable {
 
     @FXML
     private ToggleGroup PossuiChaveReserva;
@@ -41,6 +46,16 @@ public class FXMLCadastroChaveController {
 
     private Chave chave = new Chave();
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        CaseTextFormatter.applyUpperCase(tfNomeSala);
+        CaseTextFormatter.applyUpperCase(tfBloco);
+        tfNomeSala.setText("");
+        tfNumeroChave.setText("");
+        tfBloco.setText("");
+        taDescricao.setText("");
+    }
+
     @FXML
     void btnCadastrarMouseClicked(MouseEvent event) {
         // Verifico se todos os campos estão preenchidos
@@ -65,8 +80,10 @@ public class FXMLCadastroChaveController {
 
                 if (rb_sim.isSelected()) {
                     chave.setQuantChave(2);
+                    chave.setPossuiReserva("Sim");
                 } else if (rb_nao.isSelected()) {
                     chave.setQuantChave(1);
+                    chave.setPossuiReserva("Não");
                 }
 
                 chave.setStatus("DISPONÍVEL");
@@ -97,5 +114,4 @@ public class FXMLCadastroChaveController {
         rb_sim.setSelected(false);
         rb_nao.setSelected(false);
     }
-
 }
