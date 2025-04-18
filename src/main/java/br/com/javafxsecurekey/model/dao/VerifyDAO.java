@@ -359,9 +359,9 @@ public class VerifyDAO {
     /**
      * Verifica o status da chave para saber se ela está disponível
      */
-    public boolean verifyStatusChave(int idChave){
+    public static boolean verifyStatusChave(int idChave){
 
-        String sql = "SELECT status, quantChave, tipo FROM chaves WHERE idChave = ?";
+        String sql = "SELECT status, quantChave, possuiReserva FROM chaves WHERE idChave = ?";
 
         boolean resultadoVerify = false;
 
@@ -385,64 +385,60 @@ public class VerifyDAO {
             rset = pstm.executeQuery();
 
             //
-            rset.next();
-
-            //
-            Chave chave = new Chave();
-
-            //Variável que armazenará o valor do status da chave armazenada no banco de dados
-            chave.setStatus(rset.getString("status"));
-
-            //Variável que armazenará a quantidade de chaves que estarão na portaria no momento em que for realizado o emprestimo
-            chave.setQuantChave(rset.getInt("quantChave"));
-
-            //Variável que armazenará o tipo da chave (chave principal ou chave reserva) armazenada no banco de dados
-            chave.setPossuiReserva(rset.getString("possuiReserva"));
-
-            //Se o status da chave for disponível, a quantidade for maior ou igual que 1 (um), o resultado recebe um valor true
-            if (
-                    (chave.getQuantChave() > 1 &&
-                            chave.getStatus().equalsIgnoreCase("DISPONÍVEL") &&
-                            chave.getPossuiReserva().equalsIgnoreCase("Sim"))
-                    ||
-                    (chave.getQuantChave() == 1 &&
-                            chave.getStatus().equalsIgnoreCase("DISPONÍVEL") &&
-                            chave.getPossuiReserva().equalsIgnoreCase("Não"))
-
-
-            ) {
-                resultadoVerify = true;
-                JOptionPane.showMessageDialog(null, "Chave Emprestada com sucesso!!!", "", JOptionPane.INFORMATION_MESSAGE);
-
-            }
-            //Tratamento de chaves com a quantidade igual a 0 (zero)
-            else if (chave.getQuantChave() == 0) {
+            if(rset.next()) {
                 //
-                ChaveDAO chaveDAO = new ChaveDAO();
+                Chave chave = new Chave();
 
-                //
-                chaveDAO.updateStatusChave(idChave);
+                //Variável que armazenará o valor do status da chave armazenada no banco de dados
+                chave.setStatus(rset.getString("status"));
 
-                //Mensagem de erro ao tentar emprestar a chave, estando ela indisponível
-                JOptionPane.showMessageDialog(null, "Você não pode emprestar esta chave, pois ela está INDISPONÍVEL!",
-                        "ERRO AO EMPRESTAR CHAVE!", JOptionPane.ERROR_MESSAGE);
-            }
-            //Tratamento de emprestimo de chave reserva
-            else if(chave.getQuantChave() == 1 && chave.getPossuiReserva().equalsIgnoreCase("Sim")){
+                //Variável que armazenará a quantidade de chaves que estarão na portaria no momento em que for realizado o emprestimo
+                chave.setQuantChave(rset.getInt("quantChave"));
 
-                //Mensagem de confirmação de emprestimo de chave reserva
-                int opcao = JOptionPane.showOptionDialog(null, "Você está emprestando uma Chave RESERVA! \n Tem certeza que deseja continuar?",
-                        "Chave Reserva Identificada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Sim", "Não"}, null );
+                //Variável que armazenará o possuiReserva da chave (chave principal ou chave reserva) armazenada no banco de dados
+                chave.setPossuiReserva(rset.getString("possuiReserva"));
 
-                if(opcao == 0){
+                //Se o status da chave for disponível, a quantidade for maior ou igual que 1 (um), o resultado recebe um valor true
+                if (
+                        (chave.getQuantChave() > 1 &&
+                                chave.getStatus().equalsIgnoreCase("DISPONÍVEL") &&
+                                chave.getPossuiReserva().equalsIgnoreCase("Sim"))
+                                ||
+                                (chave.getQuantChave() == 1 &&
+                                chave.getStatus().equalsIgnoreCase("DISPONÍVEL") &&
+                                chave.getPossuiReserva().equalsIgnoreCase("Não"))
+
+
+                ) {
                     resultadoVerify = true;
                 }
-                else{
-                    JOptionPane.showMessageDialog(null, "A Chave NÃO foi emprestada!",
-                            "Cancelado!", JOptionPane.INFORMATION_MESSAGE);
+                //Tratamento de chaves com a quantidade igual a 0 (zero)
+                else if (chave.getQuantChave() == 0) {
+                    //
+                    ChaveDAO chaveDAO = new ChaveDAO();
+
+                    //
+                    chaveDAO.updateStatusChave(idChave);
+
+                    //Mensagem de erro ao tentar emprestar a chave, estando ela indisponível
+                    JOptionPane.showMessageDialog(null, "Você não pode emprestar esta chave, pois ela está INDISPONÍVEL!",
+                            "ERRO AO EMPRESTAR CHAVE!", JOptionPane.ERROR_MESSAGE);
+                }
+                //Tratamento de emprestimo de chave reserva
+                else if (chave.getQuantChave() == 1 && chave.getPossuiReserva().equalsIgnoreCase("Sim")) {
+
+                    //Mensagem de confirmação de emprestimo de chave reserva
+                    int opcao = JOptionPane.showOptionDialog(null, "Você está emprestando uma Chave RESERVA! \n Tem certeza que deseja continuar?",
+                            "Chave Reserva Identificada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, null);
+
+                    if (opcao == 0) {
+                        resultadoVerify = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "A Chave NÃO foi emprestada!",
+                                "Cancelado!", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
             }
-
         }catch(Exception e){
             e.printStackTrace();
         }finally{
