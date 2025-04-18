@@ -24,7 +24,6 @@
 package br.com.javafxsecurekey.model.domain;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 
 /**
  * Essa é a Classe model de Pessoa, contendo todos os atributos e métodos sobre Pessoa
@@ -37,12 +36,8 @@ public class Pessoa {
     private String CPF;
     private String email;
     private String telefone;
-    private String endereco;
     private String empresa;
     private String cargo;
-    private String cidade;
-    private String cep;
-    private LocalDate dtNascimento;
     private Timestamp dtRegistro;
 
     public void setIdPessoa(int id){
@@ -85,14 +80,6 @@ public class Pessoa {
         return telefone;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
     }
@@ -107,30 +94,6 @@ public class Pessoa {
 
     public String getCargo() {
         return cargo;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setDtNascimento(LocalDate dtNascimento) {
-        this.dtNascimento = dtNascimento;
-    }
-
-    public LocalDate getDtNascimento() {
-        return dtNascimento;
     }
 
     public void setDtRegistro(Timestamp dtRegistro) {

@@ -40,7 +40,7 @@ public class PessoaDAO {
      */
     public static void save(Pessoa pessoa){
 
-        String sql = "INSERT INTO pessoa(nome, cpf, email, telefone, endereco, empresa, cargo, cidade, cep, dtNascimento, dtRegistro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pessoa(nome, cpf, email, telefone, empresa, cargo, dtRegistro) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         pessoa.setDtRegistro(new Timestamp(System.currentTimeMillis()));
 
@@ -60,13 +60,9 @@ public class PessoaDAO {
             pstm.setString(2, pessoa.getCPF());
             pstm.setString(3, pessoa.getEmail());
             pstm.setString(4, pessoa.getTelefone());
-            pstm.setString(5, pessoa.getEndereco());
-            pstm.setString(6, pessoa.getEmpresa());
-            pstm.setString(7, pessoa.getCargo());
-            pstm.setString(8, pessoa.getCidade());
-            pstm.setString(9, pessoa.getCep());
-            pstm.setDate(10, Date.valueOf(pessoa.getDtNascimento()));
-            pstm.setTimestamp(11, pessoa.getDtRegistro());
+            pstm.setString(5, pessoa.getEmpresa());
+            pstm.setString(6, pessoa.getCargo());
+            pstm.setTimestamp(7, pessoa.getDtRegistro());
 
             //Executa a Query
             pstm.execute();
@@ -135,23 +131,11 @@ public class PessoaDAO {
                 //Recupera o telefone da Pessoa
                 pessoa.setTelefone(rset.getString("telefone"));
 
-                //Recupera o endereço da Pessoa
-                pessoa.setEndereco(rset.getString("endereco"));
-
                 //Recupera o empresa da Pessoa
                 pessoa.setEmpresa(rset.getString("empresa"));
 
                 //Recupera o cargo da Pessoa
                 pessoa.setCargo(rset.getString("cargo"));
-
-                //Recupera o cidade da Pessoa
-                pessoa.setCidade(rset.getString("cidade"));
-
-                //Recupera o cep da Pessoa
-                pessoa.setCep(rset.getString("cep"));
-
-                //Recupera o data de nascimento da Pessoa
-                pessoa.setDtNascimento(rset.getDate("dtNascimento").toLocalDate());
 
                 //Recupera o data de registro da Pessoa
                 pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
@@ -189,7 +173,7 @@ public class PessoaDAO {
      */
     public void update(Pessoa pessoa){
 
-        String sql = "UPDATE pessoa SET nome = ?, cpf = ?, email = ?, telefone = ?, endereco = ?, empresa = ?, cargo = ?, cidade = ?, cep = ?, DtRegistro = ?"+
+        String sql = "UPDATE pessoa SET nome = ?, cpf = ?, email = ?, telefone = ?, empresa = ?, cargo = ?, DtRegistro = ?"+
                 "WHERE idPessoa = ?";
 
         Connection conn = null;
@@ -208,15 +192,12 @@ public class PessoaDAO {
             pstm.setString(2, pessoa.getCPF());
             pstm.setString(3, pessoa.getEmail());
             pstm.setString(4, pessoa.getTelefone());
-            pstm.setString(5, pessoa.getEndereco());
-            pstm.setString(6, pessoa.getEmpresa());
-            pstm.setString(7, pessoa.getCargo());
-            pstm.setString(8, pessoa.getCidade());
-            pstm.setString(9, pessoa.getCep());
-            pstm.setDate(10, new Date(pessoa.getDtRegistro().getTime()));
+            pstm.setString(5, pessoa.getEmpresa());
+            pstm.setString(6, pessoa.getCargo());
+            pstm.setDate(7, new Date(pessoa.getDtRegistro().getTime()));
 
             //Qual o ID do registro que deseja atualizar? passando o id de pessoa para atualizar o registro
-            pstm.setInt(11, pessoa.getIdPessoa());
+            pstm.setInt(8, pessoa.getIdPessoa());
 
             //Executa a Query
             pstm.execute();
