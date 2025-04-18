@@ -17,7 +17,6 @@ import javafx.scene.layout.Pane;
 
 import javax.swing.*;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -43,8 +42,6 @@ public class FXMLCadastroUserController implements Initializable {
     private RadioButton rb_operador;
     @FXML
     private TextField textFieldCPF;
-    @FXML
-    private TextField textFieldDtNascimento;
     @FXML
     private TextField textFieldEmail;
     @FXML
@@ -75,15 +72,6 @@ public class FXMLCadastroUserController implements Initializable {
     }
 
     @FXML
-    void tfDataKeyReleased(KeyEvent event) {
-        TextFieldFormatter tff = new TextFieldFormatter();
-        tff.setMask("##/##/####");
-        tff.setCaracteresValidos("0123456789");
-        tff.setTf(textFieldDtNascimento);
-        tff.formatter();
-    }
-
-    @FXML
     void textFieldTelefoneOnKeyReleased(KeyEvent event) {
         TextFieldFormatter tff = new TextFieldFormatter();
         tff.setMask("(##)#####-####");
@@ -102,7 +90,6 @@ public class FXMLCadastroUserController implements Initializable {
                         !textFieldUsername.getText().isEmpty() &&
                         !textFieldTelefone.getText().isEmpty() &&
                         !textFieldCPF.getText().isEmpty() &&
-                        !textFieldDtNascimento.getText().isEmpty() &&
                         !passFieldSenha.getText().isEmpty() &&
                         !passFieldConfirmSenha.getText().isEmpty() &&
                         (rb_admin.isSelected() || rb_gerente.isSelected() || rb_operador.isSelected())
@@ -133,7 +120,6 @@ public class FXMLCadastroUserController implements Initializable {
                                     if (opcao == 0) {
                                         usuario.setNome(textFieldNome.getText());
                                         usuario.setCPF(textFieldCPF.getText());
-                                        usuario.setDtNascimento(LocalDate.parse(textFieldDtNascimento.getText(), format));
                                         usuario.setEmail(textFieldEmail.getText());
                                         usuario.setTelefone(textFieldTelefone.getText());
 
@@ -153,7 +139,6 @@ public class FXMLCadastroUserController implements Initializable {
                                         textFieldNome.setText(null);
                                         textFieldUsername.setText(null);
                                         textFieldCPF.setText(null);
-                                        textFieldDtNascimento.setText(null);
                                         textFieldEmail.setText(null);
                                         textFieldTelefone.setText(null);
                                         passFieldSenha.setText(null);
@@ -208,7 +193,6 @@ public class FXMLCadastroUserController implements Initializable {
         textFieldNome.setText(null);
         textFieldUsername.setText(null);
         textFieldCPF.setText(null);
-        textFieldDtNascimento.setText(null);
         textFieldEmail.setText(null);
         textFieldTelefone.setText(null);
         passFieldSenha.setText(null);
