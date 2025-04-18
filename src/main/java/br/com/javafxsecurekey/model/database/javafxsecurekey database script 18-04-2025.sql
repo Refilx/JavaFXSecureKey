@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `javafxsecurekey`.`chaves` (
   `possuiReserva` VARCHAR(3) NOT NULL,
   PRIMARY KEY (`idChave`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `javafxsecurekey`.`pessoa` (
   UNIQUE INDEX `cpf` (`cpf` ASC) VISIBLE,
   UNIQUE INDEX `email` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `javafxsecurekey`.`historico` (
     FOREIGN KEY (`idPessoa`)
     REFERENCES `javafxsecurekey`.`pessoa` (`idPessoa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 13
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `javafxsecurekey`.`usuario` (
     FOREIGN KEY (`idPessoa`)
     REFERENCES `javafxsecurekey`.`pessoa` (`idPessoa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `javafxsecurekey`.`log` (
     FOREIGN KEY (`idUsuario`)
     REFERENCES `javafxsecurekey`.`usuario` (`idUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
