@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="br.com.javafxsecurekey.view.screens.FXMLUsuariosCadastradosScreen"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLUsuariosCadastradosController">
+   <children>
+      <TableView fx:id="tvUsuariosCadastrados" fixedCellSize="50.0" layoutX="7.0" layoutY="69.0" prefHeight="675.0" prefWidth="986.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
+         <columns>
+            <TableColumn fx:id="tc_username" editable="false" prefWidth="233.60000324249268" resizable="false" sortable="false" text="NOME DO USUÁRIO" />
+            <TableColumn fx:id="tc_role" editable="false" prefWidth="141.59999084472656" sortable="false" text="NÍVEL DE USUÁRIO" />
+            <TableColumn fx:id="tc_email" editable="false" prefWidth="333.60003662109375" resizable="false" sortable="false" text="EMAIL" />
+            <TableColumn fx:id="tc_empresa" editable="false" minWidth="0.0" prefWidth="160.0" resizable="false" sortable="false" text="EMPRESA" />
+            <TableColumn fx:id="tc_cargo" editable="false" minWidth="0.0" prefWidth="116.800048828125" resizable="false" sortable="false" text="CARGO" />
+         </columns>
+      </TableView>
+      <Label layoutX="380.0" layoutY="14.0" text="Usuários Cadastrados">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfPesquisa" layoutX="708.0" layoutY="14.0" prefHeight="41.0" prefWidth="256.0" promptText="Pesquisa..." style="-fx-background-radius: 10;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+         <effect>
+            <InnerShadow height="7.0" radius="3.0" width="7.0" />
+         </effect>
+      </TextField>
+      <ImageView fitHeight="61.0" fitWidth="53.0" layoutX="656.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imgs/lupa-s-fundo.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

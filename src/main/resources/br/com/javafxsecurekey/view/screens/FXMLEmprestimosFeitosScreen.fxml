@@ -1,14 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="br.com.javafxsecurekey.view.screens.FXMLEmprestimosFeitosScreen"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLEmprestimosFeitosController">
+   <children>
+      <TableView fx:id="tvHistEmprestimo" fixedCellSize="50.0" layoutX="7.0" layoutY="69.0" prefHeight="615.0" prefWidth="986.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
+         <columns>
+            <TableColumn fx:id="tc_numChave" editable="false" prefWidth="103.99999618530273" resizable="false" sortable="false" text="NUM. DA CHAVE" />
+            <TableColumn fx:id="tc_nomeSolicitante" editable="false" prefWidth="220.80003356933594" sortable="false" text="NOME DO SOLICITANTE" />
+            <TableColumn fx:id="tc_observacoes" editable="false" prefWidth="248.0" resizable="false" sortable="false" text="OBSERVAÇÕES" />
+            <TableColumn fx:id="tc_status" editable="false" prefWidth="129.5999755859375" resizable="false" sortable="false" text="STATUS" />
+            <TableColumn fx:id="tc_dataAbertura" editable="false" prefWidth="147.19989013671875" resizable="false" sortable="false" text="DATA ABERTURA" />
+            <TableColumn fx:id="tc_dataFechamento" editable="false" prefWidth="135.2000732421875" resizable="false" sortable="false" text="DATA FECHAMENTO" />
+         </columns>
+      </TableView>
+      <Label layoutX="380.0" layoutY="14.0" text="Empréstimos Feitos">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfPesquisa" layoutX="708.0" layoutY="14.0" prefHeight="41.0" prefWidth="256.0" promptText="Pesquisa..." style="-fx-background-radius: 10;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+         <effect>
+            <InnerShadow height="7.0" radius="3.0" width="7.0" />
+         </effect>
+      </TextField>
+      <ImageView fitHeight="61.0" fitWidth="53.0" layoutX="656.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imgs/lupa-s-fundo.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnCadastrar" disable="true" layoutX="731.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#btnCadastrarMouseClicked" prefHeight="52.0" prefWidth="227.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Registrar Devolução" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow height="20.0" offsetY="5.0" radius="8.25" width="15.0" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <MenuButton fx:id="GPMenu" alignment="CENTER" focusTraversable="false" layoutX="395.0" layoutY="687.0" mnemonicParsing="false" popupSide="TOP" prefHeight="41.0" prefWidth="246.0" style="-fx-background-radius: 16; -fx-background-color: #c8cbd4;" text="Exportar Dados" textAlignment="CENTER" textFill="#1e3a8a">
+         <items>
+            <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: transparent;">
+               <content>
+                  <VBox prefHeight="145.0" prefWidth="210.0" spacing="20.0">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#exportToPDF" prefHeight="55.0" prefWidth="190.0" style="-fx-background-radius: 16; -fx-background-color: #e44a4a;" text="PDF" textAlignment="RIGHT" textFill="#1e3a8a">
+                           <font>
+                              <Font name="Arial Bold" size="26.0" />
+                           </font>
+                           <effect>
+                              <DropShadow offsetY="6.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../imgs/formato-PDF-s-fundo.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onMouseClicked="#exportToEXCEL" prefHeight="55.0" prefWidth="190.0" style="-fx-background-radius: 16; -fx-background-color: #4ef74b;" text="EXCEL" textAlignment="RIGHT" textFill="#1e3a8a">
+                           <font>
+                              <Font name="Arial Bold" size="26.0" />
+                           </font>
+                           <effect>
+                              <DropShadow offsetY="6.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="55.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../imgs/formato-EXCEL-s-fundo.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </SeparatorMenuItem>
+         </items>
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow height="20.0" offsetY="5.0" radius="8.25" width="15.0" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="39.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/exportar-dados-s-fundo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </MenuButton>
+   </children>
+</Pane>
