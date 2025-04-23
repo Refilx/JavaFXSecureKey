@@ -153,11 +153,7 @@
                   <Font name="Arial Bold" size="26.0" />
                </font>
                <effect>
-                  <DropShadow offsetY="6.0">
-                     <input>
-                        <InnerShadow />
-                     </input>
-                  </DropShadow>
+                  <DropShadow offsetY="6.0" />
                </effect>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
@@ -251,11 +247,7 @@
                   <Font name="Arial Bold" size="26.0" />
                </font>
                <effect>
-                  <DropShadow offsetY="6.0">
-                     <input>
-                        <InnerShadow />
-                     </input>
-                  </DropShadow>
+                  <DropShadow offsetY="6.0" />
                </effect>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -377,11 +369,7 @@
                   <Insets left="15.0" />
                </VBox.margin>
                <effect>
-                  <DropShadow offsetY="6.0">
-                     <input>
-                        <InnerShadow />
-                     </input>
-                  </DropShadow>
+                  <DropShadow offsetY="6.0" />
                </effect>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -399,11 +387,7 @@
                   <Font name="Arial Bold" size="26.0" />
                </font>
                <effect>
-                  <DropShadow offsetY="6.0">
-                     <input>
-                        <InnerShadow />
-                     </input>
-                  </DropShadow>
+                  <DropShadow offsetY="6.0" />
                </effect>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true">
