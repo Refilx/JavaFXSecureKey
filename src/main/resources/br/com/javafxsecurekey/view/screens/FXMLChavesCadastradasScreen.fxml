@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="br.com.javafxsecurekey.view.screens.FXMLChavesCadastradasScreen"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLChavesCadastradasController">
+   <children>
+      <TableView fx:id="tvChavesCadastradas" fixedCellSize="50.0" layoutX="7.0" layoutY="69.0" prefHeight="675.0" prefWidth="986.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
+         <columns>
+            <TableColumn fx:id="tc_numChave" editable="false" prefWidth="103.99999618530273" resizable="false" sortable="false" text="NUM. DA CHAVE" />
+            <TableColumn fx:id="tc_nomeSala" prefWidth="220.80003356933594" sortable="false" text="NOME DA SALA" />
+            <TableColumn fx:id="tc_bloco" editable="false" prefWidth="191.99990844726562" resizable="false" sortable="false" text="BLOCO/PRÉDIO" />
+            <TableColumn fx:id="tc_observacoes" editable="false" prefWidth="157.5999755859375" resizable="false" sortable="false" text="OBSERVAÇÕES" />
+            <TableColumn fx:id="tc_quantidade" editable="false" prefWidth="86.4000244140625" resizable="false" sortable="false" text="QUANTIDADE" />
+            <TableColumn fx:id="tc_status" editable="false" prefWidth="129.5999755859375" resizable="false" sortable="false" text="STATUS" />
+            <TableColumn fx:id="tc_temReserva" editable="false" prefWidth="94.4000244140625" resizable="false" sortable="false" text="TEM RESERVA?" />
+         </columns>
+      </TableView>
+      <Label layoutX="380.0" layoutY="14.0" text="Chaves Cadastradas">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfPesquisa" layoutX="708.0" layoutY="14.0" prefHeight="41.0" prefWidth="256.0" promptText="Pesquisa..." style="-fx-background-radius: 10;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+         <effect>
+            <InnerShadow height="7.0" radius="3.0" width="7.0" />
+         </effect>
+      </TextField>
+      <ImageView fitHeight="61.0" fitWidth="53.0" layoutX="656.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imgs/lupa-s-fundo.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
