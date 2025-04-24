@@ -26,6 +26,7 @@ package br.com.javafxsecurekey.model.dao;
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.domain.Chave;
 import br.com.javafxsecurekey.model.domain.Historico;
+import br.com.javafxsecurekey.model.util.Arvore;
 import javafx.scene.control.Alert;
 
 import javax.swing.*;
@@ -182,6 +183,85 @@ public class ChaveDAO {
         }
 
         return listaChave;
+    }
+
+    //O método executa o READ no banco de dados
+    public static Arvore<Chave> getChaveEmArvore() {
+
+        String sql = "SELECT * FROM chaves";
+
+        Arvore<Chave> arvoreChave = new Arvore<>();
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        // Classe que vai recuperar os dados do banco.  *** SELECT ***
+        ResultSet rset = null;
+
+        try{
+            //Cria a conexão com o banco de dados
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //Criamos uma PreparedStatement para executar uma query
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            //Enquanto houver um próximo dado para ser armazenado pelo ResultSet, os comandos serão executados
+            while(rset.next()){
+                Chave chave = new Chave();
+
+                //Recupera o id da chave
+                chave.setIdChave(rset.getInt("idChave"));
+
+                //Recupera o número da chave
+                chave.setNumeroChave(rset.getInt("numeroChave"));
+
+                //Recupera a sala da chave
+                chave.setSala(rset.getString("sala"));
+
+                //Recupera o Bloco/Predio que pertence a chave
+                chave.setBloco(rset.getString("bloco_predio"));
+
+                //Recupera as observações da chave
+                chave.setObservacoes(rset.getString("observacoes"));
+
+                //Recupera a quantidade da respectiva chave
+                chave.setQuantChave(rset.getInt("quantChave"));
+
+                //Recupera o status da chave
+                chave.setStatus(rset.getString("status"));
+
+                //Recupera o possuiReserva da chave
+                chave.setPossuiReserva(rset.getString("possuiReserva"));
+
+                //Adiciona a chave com todos os dados registrados à lista de chaves
+                arvoreChave.adicionar(chave);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+
+            try{
+                //Fecha as conexões que foram abertas com o banco de dados
+                if(rset!=null){
+                    rset.close();
+                }
+
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return arvoreChave;
     }
 
     /**
