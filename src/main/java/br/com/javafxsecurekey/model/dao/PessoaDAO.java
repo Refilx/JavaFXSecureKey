@@ -30,7 +30,9 @@ import javafx.scene.control.Alert;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Essa Classe faz a manipulação dos dados sobre pessoas com o banco de dados
@@ -190,13 +192,13 @@ public class PessoaDAO {
     }
 
     /**
-     * O método executa o SELECT no banco de dados e armazena os dados em árvore
+     * O método executa o SELECT no banco de dados e armazena os dados de Map
      */
-    public static Arvore<Pessoa> getPessoaEmArvore(){
+    public static Map<Integer, Pessoa> getMapPessoa(){
 
         String sql = "SELECT * FROM pessoa";
 
-        Arvore<Pessoa> arvorePessoa = new Arvore<>();
+        Map<Integer, Pessoa> mapPessoa = new HashMap<>();
 
         Connection conn = null;
 
@@ -243,7 +245,7 @@ public class PessoaDAO {
                 pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
 
                 //Adiciona a Pessoa com todos os dados registrados à lista de Pessoas
-                arvorePessoa.adicionar(pessoa);
+                mapPessoa.putIfAbsent(pessoa.getIdPessoa(), pessoa);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -267,7 +269,7 @@ public class PessoaDAO {
             }
         }
 
-        return arvorePessoa;
+        return mapPessoa;
     }
 
     /**

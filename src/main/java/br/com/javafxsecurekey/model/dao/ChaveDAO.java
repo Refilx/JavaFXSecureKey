@@ -33,7 +33,9 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Essa Classe faz a manipulação dos dados sobre chaves com o banco de dados
@@ -186,11 +188,11 @@ public class ChaveDAO {
     }
 
     //O método executa o READ no banco de dados
-    public static Arvore<Chave> getChaveEmArvore() {
+    public static Map<Integer, Chave> getMapChave() {
 
         String sql = "SELECT * FROM chaves";
 
-        Arvore<Chave> arvoreChave = new Arvore<>();
+        Map<Integer, Chave> mapChave = new HashMap<>();
 
         Connection conn = null;
 
@@ -237,7 +239,7 @@ public class ChaveDAO {
                 chave.setPossuiReserva(rset.getString("possuiReserva"));
 
                 //Adiciona a chave com todos os dados registrados à lista de chaves
-                arvoreChave.adicionar(chave);
+                mapChave.putIfAbsent(chave.getIdChave(), chave);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -261,7 +263,7 @@ public class ChaveDAO {
             }
         }
 
-        return arvoreChave;
+        return mapChave;
     }
 
     /**

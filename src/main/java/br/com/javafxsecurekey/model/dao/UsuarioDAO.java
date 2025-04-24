@@ -34,8 +34,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Essa Classe faz a manipulação dos dados sobre usuários com o banco de dados
@@ -190,13 +192,13 @@ public class UsuarioDAO {
     }
 
     /**
-     * O método executa o SELECT no banco de dados e armazena os dados em árvore
+     * O método executa o SELECT no banco de dados e armazena os dados de Map
      */
-    public Arvore<Usuario> getUsuarioEmArvore(){
+    public Map<Integer, Usuario> getMapUsuario(){
 
         String sql = "SELECT * FROM usuario";
 
-        Arvore<Usuario> arvoreUsuario = new Arvore<>();
+        Map<Integer, Usuario> mapUsuario = new HashMap<>();
 
         Connection conn = null;
 
@@ -237,7 +239,7 @@ public class UsuarioDAO {
                 usuario.setDtRegistro(rset.getTimestamp("dtRegistro"));
 
                 //Adiciona o Usuário com todos os dados registrados à lista de Usuários
-                arvoreUsuario.adicionar(usuario);
+                mapUsuario.putIfAbsent(usuario.getIdUsuario(), usuario);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -261,7 +263,7 @@ public class UsuarioDAO {
             }
         }
 
-        return arvoreUsuario;
+        return mapUsuario;
     }
 
     /**

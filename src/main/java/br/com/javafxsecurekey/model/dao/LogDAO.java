@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Essa Classe faz a manipulação dos dados sobre o login de usuários com o banco de dados
@@ -182,12 +184,12 @@ public class LogDAO {
     }
 
 
-    //O método executa o READ no banco de dados  e armazena os dados em árvore
-    public Arvore<Log> getLogsEmArvore() {
+    //O método executa o READ no banco de dados  e armazena os dados de Map
+    public Map<Integer, Log> getMapLogs() {
         String sql = "SELECT L.*, U.username, U.role FROM log L JOIN usuario U ON(L.idUsuario = U.idUsuario)"; //Verificar se vai dar certo
 
         //Lista que armazenará os dados de logs
-        Arvore<Log> arvoreLog = new Arvore<>();
+        Map<Integer, Log> mapLog = new HashMap<>();
 
         Connection conn = null;
 
@@ -228,7 +230,7 @@ public class LogDAO {
                 log.setDtLogout(rset.getTimestamp("dtLogout"));
 
                 //Adiciona a log com todos os dados registrados à lista de chaves
-                arvoreLog.adicionar(log);
+                mapLog.putIfAbsent(log.getIdLog(), log);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -252,7 +254,7 @@ public class LogDAO {
             }
         }
 
-        return arvoreLog;
+        return mapLog;
     }
 
     /**

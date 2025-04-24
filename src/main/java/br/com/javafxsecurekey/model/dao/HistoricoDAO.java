@@ -33,7 +33,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Essa Classe faz a manipulação dos dados sobre o histórico de emprestimo de chaves com o banco de dados
@@ -294,14 +296,14 @@ public class HistoricoDAO {
     }
 
     /**
-     * Armazena os dados do histórico do banco de dados em uma estrutura de árvore
+     * Armazena os dados do histórico do banco de dados em uma estrutura de Map
      * @return
      */
-    public Arvore<Historico> getHistoricoEmArvore(){
+    public Map<Integer, Historico> getMapHistorico(){
 
         String sql = "SELECT * FROM consulta_historico";
 
-        Arvore<Historico> arvoreHistorico = new Arvore<>();
+        Map<Integer, Historico> mapHistorico = new HashMap<>();
 
         Connection conn = null;
 
@@ -353,7 +355,7 @@ public class HistoricoDAO {
                 historico.setDataFechamento(rset.getTimestamp("dataFechamento"));
 
                 //
-                arvoreHistorico.adicionar(historico);
+                mapHistorico.putIfAbsent(historico.getIdHistorico(), historico);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -377,7 +379,7 @@ public class HistoricoDAO {
                 e.printStackTrace();
             }
         }
-        return arvoreHistorico;
+        return mapHistorico;
     }
 
     /**
