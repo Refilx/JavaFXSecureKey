@@ -2,6 +2,7 @@ package br.com.javafxsecurekey.model.dao;
 
 import br.com.javafxsecurekey.model.domain.Log;
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
+import br.com.javafxsecurekey.model.util.Arvore;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -178,6 +179,80 @@ public class LogDAO {
         }
 
         return listaLogs;
+    }
+
+
+    //O método executa o READ no banco de dados  e armazena os dados em árvore
+    public Arvore<Log> getLogsEmArvore() {
+        String sql = "SELECT L.*, U.username, U.role FROM log L JOIN usuario U ON(L.idUsuario = U.idUsuario)"; //Verificar se vai dar certo
+
+        //Lista que armazenará os dados de logs
+        Arvore<Log> arvoreLog = new Arvore<>();
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        // Classe que vai recuperar os dados do banco.  *** SELECT ***
+        ResultSet rset = null;
+
+        try{
+            //Cria a conexão com o banco de dados
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //Criamos uma PreparedStatement para executar uma query
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            //Enquanto houver um próximo dado para ser armazenado pelo ResultSet, os comandos serão executados
+            while(rset.next()){
+                Log log = new Log();
+
+                //Recupera o idLogs da log
+                log.setIdLog(rset.getInt("idLog"));
+
+                //Recupera o idUser da log
+                log.setIdUsuario(rset.getInt("idUsuario"));
+
+                //Recupera o username da consulta
+                log.setUsername(rset.getString("username"));
+
+                // Recupera a role do usuário da consulta
+                log.setRole(rset.getString("role"));
+
+                //Recupera a data do login
+                log.setDtLogin(rset.getTimestamp("dtLogin"));
+
+                //Recupera a data do logout
+                log.setDtLogout(rset.getTimestamp("dtLogout"));
+
+                //Adiciona a log com todos os dados registrados à lista de chaves
+                arvoreLog.adicionar(log);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+
+            try{
+                //Fecha as conexões que foram abertas com o banco de dados
+                if(rset!=null){
+                    rset.close();
+                }
+
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return arvoreLog;
     }
 
     /**
