@@ -25,6 +25,7 @@ package br.com.javafxsecurekey.model.dao;
 
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.domain.Pessoa;
+import br.com.javafxsecurekey.model.util.Arvore;
 import javafx.scene.control.Alert;
 
 import javax.swing.*;
@@ -186,6 +187,87 @@ public class PessoaDAO {
         }
 
         return listaPessoa;
+    }
+
+    /**
+     * O método executa o SELECT no banco de dados e armazena os dados em árvore
+     */
+    public static Arvore<Pessoa> getPessoaEmArvore(){
+
+        String sql = "SELECT * FROM pessoa";
+
+        Arvore<Pessoa> arvorePessoa = new Arvore<>();
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        // Classe que vai recuperar os dados do banco.  *** SELECT ***
+        ResultSet rset = null;
+
+        try{
+            //Cria a conexão com o banco de dados
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //Criamos uma PreparedStatement para executar uma query
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            //Enquanto houver um próximo dado para ser armazenado pelo ResultSet, os comandos serão executados
+            while(rset.next()){
+                Pessoa pessoa = new Pessoa();
+
+                //Recupera o id da Pessoa
+                pessoa.setIdPessoa(rset.getInt("idPessoa"));
+
+                //Recupera o nome da Pessoa
+                pessoa.setNome(rset.getString("nome"));
+
+                //Recupera o cpf da Pessoa
+                pessoa.setCPF(rset.getString("cpf"));
+
+                //Recupera o email da Pessoa
+                pessoa.setEmail(rset.getString("email"));
+
+                //Recupera o telefone da Pessoa
+                pessoa.setTelefone(rset.getString("telefone"));
+
+                //Recupera o empresa da Pessoa
+                pessoa.setEmpresa(rset.getString("empresa"));
+
+                //Recupera o cargo da Pessoa
+                pessoa.setCargo(rset.getString("cargo"));
+
+                //Recupera o data de registro da Pessoa
+                pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
+
+                //Adiciona a Pessoa com todos os dados registrados à lista de Pessoas
+                arvorePessoa.adicionar(pessoa);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+
+            try{
+                //Fecha as conexões que foram abertas com o banco de dados
+                if(rset!=null){
+                    rset.close();
+                }
+
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return arvorePessoa;
     }
 
     /**
