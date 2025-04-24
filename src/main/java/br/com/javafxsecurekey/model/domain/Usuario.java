@@ -29,9 +29,9 @@ import java.sql.Timestamp;
  * Essa é a Classe model de Usuário, contendo todos os atributos e métodos sobre Usuário
  * @author Bruno Sousa da Silva
  */
-public class Usuario extends Pessoa{
+public class Usuario extends Pessoa {
 
-    private int IdUsuario;
+    private int idUsuario;
     private String username;
     private String password;
     private String role;
@@ -39,11 +39,11 @@ public class Usuario extends Pessoa{
     private String status;
 
     public void setIdUsuario(int idUsuario) {
-        IdUsuario = idUsuario;
+        this.idUsuario = idUsuario;
     }
 
     public int getIdUsuario() {
-        return IdUsuario;
+        return idUsuario;
     }
 
     public void setUsername(String username) {

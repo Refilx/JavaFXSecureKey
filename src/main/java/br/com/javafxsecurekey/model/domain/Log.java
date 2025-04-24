@@ -29,29 +29,29 @@ import java.sql.Timestamp;
  * Essa é a Classe model de Login, contendo todos os atributos e métodos sobre Login
  * @author Bruno Sousa da Silva
  */
-public class Log {
+public class Log implements Comparable<Log> {
 
-    private int IdLog;
-    private int IdUsuario;
+    private int idLog;
+    private int idUsuario;
     private String username;
     private String role;
     private Timestamp DtLogin;
     private Timestamp DtLogout;
 
     public int getIdLog() {
-        return IdLog;
+        return idLog;
     }
 
     public void setIdLog(int idLog) {
-        IdLog = idLog;
+        this.idLog = idLog;
     }
 
     public void setIdUsuario(int idUsuario) {
-        IdUsuario = idUsuario;
+        this.idUsuario = idUsuario;
     }
 
     public int getIdUsuario() {
-        return IdUsuario;
+        return idUsuario;
     }
 
     public void setUsername(String nome) {
@@ -84,5 +84,24 @@ public class Log {
 
     public Timestamp getDtLogout() {
         return DtLogout;
+    }
+
+    /**
+     * O metodo compareTo permite organizar os elementos na estrutura de arvore
+     * @param l the object to be compared.
+     * @return -1, 1 ou 0 dependendo de é maior, menor ou igual ao elemento comparado
+     */
+    @Override
+    public int compareTo(Log l) {
+        if(idLog < l.idLog)
+        {
+            return -1;
+        }
+        else if(idLog > l.idLog)
+        {
+            return 1;
+        }
+        else
+            return 0;
     }
 }

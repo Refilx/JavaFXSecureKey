@@ -29,7 +29,7 @@ import java.sql.Timestamp;
  * Essa é a Classe model do histórico de empréstimo de chaves, contendo todos os atributos e métodos sobre o histórico de empréstimo de chaves
  * @author Bruno Sousa da Silva
  */
-public class Historico {
+public class Historico implements Comparable<Historico> {
 
     private int idHistorico;
     private String nome; //Guarda o valor apenas na aplicação
@@ -120,5 +120,24 @@ public class Historico {
 
     public Timestamp getDataFechamento() {
         return dataFechamento;
+    }
+
+    /**
+     * O metodo compareTo permite organizar os elementos na estrutura de arvore
+     * @param h the object to be compared.
+     * @return -1, 1 ou 0 dependendo de é maior, menor ou igual ao elemento comparado
+     */
+    @Override
+    public int compareTo(Historico h) {
+        if(idHistorico < h.idHistorico)
+        {
+            return -1;
+        }
+        else if(idHistorico > h.idHistorico)
+        {
+            return 1;
+        }
+        else
+            return 0;
     }
 }

@@ -27,7 +27,7 @@ package br.com.javafxsecurekey.model.domain;
  * Essa é a Classe model de chaves, contendo todos os atributos e métodos sobre chaves
  * @author Bruno Sousa da Silva
  */
-public class Chave{
+public class Chave implements Comparable<Chave> {
 
     private int idChave;
     private int numeroChave;
@@ -100,5 +100,24 @@ public class Chave{
 
     public String getPossuiReserva() {
         return possuiReserva;
+    }
+
+    /**
+     * O metodo compareTo permite organizar os elementos na estrutura de arvore
+     * @param c the object to be compared.
+     * @return -1, 1 ou 0 dependendo de é maior, menor ou igual ao elemento comparado
+     */
+    @Override
+    public int compareTo(Chave c) {
+        if(idChave < c.idChave)
+        {
+            return -1;
+        }
+        else if(idChave > c.idChave)
+        {
+            return 1;
+        }
+        else
+            return 0;
     }
 }

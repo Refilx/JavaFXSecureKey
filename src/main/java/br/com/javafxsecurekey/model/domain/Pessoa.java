@@ -29,7 +29,7 @@ import java.sql.Timestamp;
  * Essa é a Classe model de Pessoa, contendo todos os atributos e métodos sobre Pessoa
  * @author Bruno Sousa da Silva
  */
-public class Pessoa {
+public class Pessoa implements Comparable<Pessoa> {
 
     private int idPessoa;
     private String nome;
@@ -102,5 +102,24 @@ public class Pessoa {
 
     public Timestamp getDtRegistro() {
         return dtRegistro;
+    }
+
+    /**
+     * O metodo compareTo permite organizar os elementos na estrutura de arvore
+     * @param p the object to be compared.
+     * @return -1, 1 ou 0 dependendo de é maior, menor ou igual ao elemento comparado
+     */
+    @Override
+    public int compareTo(Pessoa p) {
+        if(this.idPessoa < p.idPessoa)
+        {
+            return -1;
+        }
+        else if(this.idPessoa > p.idPessoa)
+        {
+            return 1;
+        }
+        else
+            return 0;
     }
 }
