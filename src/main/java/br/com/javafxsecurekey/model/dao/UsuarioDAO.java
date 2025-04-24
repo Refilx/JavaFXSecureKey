@@ -25,6 +25,7 @@ package br.com.javafxsecurekey.model.dao;
 
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.domain.Usuario;
+import br.com.javafxsecurekey.model.util.Arvore;
 import javafx.scene.control.Alert;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
@@ -189,13 +190,13 @@ public class UsuarioDAO {
     }
 
     /**
-     * O método executa o SELECT na View da tabela Usuário banco de dados
+     * O método executa o SELECT no banco de dados e armazena os dados em árvore
      */
-    public List<Usuario> getUserlist(){
+    public Arvore<Usuario> getUsuarioEmArvore(){
 
-        String sql = "SELECT * FROM usuario_list";
+        String sql = "SELECT * FROM usuario";
 
-        List<Usuario> listaUsuario = new LinkedList<>();
+        Arvore<Usuario> arvoreUsuario = new Arvore<>();
 
         Connection conn = null;
 
@@ -217,20 +218,26 @@ public class UsuarioDAO {
             while(rset.next()){
                 Usuario usuario = new Usuario();
 
+                //Recupera o idUser do usuário no banco de dados
+                usuario.setIdUsuario(rset.getInt("idUsuario"));
+
+                //Recupera o idPessoa do usuário no banco de dados
+                usuario.setIdPessoa(rset.getInt("idPessoa"));
+
                 //Recupera o username do usuário no banco de dados
                 usuario.setUsername(rset.getString("username"));
+
+                //Recupera a password do usuário no banco de dados
+                usuario.setPassword(rset.getString("password"));
 
                 //Recupera a role do usuário no banco de dados
                 usuario.setRole(rset.getString("role"));
 
-                //Recupera o telefone do usuário no banco de dados
-                usuario.setTelefone(rset.getString("telefone"));
-
-                //Recupera o telefone do usuário no banco de dados
-                usuario.setEmail(rset.getString("email"));
+                //Recupera a data de registro do usuário no banco de dados
+                usuario.setDtRegistro(rset.getTimestamp("dtRegistro"));
 
                 //Adiciona o Usuário com todos os dados registrados à lista de Usuários
-                listaUsuario.add(usuario);
+                arvoreUsuario.adicionar(usuario);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -254,7 +261,7 @@ public class UsuarioDAO {
             }
         }
 
-        return listaUsuario;
+        return arvoreUsuario;
     }
 
     /**
