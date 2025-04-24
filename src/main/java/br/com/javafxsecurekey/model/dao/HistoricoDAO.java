@@ -25,6 +25,7 @@ package br.com.javafxsecurekey.model.dao;
 
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.domain.Historico;
+import br.com.javafxsecurekey.model.util.Arvore;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -290,6 +291,93 @@ public class HistoricoDAO {
             }
         }
         return listaHistorico;
+    }
+
+    /**
+     * Armazena os dados do histórico do banco de dados em uma estrutura de árvore
+     * @return
+     */
+    public Arvore<Historico> getHistoricoEmArvore(){
+
+        String sql = "SELECT * FROM consulta_historico";
+
+        Arvore<Historico> arvoreHistorico = new Arvore<>();
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try{
+            //
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //
+            pstm = conn.prepareStatement(sql);
+
+            //
+            rset = pstm.executeQuery();
+
+            //
+            while(rset.next()){
+
+                //
+                Historico historico = new Historico();
+
+                //
+                historico.setIdHistorico(rset.getInt("idHistorico"));
+
+                //
+                historico.setIdChave(rset.getInt("idChave"));
+
+                //
+                historico.setNumeroChave(rset.getInt("numerochave"));
+
+                //
+                historico.setNome(rset.getString("nome"));
+
+                //
+                historico.setCargo(rset.getString("cargo"));
+
+                //
+                historico.setObservacoes(rset.getString("observacoes"));
+
+                //
+                historico.setStatus(rset.getString("status"));
+
+                //
+                historico.setDataAbertura(rset.getTimestamp("dataAbertura"));
+
+                //
+                historico.setDataFechamento(rset.getTimestamp("dataFechamento"));
+
+                //
+                arvoreHistorico.adicionar(historico);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+
+            try{
+                //
+                if(rset!=null){
+                    rset.close();
+                }
+
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return arvoreHistorico;
     }
 
     /**
