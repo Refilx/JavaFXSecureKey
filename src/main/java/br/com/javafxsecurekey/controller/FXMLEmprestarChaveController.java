@@ -1,7 +1,6 @@
 package br.com.javafxsecurekey.controller;
 
 import br.com.javafxsecurekey.model.dao.ChaveDAO;
-import br.com.javafxsecurekey.model.dao.HistoricoDAO;
 import br.com.javafxsecurekey.model.dao.PessoaDAO;
 import br.com.javafxsecurekey.model.domain.Chave;
 import br.com.javafxsecurekey.model.domain.Historico;
@@ -17,7 +16,9 @@ import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class FXMLEmprestarChaveController implements Initializable {
@@ -42,11 +43,11 @@ public class FXMLEmprestarChaveController implements Initializable {
     private Pessoa pessoaEscolhida = new Pessoa();
     private Chave chaveEscolhida = new Chave();
 
-    private LinkedList<Pessoa> listPessoas = new LinkedList<>();
-    private LinkedList<Chave> listChaves = new LinkedList<>();
+    private Map<Integer, Pessoa> mapPessoas = new HashMap<>();
+    private Map<Integer, Chave> mapChaves = new HashMap<>();
 
-    LinkedList<String> nomeCPF = new LinkedList<>();
-    LinkedList<String> numChave = new LinkedList<>();
+    Map<String, Integer> mapLvPessoaValues = new HashMap<>();
+    Map<String, Integer> mapLvChaveValues = new HashMap<>();
 
     private ObservableList<String> obsPessoas;
     private ObservableList<String> obsChaves;
@@ -116,19 +117,19 @@ public class FXMLEmprestarChaveController implements Initializable {
 
     private void carregarDados() {
         // Listas principais recebem os dados do banco
-        listPessoas = PessoaDAO.getPessoa();
-        listChaves = ChaveDAO.getChave();
+        mapPessoas = PessoaDAO.getMapPessoa();
+        mapChaves = ChaveDAO.getMapChave();
 
         // Passando alguns dados específicos para listas auxiliares que exibirão os dados na ListView
-        for(Pessoa p : listPessoas)
-            nomeCPF.add(p.getNome()+" - "+p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)); // formatando a exibição dos dados: Nome da pessoa + CPF: 000.***.***-00
+        for(Map.Entry<Integer, Pessoa> mapEntry : mapPessoas.entrySet())
+            mapLvPessoaValues.putIfAbsent(mapEntry.getValue().getNome()+" - "+mapEntry.getValue().getCPF().substring(0, 3)+".***.***-"+mapEntry.getValue().getCPF().substring(12, 14), mapEntry.getKey()); // formatando a exibição dos dados: Nome da pessoa + CPF: 000.***.***-00
 
-        for(Chave c : listChaves)
-            numChave.add("Chave: "+c.getNumeroChave()+" - Sala: "+c.getSala());
+        for(Map.Entry<Integer, Chave> mapEntry : mapChaves.entrySet())
+            mapLvChaveValues.putIfAbsent("Chave: "+mapEntry.getValue().getNumeroChave()+" - Sala: "+mapEntry.getValue().getSala(), mapEntry.getKey());
 
         // Carregamos as listas auxiliares com os dados exibíveis
-        obsPessoas = FXCollections.observableArrayList(nomeCPF);
-        obsChaves = FXCollections.observableArrayList(numChave);
+        obsPessoas = FXCollections.observableArrayList(mapLvPessoaValues.keySet());
+        obsChaves = FXCollections.observableArrayList(mapLvChaveValues.keySet());
 
         // FilteredLists para filtragem dinâmica
         FilteredList<String> filteredPessoas = new FilteredList<>(obsPessoas, p -> true);
@@ -160,14 +161,17 @@ public class FXMLEmprestarChaveController implements Initializable {
         lvSolicitante.setOnMouseClicked(e -> {
             String selected = lvSolicitante.getSelectionModel().getSelectedItem();
 
-            for(Pessoa p : listPessoas) // Procurando o item na lista, se for encontrado, armazenamos os dados da pessoa escolhida
-            {
-                if((p.getNome()+" - "+p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)).equals(selected)) // Comparando a formatação do item da vez com o item selecionado
-                {
-                    pessoaEscolhida = p;
-                    break;
-                }
-            }
+//            for(Pessoa p : mapPessoas) // Procurando o item na lista, se for encontrado, armazenamos os dados da pessoa escolhida
+//            {
+//                if((p.getNome()+" - "+p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)).equals(selected)) // Comparando a formatação do item da vez com o item selecionado
+//                {
+//                    pessoaEscolhida = p;
+//                    break;
+//                }
+//            }
+
+            // Os dados da pessoa Escolhida está na mapPessoas, mas a chave da mapPessoas é o valor que está na mapLvPessoaValues e o selected (valor selecionado) é a chave da mapLvPessoaValues
+            pessoaEscolhida = mapPessoas.get(mapLvPessoaValues.get(selected));
 
             if (selected != null) {
                 tfSolicitante.setText(selected); // TextField
@@ -179,14 +183,17 @@ public class FXMLEmprestarChaveController implements Initializable {
         lvNumChave.setOnMouseClicked(e -> {
             String selected = lvNumChave.getSelectionModel().getSelectedItem();
 
-            for(Chave c : listChaves) // Procurando o item na lista, se for encontrado, armazenamos os dados da chave escolhida
-            {
-                if(("Chave: "+c.getNumeroChave()+" - Sala: "+c.getSala()).equals(selected))
-                {
-                    chaveEscolhida = c;
-                    break;
-                }
-            }
+//            for(Map.Entry<Integer, Chave> mapEntry : mapChaves.entrySet()) // Procurando o item na lista, se for encontrado, armazenamos os dados da chave escolhida
+//            {
+//                if(("Chave: "+mapEntry.getValue().getNumeroChave()+" - Sala: "+mapEntry.getValue().getSala()).equals(selected))
+//                {
+//                    chaveEscolhida = mapEntry.getValue();
+//                    break;
+//                }
+//            }
+
+            // Os dados da chave Escolhida está na mapChaves, mas a chave da mapChaves é o valor que está na mapLvChaveValues e o selected (valor selecionado) é a chave da mapLvChaveValues
+            chaveEscolhida = mapChaves.get(mapLvChaveValues.get(selected));
 
             if (selected != null) {
                 tfNumChave.setText(selected); // TextField
