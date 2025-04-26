@@ -87,7 +87,7 @@ public class UsuarioDAO {
             pstm.setString(1, usuario.getUsername());
             pstm.setString(2, senhaCriptografada);
             pstm.setString(3, usuario.getRole());
-            pstm.setDate(4, new Date(usuario.getDtRegistro().getTime()));
+            pstm.setDate(4, new Date(System.currentTimeMillis()));
             pstm.setInt(5, usuario.getIdPessoa());
 
             //Executa a Query
@@ -194,9 +194,11 @@ public class UsuarioDAO {
     /**
      * O método executa o SELECT no banco de dados e armazena os dados de Map
      */
-    public Map<Integer, Usuario> getMapUsuario(){
+    public static Map<Integer, Usuario> getMapUsuario(){
 
-        String sql = "SELECT * FROM usuario";
+        String sql = "SELECT P.email, P.cargo, P.empresa, U.* FROM usuario U" +
+                "\nJOIN pessoa P ON (P.idPessoa = U.idPessoa)" +
+                "\nORDER BY idUsuario DESC;";
 
         Map<Integer, Usuario> mapUsuario = new HashMap<>();
 
@@ -228,6 +230,15 @@ public class UsuarioDAO {
 
                 //Recupera o username do usuário no banco de dados
                 usuario.setUsername(rset.getString("username"));
+
+                //Recupera o email do usuário no banco de dados
+                usuario.setEmail(rset.getString("email"));
+
+                //Recupera o nome da empresa do usuário no banco de dados
+                usuario.setEmpresa(rset.getString("empresa"));
+
+                //Recupera o nome do cargo do usuário no banco de dados
+                usuario.setCargo(rset.getString("cargo"));
 
                 //Recupera a password do usuário no banco de dados
                 usuario.setPassword(rset.getString("password"));

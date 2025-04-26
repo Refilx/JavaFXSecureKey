@@ -32,7 +32,7 @@ public class Chave implements Comparable<Chave> {
     private int idChave;
     private int numeroChave;
     private String sala;
-    private String bloco;
+    private String bloco_predio;
     private String observacoes;
     private int quantChave;
     private String status;
@@ -62,12 +62,12 @@ public class Chave implements Comparable<Chave> {
         return sala;
     }
 
-    public void setBloco(String bloco) {
-        this.bloco = bloco;
+    public void setBloco_predio(String bloco_predio) {
+        this.bloco_predio = bloco_predio;
     }
 
-    public String getBloco() {
-        return bloco;
+    public String getBloco_predio() {
+        return bloco_predio;
     }
 
     public String getObservacoes() {

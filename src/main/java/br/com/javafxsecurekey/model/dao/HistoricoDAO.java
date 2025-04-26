@@ -299,9 +299,9 @@ public class HistoricoDAO {
      * Armazena os dados do histórico do banco de dados em uma estrutura de Map
      * @return
      */
-    public Map<Integer, Historico> getMapHistorico(){
+    public static Map<Integer, Historico> getMapHistorico(){
 
-        String sql = "SELECT * FROM consulta_historico";
+        String sql = "SELECT * FROM consulta_histórico";
 
         Map<Integer, Historico> mapHistorico = new HashMap<>();
 
@@ -334,7 +334,7 @@ public class HistoricoDAO {
                 historico.setIdChave(rset.getInt("idChave"));
 
                 //
-                historico.setNumeroChave(rset.getInt("numerochave"));
+                historico.setNumeroChave(rset.getInt("numeroChave"));
 
                 //
                 historico.setNome(rset.getString("nome"));

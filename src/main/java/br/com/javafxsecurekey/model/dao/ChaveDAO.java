@@ -26,7 +26,6 @@ package br.com.javafxsecurekey.model.dao;
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.domain.Chave;
 import br.com.javafxsecurekey.model.domain.Historico;
-import br.com.javafxsecurekey.model.util.Arvore;
 import javafx.scene.control.Alert;
 
 import javax.swing.*;
@@ -80,7 +79,7 @@ public class ChaveDAO {
             pstm.setString(3, chave.getObservacoes());
             pstm.setInt(4, chave.getQuantChave());
             pstm.setString(5, chave.getStatus());
-            pstm.setString(6, chave.getBloco());
+            pstm.setString(6, chave.getBloco_predio());
             pstm.setString(7, chave.getPossuiReserva());
 
             //Executa a Query
@@ -145,7 +144,7 @@ public class ChaveDAO {
                 chave.setSala(rset.getString("sala"));
 
                 //Recupera o Bloco/Predio que pertence a chave
-                chave.setBloco(rset.getString("bloco_predio"));
+                chave.setBloco_predio(rset.getString("bloco_predio"));
 
                 //Recupera as observações da chave
                 chave.setObservacoes(rset.getString("observacoes"));
@@ -224,7 +223,7 @@ public class ChaveDAO {
                 chave.setSala(rset.getString("sala"));
 
                 //Recupera o Bloco/Predio que pertence a chave
-                chave.setBloco(rset.getString("bloco_predio"));
+                chave.setBloco_predio(rset.getString("bloco_predio"));
 
                 //Recupera as observações da chave
                 chave.setObservacoes(rset.getString("observacoes"));
@@ -290,7 +289,7 @@ public class ChaveDAO {
             pstm.setString(3, chave.getObservacoes());
             pstm.setInt(4, chave.getQuantChave());
             pstm.setString(5, chave.getStatus());
-            pstm.setString(6, chave.getBloco());
+            pstm.setString(6, chave.getBloco_predio());
             pstm.setString(7, chave.getPossuiReserva());
 
             //Qual o ID do registro que deseja atualizar?

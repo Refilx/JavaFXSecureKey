@@ -185,7 +185,7 @@ public class LogDAO {
 
 
     //O método executa o READ no banco de dados  e armazena os dados de Map
-    public Map<Integer, Log> getMapLogs() {
+    public static Map<Integer, Log> getMapLogs() {
         String sql = "SELECT L.*, U.username, U.role FROM log L JOIN usuario U ON(L.idUsuario = U.idUsuario)"; //Verificar se vai dar certo
 
         //Lista que armazenará os dados de logs
