@@ -17,16 +17,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLEmprestimosFeitosController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLEmprestimosFeitosController">
    <children>
-      <TableView fx:id="tvHistEmprestimo" fixedCellSize="50.0" layoutX="7.0" layoutY="69.0" prefHeight="615.0" prefWidth="986.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
+      <TableView fx:id="tvHistEmprestimo" fixedCellSize="50.0" layoutX="12.0" layoutY="69.0" prefHeight="615.0" prefWidth="1060.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
          <columns>
-            <TableColumn fx:id="tc_numChave" editable="false" prefWidth="103.99999618530273" resizable="false" sortable="false" text="NUM. DA CHAVE" />
-            <TableColumn fx:id="tc_nomeSolicitante" editable="false" prefWidth="220.80003356933594" sortable="false" text="NOME DO SOLICITANTE" />
-            <TableColumn fx:id="tc_observacoes" editable="false" prefWidth="248.0" resizable="false" sortable="false" text="OBSERVAÇÕES" />
-            <TableColumn fx:id="tc_status" editable="false" prefWidth="129.5999755859375" resizable="false" sortable="false" text="STATUS" />
-            <TableColumn fx:id="tc_dataAbertura" editable="false" prefWidth="147.19989013671875" resizable="false" sortable="false" text="DATA ABERTURA" />
-            <TableColumn fx:id="tc_dataFechamento" editable="false" prefWidth="135.2000732421875" resizable="false" sortable="false" text="DATA FECHAMENTO" />
+            <TableColumn fx:id="tc_numChave" editable="false" prefWidth="70.0" resizable="false" sortable="false" text="Nº CHAVE" />
+            <TableColumn fx:id="tc_nomeSolicitante" editable="false" prefWidth="176.0" sortable="false" text="NOME DO SOLICITANTE" />
+            <TableColumn fx:id="tc_cargo" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="CARGO" />
+            <TableColumn fx:id="tc_observacoes" editable="false" prefWidth="200.0" resizable="false" sortable="false" text="OBSERVAÇÕES" />
+            <TableColumn fx:id="tc_status" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="STATUS" />
+            <TableColumn fx:id="tc_dataAbertura" editable="false" prefWidth="180.0" resizable="false" sortType="DESCENDING" sortable="false" text="DATA ABERTURA" />
+            <TableColumn fx:id="tc_dataFechamento" editable="false" prefWidth="180.0" resizable="false" sortType="DESCENDING" sortable="false" text="DATA FECHAMENTO" />
          </columns>
       </TableView>
       <Label layoutX="380.0" layoutY="14.0" text="Empréstimos Feitos">
@@ -50,7 +51,7 @@
             <Image url="@../imgs/lupa-s-fundo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnCadastrar" disable="true" layoutX="731.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#btnCadastrarMouseClicked" prefHeight="52.0" prefWidth="227.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Registrar Devolução" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="btnCadastrar" disable="true" layoutX="731.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#btnDevolucaoMouseClicked" prefHeight="52.0" prefWidth="227.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Registrar Devolução" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
