@@ -11,7 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class FXMLHistLoginController implements Initializable {
@@ -32,7 +33,7 @@ public class FXMLHistLoginController implements Initializable {
     private TableView<?> tvHistLogin;
 
     private ObservableList observableList;
-    private LinkedList<Log> listaDeLogs = new LinkedList<>();
+    private Map<Integer, Log> mapLogs = new HashMap<>();
 
     void prepararListaTabela() {
         tc_login.setCellValueFactory(new PropertyValueFactory<>("dtLogin"));
@@ -41,10 +42,10 @@ public class FXMLHistLoginController implements Initializable {
         tc_username.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         // Pegando a lista de viagens do banco
-        listaDeLogs =  new LogDAO().getLogs();
+        mapLogs =  LogDAO.getMapLogs();
 
         // configurando o observable list com os dados da lista do banco
-        observableList = FXCollections.observableList(listaDeLogs);
+        observableList = FXCollections.observableArrayList(mapLogs.values());
 
         // Configurando a tabela após a pesquisa
         tvHistLogin.setItems(observableList);
