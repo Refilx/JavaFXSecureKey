@@ -1,6 +1,7 @@
 package br.com.javafxsecurekey.controller;
 
 import br.com.javafxsecurekey.model.aplication.FXMLLoginScreenAplication;
+import br.com.javafxsecurekey.model.aplication.FXMLNavigationPanelAplication;
 import br.com.javafxsecurekey.model.dao.UsuarioDAO;
 import br.com.javafxsecurekey.model.dao.VerifyDAO;
 import br.com.javafxsecurekey.model.domain.Usuario;
@@ -108,7 +109,11 @@ public class FXMLLoginScreenController implements Initializable {
             FXMLLoginScreenAplication loginScreen = new FXMLLoginScreenAplication();
 
             if (new VerifyDAO().verifySuperUser()) {
-                loginScreen.trocarDeTela(stageAtual, "/br/com/javafxsecurekey/view/screens/FXMLNavigationPanel.fxml");
+                stageAtual.close(); // fecha a tela de login
+
+                // Chama a tela de Navegação do usuário admininstrador
+                FXMLNavigationPanelAplication navPanel = new FXMLNavigationPanelAplication();
+                navPanel.start(new Stage());
             } else {
                 loginScreen.trocarDeTela(stageAtual, "/br/com/javafxsecurekey/view/screens/FXMLCommonUserNavigationPaneScreen.fxml");
             }
