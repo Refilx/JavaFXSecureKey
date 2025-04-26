@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
- */
 package br.com.javafxsecurekey.model.aplication;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -15,10 +12,10 @@ import java.io.IOException;
 
 /**
  *
- * @author revil
+ * @author Bruno Sousa da Silva
  */
 public class FXMLNavigationPanelAplication extends Application {
-    
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/javafxsecurekey/view/screens/FXMLNavigationPanel.fxml"));
@@ -28,7 +25,13 @@ public class FXMLNavigationPanelAplication extends Application {
 //        scene.getStylesheets().add(getClass().getResource("/br/com/javafxsecurekey/view/styles/dropdownbuttons.css").toExternalForm());
 
         stage.setScene(scene);
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setOnCloseRequest(event -> {
+            // Cancela o evento de fechamento
+            event.consume();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Por favor, utilize o botão de Sair para fechar o aplicativo!");
+            alert.showAndWait();
+        });
         stage.show();
     }
 

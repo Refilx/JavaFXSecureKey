@@ -8,16 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -28,8 +23,6 @@ import java.util.ResourceBundle;
 
 public class FXMLNavigationPanelController implements Initializable {
 
-    @FXML
-    private MenuButton ConfigMenu;
     @FXML
     private MenuButton GCMenu;
     @FXML
@@ -83,12 +76,6 @@ public class FXMLNavigationPanelController implements Initializable {
     }
 
     @FXML
-    void getConfiguracoesScreen(MouseEvent event) throws IOException {
-        loadPage("FXMLConfiguracoesScreen");
-        ConfigMenu.hide();
-    }
-
-    @FXML
     private void getDashboardScreen(MouseEvent event) {
         borderPane.setCenter(dashboardScreen);
     }
@@ -111,18 +98,6 @@ public class FXMLNavigationPanelController implements Initializable {
     }
 
     @FXML
-    void getPerfilScreen(MouseEvent event) throws IOException {
-        loadPage("FXMLPerfilScreen");
-        ConfigMenu.hide();
-    }
-
-    @FXML
-    void getSobreOSecureKeyScreen(MouseEvent event) throws IOException {
-        loadPage("FXMLSobreOSecureKeyScreen");
-        ConfigMenu.hide();
-    }
-
-    @FXML
     void getUsuariosCadastradosScreen(MouseEvent event) throws IOException {
         loadPage("FXMLUsuariosCadastradosScreen");
         GPMenu.hide();
@@ -130,8 +105,6 @@ public class FXMLNavigationPanelController implements Initializable {
 
     @FXML
     private void logout(MouseEvent event) throws IOException {
-        ConfigMenu.hide();
-
         // Forma de adicionar icone ( new ImageIcon(getClass().getResource("/br/com/javafxsecurekey/view/imgs/logout-door.png"), "logout") )
         // Adicionar o código acima no espaço para icon, OBS a imagem deve ser pequena para ficar arrumado no JOptionPane
         int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Confirmação",
@@ -142,7 +115,7 @@ public class FXMLNavigationPanelController implements Initializable {
             LogDAO logDAO = new LogDAO();
             logDAO.saveLogout(usuarioLogado);
 
-            Stage stageAtual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage stageAtual = (Stage) ((Node) btnSair).getScene().getWindow();
             stageAtual.close(); // fecha a tela de dashboard
 
             // Chama a tela de login e reinicia a aplicação

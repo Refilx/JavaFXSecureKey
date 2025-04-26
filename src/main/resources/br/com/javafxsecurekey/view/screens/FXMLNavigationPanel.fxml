@@ -20,121 +20,29 @@
 
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLNavigationPanelController">
    <left>
-      <VBox fx:id="vbox" prefHeight="750.0" prefWidth="420.0" spacing="20.0" style="-fx-background-color: #15CE52;" BorderPane.alignment="CENTER">
+      <VBox fx:id="vbox" prefHeight="750.0" prefWidth="392.0" spacing="20.0" style="-fx-background-color: #15CE52;" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="100.0" prefWidth="500.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <children>
-                  <ImageView fitHeight="108.0" fitWidth="420.0" layoutY="-4.0" pickOnBounds="true">
+                  <ImageView fitHeight="108.0" fitWidth="393.0" layoutY="-4.0" pickOnBounds="true">
                      <image>
                         <Image url="@../imgs/barra-de-fundo.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="labelUsername" layoutX="120.0" layoutY="25.0" prefHeight="30.0" prefWidth="229.0" text="Username.usuário" textFill="#1e3a8a">
+                  <Label fx:id="labelUsername" layoutX="102.0" layoutY="25.0" prefHeight="30.0" prefWidth="223.0" text="Username.usuário" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial Bold" size="25.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelRole" layoutX="120.0" layoutY="49.0" prefHeight="23.0" prefWidth="220.0" text="cargo" textFill="#1e3a8a">
+                  <Label fx:id="labelRole" layoutX="104.0" layoutY="49.0" prefHeight="23.0" prefWidth="220.0" text="cargo" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>
                   </Label>
                   <Circle fx:id="imgCircle" fill="DODGERBLUE" layoutX="50.0" layoutY="50.0" radius="44.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                  <MenuButton fx:id="ConfigMenu" alignment="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="346.0" layoutY="23.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="37.0" style="-fx-background-radius: 50; -fx-background-color: transparent;" textAlignment="CENTER" textFill="#1e3a8a">
-                     <items>
-                        <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: transparent;">
-                           <content>
-                              <VBox prefHeight="320.0" prefWidth="360.0" spacing="20.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" onMouseClicked="#getPerfilScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF; -fx-border-width: 10; -fx-border-color: #000000;" text="Perfil" textAlignment="RIGHT" textFill="#1e3a8a">
-                                       <font>
-                                          <Font name="Arial Bold" size="26.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <graphic>
-                                          <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../imgs/perfil-editar-s-fundo.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button mnemonicParsing="false" onMouseClicked="#getConfiguracoesScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Configurações" textAlignment="RIGHT" textFill="#1e3a8a">
-                                       <font>
-                                          <Font name="Arial Bold" size="26.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <graphic>
-                                          <ImageView fitHeight="40.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../imgs/configuracao.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button mnemonicParsing="false" onMouseClicked="#getSobreOSecureKeyScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Sobre o Secure Key" textAlignment="RIGHT" textFill="#1e3a8a">
-                                       <font>
-                                          <Font name="Arial Bold" size="26.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../imgs/informacoes-s-fundo.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                    <Button fx:id="btnSair1" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #EF4444;" text="Sair" textAlignment="RIGHT" textFill="WHITE">
-                                       <font>
-                                          <Font name="Arial Bold" size="26.0" />
-                                       </font>
-                                       <effect>
-                                          <DropShadow offsetY="6.0">
-                                             <input>
-                                                <InnerShadow />
-                                             </input>
-                                          </DropShadow>
-                                       </effect>
-                                       <graphic>
-                                          <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../imgs/logout-door.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                 </children>
-                              </VBox>
-                           </content>
-                        </SeparatorMenuItem>
-                     </items>
-                     <font>
-                        <Font name="Arial Bold" size="1.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="64.0" pickOnBounds="true">
-                           <image>
-                              <Image url="@../imgs/configuracao.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </MenuButton>
                </children>
             </Pane>
             <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
@@ -401,6 +309,27 @@
                </cursor>
                <VBox.margin>
                   <Insets left="15.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnSair" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="55.0" prefWidth="150.0" style="-fx-background-radius: 16; -fx-background-color: #EF4444;" text="Sair" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0" />
+               </effect>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/logout-door.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="120.0" top="90.0" />
                </VBox.margin>
             </Button>
          </children>
