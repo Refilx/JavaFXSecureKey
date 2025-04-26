@@ -85,7 +85,7 @@ public class FXMLCadastroUserController implements Initializable {
                     // Se o botão sim for apertado, cadastramos o novo usuário
                     if (opcao == 0) {
 
-                        usuario.setIdUsuario(pessoaEscolhida.getIdPessoa());
+                        usuario.setIdPessoa(pessoaEscolhida.getIdPessoa());
                         usuario.setUsername(textFieldUsername.getText());
                         usuario.setPassword(passFieldSenha.getText());
                         if (rb_operador.isSelected())
@@ -99,10 +99,7 @@ public class FXMLCadastroUserController implements Initializable {
 
                         if(UsuarioDAO.getResult())
                         {
-                            textFieldSelecionaPessoa.setText(null);
-                            textFieldUsername.setText(null);
-                            passFieldSenha.setText(null);
-                            passFieldConfirmSenha.setText(null);
+                            btnCancelarMouseClicked(null);
                             UsuarioDAO.setDefaultResult();
                         }
                     }

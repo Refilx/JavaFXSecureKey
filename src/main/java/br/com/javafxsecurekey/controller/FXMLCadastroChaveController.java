@@ -75,7 +75,7 @@ public class FXMLCadastroChaveController implements Initializable {
 
             if(conseguiu) {
                 chave.setSala(tfNomeSala.getText());
-                chave.setBloco(tfBloco.getText());
+                chave.setBloco_predio(tfBloco.getText());
                 chave.setObservacoes(taDescricao.getText());
 
                 if (rb_sim.isSelected()) {
