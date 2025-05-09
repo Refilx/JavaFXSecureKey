@@ -7,6 +7,7 @@ module br.com.javafxsecurekey {
     requires javax.mail;
     requires com.jfoenix;
     requires javafx.controls;
+    requires org.apache.poi.ooxml;
     requires java.desktop;
 
 
