@@ -36,8 +36,8 @@ public class FXMLHistLoginController implements Initializable {
     private Map<Integer, Log> mapLogs = new HashMap<>();
 
     void prepararListaTabela() {
-        tc_login.setCellValueFactory(new PropertyValueFactory<>("dtLogin"));
-        tc_logout.setCellValueFactory(new PropertyValueFactory<>("dtLogout"));
+        tc_login.setCellValueFactory(new PropertyValueFactory<>("dtLoginFormated"));
+        tc_logout.setCellValueFactory(new PropertyValueFactory<>("dtLogoutFormated"));
         tc_role.setCellValueFactory(new PropertyValueFactory<>("role"));
         tc_username.setCellValueFactory(new PropertyValueFactory<>("username"));
 

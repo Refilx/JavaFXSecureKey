@@ -4,6 +4,7 @@ import br.com.javafxsecurekey.model.dao.UsuarioDAO;
 import br.com.javafxsecurekey.model.domain.Usuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -31,10 +32,11 @@ public class FXMLUsuariosCadastradosController implements Initializable {
     @FXML
     private TextField tfPesquisa;
     @FXML
-    private TableView<?> tvUsuariosCadastrados;
+    private TableView<Usuario> tvUsuariosCadastrados;
 
-    private ObservableList observableList;
+    private ObservableList observableMap;
     private Map<Integer, Usuario> mapUsuarios = new HashMap<>();
+    private FilteredList<Usuario> filteredData;
 
     void prepararListaTabela() {
         tc_username.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -47,10 +49,40 @@ public class FXMLUsuariosCadastradosController implements Initializable {
         mapUsuarios = UsuarioDAO.getMapUsuario();
 
         // configurando o observable list com os dados da lista do banco
-        observableList = FXCollections.observableArrayList(mapUsuarios.values());
+        observableMap = FXCollections.observableArrayList(mapUsuarios.values());
+
+        // Criando a filtered list com os dados
+        filteredData = new FilteredList<>(observableMap, p -> true);
 
         // Configurando a tabela após a pesquisa
-        tvUsuariosCadastrados.setItems(observableList);
+        tvUsuariosCadastrados.setItems(filteredData);
+
+        // Agora vamos colocar o listener no TextField
+        tfPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(usuario -> {
+                // Se o campo de filtro estiver vazio, exibe todos
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Adapte os campos conforme os atributos da sua classe Historico
+                if (usuario.getUsername().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (usuario.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (usuario.getCargo().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (usuario.getEmpresa().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (usuario.getRole().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false; // Não corresponde ao filtro
+            });
+        });
     }
 
     @Override
