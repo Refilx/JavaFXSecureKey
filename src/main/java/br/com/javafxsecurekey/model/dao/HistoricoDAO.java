@@ -32,6 +32,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -209,93 +210,6 @@ public class HistoricoDAO {
     }
 
     /**
-     *
-     * @return
-     */
-    public List<Historico> getHistorico(){
-
-        String sql = "SELECT * FROM consulta_historico";
-
-        List<Historico> listaHistorico = new ArrayList<Historico>();
-
-        Connection conn = null;
-
-        PreparedStatement pstm = null;
-
-        ResultSet rset = null;
-
-        try{
-            //
-            conn = ConnectionFactory.createConnectionToMySQL();
-
-            //
-            pstm = conn.prepareStatement(sql);
-
-            //
-            rset = pstm.executeQuery();
-
-            //
-            while(rset.next()){
-
-                //
-                Historico historico = new Historico();
-
-                //
-                historico.setIdHistorico(rset.getInt("idHistorico"));
-
-                //
-                historico.setIdChave(rset.getInt("idChave"));
-
-                //
-                historico.setNumeroChave(rset.getInt("numerochave"));
-
-                //
-                historico.setNome(rset.getString("nome"));
-
-                //
-                historico.setCargo(rset.getString("cargo"));
-
-                //
-                historico.setObservacoes(rset.getString("observacoes"));
-
-                //
-                historico.setStatus(rset.getString("status"));
-
-                //
-                historico.setDataAbertura(rset.getTimestamp("dataAbertura"));
-
-                //
-                historico.setDataFechamento(rset.getTimestamp("dataFechamento"));
-
-                //
-                listaHistorico.add(historico);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-
-            try{
-                //
-                if(rset!=null){
-                    rset.close();
-                }
-
-                if(pstm!=null){
-                    pstm.close();
-                }
-
-                if(conn!=null){
-                    conn.close();
-                }
-
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-        return listaHistorico;
-    }
-
-    /**
      * Armazena os dados do histórico do banco de dados em uma estrutura de Map
      * @return
      */
@@ -348,10 +262,10 @@ public class HistoricoDAO {
                 //
                 historico.setStatus(rset.getString("status"));
 
-                //
+                // "dd/MM/yyyy HH:mm:ss"
                 historico.setDataAbertura(rset.getTimestamp("dataAbertura"));
 
-                //
+                // "dd/MM/yyyy HH:mm:ss"
                 historico.setDataFechamento(rset.getTimestamp("dataFechamento"));
 
                 //
