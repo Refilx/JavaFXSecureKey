@@ -24,6 +24,8 @@
 package br.com.javafxsecurekey.model.domain;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Essa é a Classe model do histórico de empréstimo de chaves, contendo todos os atributos e métodos sobre o histórico de empréstimo de chaves
@@ -114,12 +116,23 @@ public class Historico implements Comparable<Historico> {
         return dataAbertura;
     }
 
+    public String getDataAberturaFormated() {
+        return dataAbertura.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss"));
+    }
+
     public void setDataFechamento(Timestamp dataFechamento) {
         this.dataFechamento = dataFechamento;
     }
 
     public Timestamp getDataFechamento() {
         return dataFechamento;
+    }
+
+    public String getDataFechamentoFormated() {
+        if(dataFechamento != null)
+            return dataFechamento.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss"));
+        else
+            return null;
     }
 
     /**

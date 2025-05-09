@@ -24,6 +24,7 @@
 package br.com.javafxsecurekey.model.domain;
 
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Essa é a Classe model de Login, contendo todos os atributos e métodos sobre Login
@@ -35,8 +36,8 @@ public class Log implements Comparable<Log> {
     private int idUsuario;
     private String username;
     private String role;
-    private Timestamp DtLogin;
-    private Timestamp DtLogout;
+    private Timestamp dtLogin;
+    private Timestamp dtLogout;
 
     public int getIdLog() {
         return idLog;
@@ -71,19 +72,30 @@ public class Log implements Comparable<Log> {
     }
 
     public void setDtLogin(Timestamp dtLogin) {
-        DtLogin = dtLogin;
+        this.dtLogin = dtLogin;
     }
 
     public Timestamp getDtLogin() {
-        return DtLogin;
+        return dtLogin;
+    }
+
+    public String getDtLoginFormated() {
+        return dtLogin.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss"));
     }
 
     public void setDtLogout(Timestamp dtLogout) {
-        DtLogout = dtLogout;
+        this.dtLogout = dtLogout;
     }
 
     public Timestamp getDtLogout() {
-        return DtLogout;
+        return dtLogout;
+    }
+
+    public String getDtLogoutFormated() {
+        if(dtLogout != null)
+            return dtLogout.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss"));
+        else
+            return null;
     }
 
     /**
