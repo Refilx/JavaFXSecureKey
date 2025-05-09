@@ -17,7 +17,6 @@ import javafx.scene.layout.Pane;
 
 import javax.swing.*;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class FXMLCadastroPessoaController implements Initializable {

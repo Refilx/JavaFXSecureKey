@@ -4,10 +4,12 @@ import br.com.javafxsecurekey.model.dao.ChaveDAO;
 import br.com.javafxsecurekey.model.domain.Chave;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -32,11 +34,13 @@ public class FXMLChavesCadastradasController implements Initializable {
     @FXML
     private TableColumn<?, ?> tc_temReserva;
     @FXML
-    private TableView<?> tvChavesCadastradas;
+    private TableView<Chave> tvChavesCadastradas;
+    @FXML
+    private TextField tfPesquisa;
 
-
-    private ObservableList observableList;
+    private ObservableList observableMap;
     private Map<Integer, Chave> mapEmprestimos = new HashMap<>();
+    private FilteredList<Chave> filteredData;
 
     void prepararListaTabela() {
         tc_numChave.setCellValueFactory(new PropertyValueFactory<>("numeroChave"));
@@ -51,10 +55,44 @@ public class FXMLChavesCadastradasController implements Initializable {
         mapEmprestimos =  ChaveDAO.getMapChave();
 
         // configurando o observable list com os dados da lista do banco
-        observableList = FXCollections.observableArrayList(mapEmprestimos.values());
+        observableMap = FXCollections.observableArrayList(mapEmprestimos.values());
+
+        // Criando a filtered list com os dados
+        filteredData = new FilteredList<>(observableMap, p -> true);
 
         // Configurando a tabela após a pesquisa
-        tvChavesCadastradas.setItems(observableList);
+        tvChavesCadastradas.setItems(filteredData);
+
+        // Agora vamos colocar o listener no TextField
+        tfPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(chave -> {
+                // Se o campo de filtro estiver vazio, exibe todos
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Adapte os campos conforme os atributos da sua classe Historico
+                if (String.valueOf(chave.getNumeroChave()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (chave.getSala().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (chave.getBloco_predio().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (chave.getObservacoes().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (chave.getStatus().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(chave.getQuantChave()).contains(lowerCaseFilter)) {
+                    return true;
+                } else if (chave.getPossuiReserva().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false; // Não corresponde ao filtro
+            });
+        });
     }
 
     @Override
