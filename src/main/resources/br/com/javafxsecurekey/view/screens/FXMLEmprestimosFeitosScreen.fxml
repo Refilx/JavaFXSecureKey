@@ -129,5 +129,23 @@
             </ImageView>
          </graphic>
       </MenuButton>
+      <Button fx:id="btnPesquisaAvancada" layoutX="108.0" layoutY="688.0" mnemonicParsing="false" onMouseClicked="#btnPesquisaAvancadaOnMouseClicked" prefHeight="50.0" prefWidth="262.0" style="-fx-background-color: #c8cbd4; -fx-background-radius: 16;" text="Pesquisa Avançada" textAlignment="CENTER" textFill="#1e3a8a">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow height="20.0" offsetY="5.0" radius="8.25" width="15.0" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/lupa-s-fundo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>
