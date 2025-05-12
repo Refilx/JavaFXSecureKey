@@ -9,6 +9,7 @@ module br.com.javafxsecurekey {
     requires javafx.controls;
     requires org.apache.poi.ooxml;
     requires java.desktop;
+    requires mysql.connector.java;
 
 
     opens br.com.javafxsecurekey.view.screens to javafx.fxml;

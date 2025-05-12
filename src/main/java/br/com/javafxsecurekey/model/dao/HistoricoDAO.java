@@ -26,12 +26,10 @@ package br.com.javafxsecurekey.model.dao;
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.domain.Historico;
 import br.com.javafxsecurekey.model.util.Arvore;
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -215,7 +213,7 @@ public class HistoricoDAO {
      */
     public static Map<Integer, Historico> getMapHistorico(){
 
-        String sql = "SELECT * FROM consulta_histórico";
+        String sql = "SELECT * FROM historico_diario";
 
         Map<Integer, Historico> mapHistorico = new HashMap<>();
 
@@ -442,4 +440,144 @@ public class HistoricoDAO {
         return mesesList;
     }
 
+
+    /**
+     *
+     * @return
+     */
+    public static Map<String, String> getMapMeses(){
+        String sql = "SELECT * FROM lista_meses";
+
+        Map<String, String> mapMeses = new HashMap<>();
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try{
+            //
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //
+            pstm = conn.prepareStatement(sql);
+
+            //
+            rset = pstm.executeQuery();
+
+            //
+            while(rset.next()){
+
+                //
+                String dataFormatada = rset.getString("ano_mes");
+
+                // 2025-08
+                mapMeses.putIfAbsent(dataFormatada.substring(5,7)+"/"+dataFormatada.substring(0,4), dataFormatada);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+
+            try{
+                //
+                if(rset!=null){
+                    rset.close();
+                }
+
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return mapMeses;
+    }
+
+    /**
+     *
+     * @param data
+     * @return
+     */
+    public static Map<Integer, Historico> getMapMesPesquisado(String data) throws SQLException {
+
+        String sql = "SELECT H.idHistorico, H.idChave, H.idPessoa, H.observacoes, H.status, H.dataAbertura, H.dataFechamento, C.numeroChave, P.nome, P.cargo\n" +
+                     "FROM historico H\n" +
+                     "JOIN chaves C ON (H.idChave = C.idChave)\n" +
+                     "JOIN pessoa P ON (H.idPessoa = P.idPessoa)\n"+
+                     "WHERE DATE_FORMAT(dataAbertura, '%Y-%m') = ?";
+
+        Map<Integer, Historico> mapDadosPesquisados = new HashMap<>();
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try{
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, data);
+
+            rset = pstm.executeQuery();
+
+            while(rset.next()) {
+
+                //
+                Historico historico = new Historico();
+
+                //
+                historico.setIdHistorico(rset.getInt("idHistorico"));
+
+                //
+                historico.setIdChave(rset.getInt("idChave"));
+
+                //
+                historico.setNumeroChave(rset.getInt("numeroChave"));
+
+                //
+                historico.setNome(rset.getString("nome"));
+
+                //
+                historico.setCargo(rset.getString("cargo"));
+
+                //
+                historico.setObservacoes(rset.getString("observacoes"));
+
+                //
+                historico.setStatus(rset.getString("status"));
+
+                // "dd/MM/yyyy HH:mm:ss"
+                historico.setDataAbertura(rset.getTimestamp("dataAbertura"));
+
+                // "dd/MM/yyyy HH:mm:ss"
+                historico.setDataFechamento(rset.getTimestamp("dataFechamento"));
+
+                //
+                mapDadosPesquisados.putIfAbsent(historico.getIdHistorico(), historico);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if(conn != null)
+                conn.close();
+
+            if(pstm != null)
+                pstm.close();
+
+            if(rset != null)
+                rset.close();
+        }
+
+        return  mapDadosPesquisados;
+    }
 }

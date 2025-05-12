@@ -485,7 +485,7 @@ public class ChaveDAO {
      * Verificar usabilidade desse método de devolução e do método de updateDataFechamento do HistoricoDAO
      * @param historico
      */
-    public void devolverChave(Historico historico){
+    public static void devolverChave(Historico historico){
 
         String sqlUpdate = "UPDATE chaves SET quantChave = quantChave + 1, status = 'DISPONÍVEL' WHERE idChave = ?";
 
