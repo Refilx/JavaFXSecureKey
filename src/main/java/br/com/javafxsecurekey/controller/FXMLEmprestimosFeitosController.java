@@ -1,5 +1,6 @@
 package br.com.javafxsecurekey.controller;
 
+import br.com.javafxsecurekey.model.dao.ChaveDAO;
 import br.com.javafxsecurekey.model.dao.HistoricoDAO;
 import br.com.javafxsecurekey.model.domain.Historico;
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
@@ -8,14 +9,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -23,6 +25,8 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -57,13 +61,34 @@ public class FXMLEmprestimosFeitosController implements Initializable {
     private TextField tfPesquisa;
     @FXML
     private TableView<Historico> tvHistEmprestimo;
+    @FXML
+    private Button btnPesquisaAvancada;
+
+    // Pesquisa Avançada Screen
+//    @FXML
+//    private Button btnCancelar;
+//    @FXML
+//    private Button btnPesquisar;
+//    @FXML
+//    private ListView<String> lvMeses;
+//    @FXML
+//    private TextField tfData;
+
+    private static boolean carregarDados = true;
 
     private Historico dadosDoHistoricoEscolhido = new Historico();
     private ObservableList observableMap;
-    private Map<Integer, Historico> mapEmprestimos = new HashMap<>();
+    //private ObservableList observableMapDadosPesquisados;
+    private static Map<Integer, Historico> mapEmprestimos = new HashMap<>();
+    //private Map<String, String> mapMeses = new HashMap<>();
     private FilteredList<Historico> filteredData;
+    //private FilteredList<String> filteredMesesPesquisados;
 
-    void prepararListaTabela() {
+    public static void setMapEmprestimos(Map<Integer, Historico> map) {
+        mapEmprestimos = map;
+    }
+
+    void prepararListaTabela(Map<Integer, Historico> map) {
         tc_numChave.setCellValueFactory(new PropertyValueFactory<>("numeroChave"));
         tc_nomeSolicitante.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tc_cargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
@@ -73,7 +98,7 @@ public class FXMLEmprestimosFeitosController implements Initializable {
         tc_dataFechamento.setCellValueFactory(new PropertyValueFactory<>("dataFechamentoFormated"));
 
         // Pegando a lista de viagens do banco
-        mapEmprestimos =  HistoricoDAO.getMapHistorico();
+        mapEmprestimos =  map;
 
         // configurando o observable list com os dados da lista do banco
         observableMap = FXCollections.observableArrayList(mapEmprestimos.values());
@@ -118,7 +143,9 @@ public class FXMLEmprestimosFeitosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        prepararListaTabela();
+        mapEmprestimos = HistoricoDAO.getMapHistorico();
+
+        prepararListaTabela(mapEmprestimos);
     }
 
     @FXML
@@ -130,8 +157,20 @@ public class FXMLEmprestimosFeitosController implements Initializable {
     void btnDevolucaoMouseClicked(MouseEvent event) {
         dadosDoHistoricoEscolhido = tvHistEmprestimo.getSelectionModel().getSelectedItem();
 
-        if(dadosDoHistoricoEscolhido != null) {
+        int opcao = JOptionPane.showOptionDialog(null, "Deseja mesmo devolver essa chave?", "Confirmação",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Sim","Não"}, null);
+
+        //Testa se o campo dataFechamento está vazio e a opcao foi Sim
+        if(dadosDoHistoricoEscolhido.getDataFechamento() == null && opcao == 0) {
             //
+            ChaveDAO.devolverChave(dadosDoHistoricoEscolhido);
+
+            mapEmprestimos = HistoricoDAO.getMapHistorico();
+
+            prepararListaTabela(mapEmprestimos);
+
+        } else if(dadosDoHistoricoEscolhido.getDataFechamento() != null && opcao == 0) {
+            JOptionPane.showMessageDialog(null, "A chave já foi devolvida");
         }
     }
 
@@ -177,6 +216,25 @@ public class FXMLEmprestimosFeitosController implements Initializable {
         JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
         jasperViewer.setVisible(true);
 
+    }
+
+    @FXML
+    void btnPesquisaAvancadaOnMouseClicked(MouseEvent event) throws IOException {
+        // Carrega o FXML do pop-up
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/javafxsecurekey/view/screens/FXMLPesquisaAvancadaScreen.fxml"));
+        Parent popupRoot = loader.load();
+
+        // Cria um novo Stage para o pop-up
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);  // Modalidade que bloqueia todas as janelas ate a pop up ser fechada
+        popupStage.setResizable(false);  // Impede redimensionamento
+
+        // Define a cena e exibe
+        Scene popupScene = new Scene(popupRoot);
+        popupStage.setScene(popupScene);
+        popupStage.showAndWait();  // Aguarda até o pop-up ser fechado
+
+        prepararListaTabela(mapEmprestimos);
     }
 
 }
