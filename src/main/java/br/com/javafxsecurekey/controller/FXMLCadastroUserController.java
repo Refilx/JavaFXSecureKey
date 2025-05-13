@@ -39,9 +39,7 @@ public class FXMLCadastroUserController implements Initializable {
     @FXML
     private RadioButton rb_admin;
     @FXML
-    private RadioButton rb_gerente;
-    @FXML
-    private RadioButton rb_operador;
+    private RadioButton rb_usuario_comum;
     @FXML
     private TextField textFieldSelecionaPessoa;
     @FXML
@@ -70,7 +68,7 @@ public class FXMLCadastroUserController implements Initializable {
                 !textFieldUsername.getText().isEmpty() &&
                 !passFieldSenha.getText().isEmpty() &&
                 !passFieldConfirmSenha.getText().isEmpty() &&
-                (rb_admin.isSelected() || rb_gerente.isSelected() || rb_operador.isSelected())
+                (rb_admin.isSelected() || rb_usuario_comum.isSelected())
         ) {
             // Verifica se o campo senha e comfimação de senha são iguais
             if(passFieldSenha.getText().equals(passFieldConfirmSenha.getText())) {
@@ -88,10 +86,8 @@ public class FXMLCadastroUserController implements Initializable {
                         usuario.setIdPessoa(pessoaEscolhida.getIdPessoa());
                         usuario.setUsername(textFieldUsername.getText());
                         usuario.setPassword(passFieldSenha.getText());
-                        if (rb_operador.isSelected())
-                            usuario.setRole("Operador");
-                        else if (rb_gerente.isSelected())
-                            usuario.setRole("Gerente");
+                        if (rb_usuario_comum.isSelected())
+                            usuario.setRole("Usuario Comum");
                         else if (rb_admin.isSelected())
                             usuario.setRole("Administrador");
 
@@ -134,8 +130,7 @@ public class FXMLCadastroUserController implements Initializable {
         passFieldSenha.setText(null);
         passFieldConfirmSenha.setText(null);
         rb_admin.setSelected(false);
-        rb_gerente.setSelected(false);
-        rb_operador.setSelected(false);
+        rb_usuario_comum.setSelected(false);
     }
 
     @FXML
