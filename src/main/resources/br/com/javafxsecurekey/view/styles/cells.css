@@ -1,6 +1,6 @@
 .table-view .cell {
     -fx-font-size: 16px; /* Tamanho do texto */
-    -fx-padding: 10px;   /* Espaçamento dentro da célula */
+    /*-fx-padding: 10px;   /* Espaçamento dentro da célula */
 }
 
 .status-em-vigor {

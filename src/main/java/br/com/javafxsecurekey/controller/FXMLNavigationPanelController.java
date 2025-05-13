@@ -1,7 +1,9 @@
 package br.com.javafxsecurekey.controller;
 
 import br.com.javafxsecurekey.model.aplication.FXMLLoginScreenAplication;
+import br.com.javafxsecurekey.model.dao.ChaveDAO;
 import br.com.javafxsecurekey.model.dao.LogDAO;
+import br.com.javafxsecurekey.model.domain.Chave;
 import br.com.javafxsecurekey.model.domain.Log;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +11,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -44,9 +48,9 @@ public class FXMLNavigationPanelController implements Initializable {
     @FXML
     private VBox vbox;
     @FXML
-    private TextField textFieldDestinoPopular;
+    private TextField tfChaveRequisitadaMes;
     @FXML
-    private TextField textFieldQuantidadeVendidaMes;
+    private TextField tfSalaMaisAcessada;
 
     private LogDAO logDoUsuario = new LogDAO();
     private Log usuarioLogado;
@@ -138,7 +142,12 @@ public class FXMLNavigationPanelController implements Initializable {
         labelRole.setText(usuarioLogado.getRole());
         labelUsername.setText(usuarioLogado.getUsername());
 
-//            Image img = new Image(getClass().getResource("/br/com/javafxsecurekey/view/imgs/lucas.jpg").toExternalForm(), false);
+        Chave c = ChaveDAO.getChaveSalaPopular();
+
+        tfChaveRequisitadaMes.setText(""+c.getNumeroChave());
+        tfSalaMaisAcessada.setText(c.getSala());
+
+//            Image img = new Image(getClass().getResource("/br/com/javafxsecurekey/view/imgs/").toExternalForm(), false);
 //            imgCircle.setFill(new ImagePattern(img));
 
     }
