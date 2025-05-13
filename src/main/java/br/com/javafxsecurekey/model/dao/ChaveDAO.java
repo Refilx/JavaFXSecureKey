@@ -364,43 +364,46 @@ public class ChaveDAO {
      *
      * @param idChave
      */
-    public void updateStatusChave(int idChave){
+    public static void updateStatusChave(int idChave){
 
-        String sql = "UPDATE chaves SET status = 'INDISPONÍVEL' WHERE idChave = ? AND quantChave = 0;";
+        if(VerifyDAO.verifyQuantIndisponivel(idChave)) {
 
-        Connection conn = null;
+            String sql = "UPDATE chaves SET status = 'INDISPONÍVEL' WHERE idChave = ? AND quantChave = 0;";
 
-        PreparedStatement pstm = null;
+            Connection conn = null;
 
-        try{
-            //Cria a conexão com o banco de dados
-            conn = ConnectionFactory.createConnectionToMySQL();
+            PreparedStatement pstm = null;
 
-            //Criamos uma PreparedStatement para executar uma query
-            pstm = conn.prepareStatement(sql);
+            try {
+                //Cria a conexão com o banco de dados
+                conn = ConnectionFactory.createConnectionToMySQL();
 
-            //
-            pstm.setInt(1, idChave);
+                //Criamos uma PreparedStatement para executar uma query
+                pstm = conn.prepareStatement(sql);
 
-            //
-            pstm.execute();
+                //
+                pstm.setInt(1, idChave);
 
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            try{
+                //
+                pstm.execute();
 
-                //Fechar as conexões que foram abertas
-                if(pstm!=null){
-                    pstm.close();
-                }
-
-                if(conn!=null) {
-                    conn.close();
-                }
-
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                try {
+
+                    //Fechar as conexões que foram abertas
+                    if (pstm != null) {
+                        pstm.close();
+                    }
+
+                    if (conn != null) {
+                        conn.close();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -440,6 +443,8 @@ public class ChaveDAO {
                 {
                     //Após executar a query que realiza o empréstimo da chave, salvamos a transação no histórico
                     HistoricoDAO.save(historico);
+
+                    ChaveDAO.updateStatusChave(historico.getIdChave());
 
                     if(HistoricoDAO.getResult())
                     {
@@ -536,6 +541,54 @@ public class ChaveDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Chave getChaveSalaPopular() {
+        String sql = "SELECT numeroChave, sala FROM chaves_sala_popular";
+
+        Chave chave = new Chave();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                //
+                chave.setNumeroChave(rset.getInt("numeroChave"));
+
+                //
+                chave.setSala(rset.getString("sala"));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            }catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return chave;
     }
 
 }

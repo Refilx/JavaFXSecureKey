@@ -415,10 +415,7 @@ public class VerifyDAO {
                 //Tratamento de chaves com a quantidade igual a 0 (zero)
                 else if (chave.getQuantChave() == 0) {
                     //
-                    ChaveDAO chaveDAO = new ChaveDAO();
-
-                    //
-                    chaveDAO.updateStatusChave(idChave);
+                    ChaveDAO.updateStatusChave(idChave);
 
                     //Mensagem de erro ao tentar emprestar a chave, estando ela indisponível
                     JOptionPane.showMessageDialog(null, "Você não pode emprestar esta chave, pois ela está INDISPONÍVEL!",
@@ -464,6 +461,75 @@ public class VerifyDAO {
 
         return resultadoVerify;
     }
+
+
+    /**
+     * Verifica o status da chave para saber se ela está disponível
+     */
+    public static boolean verifyQuantIndisponivel(int idChave){
+
+        String sql = "SELECT quantChave FROM chaves WHERE idChave = ?";
+
+        boolean resultadoVerify = false;
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try{
+            //Cria a conexão com o banco de dados
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //Criamos uma PreparedStatement para executar uma query
+            pstm = conn.prepareStatement(sql);
+
+            //
+            pstm.setInt(1, idChave);
+
+            //
+            rset = pstm.executeQuery();
+
+            //
+            if(rset.next()) {
+                //
+                Chave chave = new Chave();
+
+                //Variável que armazenará a quantidade de chaves que estarão na portaria no momento em que for realizado o emprestimo
+                chave.setQuantChave(rset.getInt("quantChave"));
+
+                //Se o status da chave for disponível, a quantidade for maior ou igual que 1 (um), o resultado recebe um valor true
+                if (chave.getQuantChave() == 0) {
+                    resultadoVerify = true;
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+
+                //Fechar as conexões que foram abertas
+                if(rset!=null){
+                    rset.close();
+                }
+
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null) {
+                    conn.close();
+                }
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return resultadoVerify;
+    }
+
 
     /**
      * Verifica se a mesma pessoa está tentando pegar uma chave igual
