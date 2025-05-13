@@ -8,6 +8,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -343,12 +344,12 @@
                   <DropShadow offsetY="3.0" />
                </effect>
                <children>
-                  <Label layoutX="10.0" layoutY="51.0" prefHeight="95.0" prefWidth="330.0" text="Quantidade de Passagens Vendidas esse mês:" textFill="WHITE" wrapText="true">
+                  <Label layoutX="10.0" layoutY="51.0" prefHeight="95.0" prefWidth="330.0" text="Chave mais requisitada do mês:" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Arial Bold" size="26.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textFieldQuantidadeVendidaMes" alignment="CENTER" editable="false" layoutX="113.0" layoutY="146.0" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                  <TextField fx:id="tfChaveRequisitadaMes" alignment="CENTER" editable="false" layoutX="113.0" layoutY="146.0" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
                      <font>
                         <Font name="Arial Bold" size="30.0" />
                      </font>
@@ -363,12 +364,12 @@
                   <DropShadow offsetY="3.0" />
                </effect>
                <children>
-                  <Label layoutX="10.0" layoutY="51.0" prefHeight="95.0" prefWidth="330.0" text="Destino mais popular para viagens:" textFill="WHITE" wrapText="true">
+                  <Label layoutX="10.0" layoutY="51.0" prefHeight="95.0" prefWidth="330.0" text="Sala mais acessada do mês:" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Arial Bold" size="26.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textFieldDestinoPopular" alignment="CENTER" editable="false" layoutX="12.0" layoutY="146.0" prefHeight="57.0" prefWidth="328.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                  <TextField fx:id="tfSalaMaisAcessada" alignment="CENTER" editable="false" layoutX="12.0" layoutY="146.0" prefHeight="57.0" prefWidth="328.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
@@ -378,11 +379,19 @@
                   </TextField>
                </children>
             </Pane>
-            <ImageView fitHeight="373.0" fitWidth="441.0" layoutX="314.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="373.0" fitWidth="441.0" layoutX="314.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imgs/chave 3.png" />
                </image>
             </ImageView>
+            <Label layoutX="315.0" layoutY="641.0" prefHeight="95.0" prefWidth="370.0" text="BEM VINDO AO SECUREKEY" wrapText="true">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <Glow level="0.86" />
+               </effect>
+            </Label>
          </children>
       </AnchorPane>
    </center>

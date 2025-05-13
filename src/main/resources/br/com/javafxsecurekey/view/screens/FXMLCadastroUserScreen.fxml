@@ -74,14 +74,14 @@
                   </PasswordField>
                </children>
             </HBox>
-            <HBox prefHeight="34.0" prefWidth="612.0">
+            <HBox prefHeight="34.0" prefWidth="502.0">
                <children>
-                  <RadioButton fx:id="rb_operador" mnemonicParsing="false" text="Operador" textFill="WHITE">
+                  <RadioButton fx:id="rb_usuario_comum" mnemonicParsing="false" text="Usuário Comum" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="20.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="50.0" right="30.0" />
+                        <Insets left="85.0" right="30.0" />
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -89,17 +89,6 @@
                      <toggleGroup>
                         <ToggleGroup fx:id="TipoUsuario" />
                      </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rb_gerente" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Gerente" textFill="WHITE" toggleGroup="$TipoUsuario">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
                   </RadioButton>
                   <RadioButton fx:id="rb_admin" layoutX="98.0" layoutY="10.0" mnemonicParsing="false" text="Administrador" textFill="WHITE" toggleGroup="$TipoUsuario">
                      <font>
