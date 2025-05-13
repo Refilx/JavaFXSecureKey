@@ -2,11 +2,13 @@ package br.com.javafxsecurekey.controller;
 
 import br.com.javafxsecurekey.model.dao.ChaveDAO;
 import br.com.javafxsecurekey.model.domain.Chave;
+import br.com.javafxsecurekey.model.domain.Historico;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -30,7 +32,7 @@ public class FXMLChavesCadastradasController implements Initializable {
     @FXML
     private TableColumn<?, ?> tc_quantidade;
     @FXML
-    private TableColumn<?, ?> tc_status;
+    private TableColumn<Chave, String> tc_status;
     @FXML
     private TableColumn<?, ?> tc_temReserva;
     @FXML
@@ -92,6 +94,29 @@ public class FXMLChavesCadastradasController implements Initializable {
 
                 return false; // Não corresponde ao filtro
             });
+        });
+
+        /**
+         * Código que adiciona cor ao status das chaves cadastradas, "INDISPONÍVEL" vermelho e "DISPONÍVEL" verde
+         */
+        tc_status.setCellFactory(column -> new TableCell<Chave, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(""); // Resetar estilo quando a célula estiver vazia
+                } else {
+                    setText(item);
+                    if ("INDISPONÍVEL".equals(item)) {
+                        setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                    } else if ("DISPONÍVEL".equals(item)) {
+                        setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+                    } else {
+                        setStyle(""); // Resetar estilo para outros valores
+                    }
+                }
+            }
         });
     }
 
