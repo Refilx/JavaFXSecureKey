@@ -50,13 +50,13 @@ public class FXMLEmprestimosFeitosController implements Initializable {
     @FXML
     private TableColumn<?, ?> tc_dataFechamento;
     @FXML
-    private TableColumn<?, ?> tc_nomeSolicitante;
+    private TableColumn<Historico, String> tc_nomeSolicitante;
     @FXML
     private TableColumn<?, ?> tc_numChave;
     @FXML
     private TableColumn<?, ?> tc_observacoes;
     @FXML
-    private TableColumn<?, ?> tc_status;
+    private TableColumn<Historico, String> tc_status;
     @FXML
     private TextField tfPesquisa;
     @FXML
@@ -138,6 +138,46 @@ public class FXMLEmprestimosFeitosController implements Initializable {
 
                 return false; // Não corresponde ao filtro
             });
+        });
+
+        /**
+         * Código que destaca o nome da pessoa solicitante da chave deixando-o em negrito
+         */
+        tc_nomeSolicitante.setCellFactory(column -> new TableCell<Historico, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(""); // Resetar estilo quando a célula estiver vazia
+                } else {
+                    setText(item);
+                    setStyle("-fx-font-weight: bold;");
+                }
+            }
+        });
+
+        /**
+         * Código que adiciona cor ao status dos empréstimos das chaves, "EM ABERTO" vermelho e "ENCERRADO" verde
+         */
+        tc_status.setCellFactory(column -> new TableCell<Historico, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(""); // Resetar estilo quando a célula estiver vazia
+                } else {
+                    setText(item);
+                    if ("EM ABERTO".equals(item)) {
+                        setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                    } else if ("ENCERRADO".equals(item)) {
+                        setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+                    } else {
+                        setStyle(""); // Resetar estilo para outros valores
+                    }
+                }
+            }
         });
     }
 
