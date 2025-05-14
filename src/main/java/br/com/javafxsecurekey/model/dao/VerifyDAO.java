@@ -534,7 +534,7 @@ public class VerifyDAO {
     /**
      * Verifica se a mesma pessoa está tentando pegar uma chave igual
      */
-    public boolean verifyAlreadyBorrowed(int idChave, int idPessoa){
+    public static boolean verifyAlreadyBorrowed(int idChave, int idPessoa){
 
         String sql = "CALL verificaPessoaJaPegou( ?, ?);";
 

@@ -2,6 +2,7 @@ package br.com.javafxsecurekey.controller;
 
 import br.com.javafxsecurekey.model.dao.ChaveDAO;
 import br.com.javafxsecurekey.model.dao.PessoaDAO;
+import br.com.javafxsecurekey.model.dao.VerifyDAO;
 import br.com.javafxsecurekey.model.domain.Chave;
 import br.com.javafxsecurekey.model.domain.Historico;
 import br.com.javafxsecurekey.model.domain.Pessoa;
@@ -58,33 +59,42 @@ public class FXMLEmprestarChaveController implements Initializable {
         lvSolicitante.setVisible(false);
         lvNumChave.setVisible(false);
 
-        if(!tfSolicitante.getText().isEmpty() && !tfNumChave.getText().isEmpty())
+        // Verifica se a pessoa já está tentando pegar a mesma chave
+        if(VerifyDAO.verifyAlreadyBorrowed(chaveEscolhida.getIdChave(), pessoaEscolhida.getIdPessoa()))
         {
-            historico.setIdPessoa(pessoaEscolhida.getIdPessoa());
-            historico.setIdChave(chaveEscolhida.getIdChave());
-            historico.setNome(pessoaEscolhida.getNome());
-            historico.setCargo(pessoaEscolhida.getCargo());
-            historico.setNumeroChave(chaveEscolhida.getNumeroChave());
-            historico.setObservacoes(taDescricao.getText());
-            historico.setStatus("EM ABERTO");
-            historico.setDataAbertura(new Timestamp(System.currentTimeMillis()));
 
-            ChaveDAO.emprestarChave(historico);
-
-            if(ChaveDAO.getResult())
+            // Verifica se os campos de texto está preechido e se o usuário escolheu uma pessoa e um chave
+            if(!tfSolicitante.getText().isEmpty() && !tfNumChave.getText().isEmpty()
+                    && pessoaEscolhida != null && chaveEscolhida != null)
             {
-                tfSolicitante.setText(null);
-                tfNumChave.setText(null);
-                taDescricao.setText(null);
-                lvNumChave.setVisible(false);
-                lvSolicitante.setVisible(false);
+                historico.setIdPessoa(pessoaEscolhida.getIdPessoa());
+                historico.setIdChave(chaveEscolhida.getIdChave());
+                historico.setNome(pessoaEscolhida.getNome());
+                historico.setCargo(pessoaEscolhida.getCargo());
+                historico.setNumeroChave(chaveEscolhida.getNumeroChave());
+                historico.setObservacoes(taDescricao.getText());
+                historico.setStatus("EM ABERTO");
+                historico.setDataAbertura(new Timestamp(System.currentTimeMillis()));
+
+                ChaveDAO.emprestarChave(historico);
+
+                if(ChaveDAO.getResult())
+                {
+                    tfSolicitante.setText(null);
+                    tfNumChave.setText(null);
+                    taDescricao.setText(null);
+                    lvNumChave.setVisible(false);
+                    lvSolicitante.setVisible(false);
+                    pessoaEscolhida = null;
+                    chaveEscolhida = null;
+                }
+                ChaveDAO.setDefaultResult();
             }
-            ChaveDAO.setDefaultResult();
-        }
-        else
-        {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Selecione o solicitante e a chave emprestada, por favor!");
-            alert.showAndWait();
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Selecione o solicitante e a chave emprestada, por favor!");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -95,6 +105,8 @@ public class FXMLEmprestarChaveController implements Initializable {
         tfSolicitante.setText(null);
         tfNumChave.setText(null);
         taDescricao.setText(null);
+        pessoaEscolhida = null;
+        chaveEscolhida = null;
     }
 
     @FXML
@@ -161,15 +173,6 @@ public class FXMLEmprestarChaveController implements Initializable {
         lvSolicitante.setOnMouseClicked(e -> {
             String selected = lvSolicitante.getSelectionModel().getSelectedItem();
 
-//            for(Pessoa p : mapPessoas) // Procurando o item na lista, se for encontrado, armazenamos os dados da pessoa escolhida
-//            {
-//                if((p.getNome()+" - "+p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)).equals(selected)) // Comparando a formatação do item da vez com o item selecionado
-//                {
-//                    pessoaEscolhida = p;
-//                    break;
-//                }
-//            }
-
             // Os dados da pessoa Escolhida está na mapPessoas, mas a chave da mapPessoas é o valor que está na mapLvPessoaValues e o selected (valor selecionado) é a chave da mapLvPessoaValues
             pessoaEscolhida = mapPessoas.get(mapLvPessoaValues.get(selected));
 
@@ -182,15 +185,6 @@ public class FXMLEmprestarChaveController implements Initializable {
         // Preenchendo o TextField ao clicar em um item da ListView
         lvNumChave.setOnMouseClicked(e -> {
             String selected = lvNumChave.getSelectionModel().getSelectedItem();
-
-//            for(Map.Entry<Integer, Chave> mapEntry : mapChaves.entrySet()) // Procurando o item na lista, se for encontrado, armazenamos os dados da chave escolhida
-//            {
-//                if(("Chave: "+mapEntry.getValue().getNumeroChave()+" - Sala: "+mapEntry.getValue().getSala()).equals(selected))
-//                {
-//                    chaveEscolhida = mapEntry.getValue();
-//                    break;
-//                }
-//            }
 
             // Os dados da chave Escolhida está na mapChaves, mas a chave da mapChaves é o valor que está na mapLvChaveValues e o selected (valor selecionado) é a chave da mapLvChaveValues
             chaveEscolhida = mapChaves.get(mapLvChaveValues.get(selected));
