@@ -147,8 +147,8 @@ public class FXMLNavigationPanelController implements Initializable {
         tfChaveRequisitadaMes.setText(""+c.getNumeroChave());
         tfSalaMaisAcessada.setText(c.getSala());
 
-//            Image img = new Image(getClass().getResource("/br/com/javafxsecurekey/view/imgs/").toExternalForm(), false);
-//            imgCircle.setFill(new ImagePattern(img));
+        Image img = new Image(getClass().getResource("/br/com/javafxsecurekey/view/imgs/admin-perfil-c-fundo.png").toExternalForm(), false);
+        imgCircle.setFill(new ImagePattern(img));
 
     }
     
