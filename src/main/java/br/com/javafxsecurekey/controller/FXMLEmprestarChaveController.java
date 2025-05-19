@@ -47,8 +47,8 @@ public class FXMLEmprestarChaveController implements Initializable {
     private Map<Integer, Pessoa> mapPessoas = new HashMap<>();
     private Map<Integer, Chave> mapChaves = new HashMap<>();
 
-    Map<String, Integer> mapLvPessoaValues = new HashMap<>();
-    Map<String, Integer> mapLvChaveValues = new HashMap<>();
+    private Map<String, Integer> mapLvPessoaValues = new HashMap<>();
+    private Map<String, Integer> mapLvChaveValues = new HashMap<>();
 
     private ObservableList<String> obsPessoas;
     private ObservableList<String> obsChaves;
@@ -129,7 +129,7 @@ public class FXMLEmprestarChaveController implements Initializable {
 
     private void carregarDados() {
         // Listas principais recebem os dados do banco
-        mapPessoas = PessoaDAO.getMapPessoa();
+        mapPessoas = PessoaDAO.getMapPessoaAtiva();
         mapChaves = ChaveDAO.getMapChave();
 
         // Passando alguns dados específicos para listas auxiliares que exibirão os dados na ListView
