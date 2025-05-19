@@ -273,6 +273,87 @@ public class PessoaDAO {
     }
 
     /**
+     * O metodo busca todas as pessoas cadastradas e que estejam ativas no BD
+     */
+    public static Map<Integer, Pessoa> getMapPessoaAtiva(){
+
+        String sql = "SELECT * FROM pessoa WHERE ativa = 'Sim';";
+
+        Map<Integer, Pessoa> mapPessoa = new HashMap<>();
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        // Classe que vai recuperar os dados do banco.  *** SELECT ***
+        ResultSet rset = null;
+
+        try{
+            //Cria a conexão com o banco de dados
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //Criamos uma PreparedStatement para executar uma query
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            //Enquanto houver um próximo dado para ser armazenado pelo ResultSet, os comandos serão executados
+            while(rset.next()){
+                Pessoa pessoa = new Pessoa();
+
+                //Recupera o id da Pessoa
+                pessoa.setIdPessoa(rset.getInt("idPessoa"));
+
+                //Recupera o nome da Pessoa
+                pessoa.setNome(rset.getString("nome"));
+
+                //Recupera o cpf da Pessoa
+                pessoa.setCPF(rset.getString("cpf"));
+
+                //Recupera o email da Pessoa
+                pessoa.setEmail(rset.getString("email"));
+
+                //Recupera o telefone da Pessoa
+                pessoa.setTelefone(rset.getString("telefone"));
+
+                //Recupera o empresa da Pessoa
+                pessoa.setEmpresa(rset.getString("empresa"));
+
+                //Recupera o cargo da Pessoa
+                pessoa.setCargo(rset.getString("cargo"));
+
+                //Recupera o data de registro da Pessoa
+                pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
+
+                //Adiciona a Pessoa com todos os dados registrados à lista de Pessoas
+                mapPessoa.putIfAbsent(pessoa.getIdPessoa(), pessoa);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+
+            try{
+                //Fecha as conexões que foram abertas com o banco de dados
+                if(rset!=null){
+                    rset.close();
+                }
+
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return mapPessoa;
+    }
+
+    /**
      * O método executa o comando UPDATE no banco de dados
      */
     public void update(Pessoa pessoa){
@@ -302,6 +383,54 @@ public class PessoaDAO {
 
             //Qual o ID do registro que deseja atualizar? passando o id de pessoa para atualizar o registro
             pstm.setInt(8, pessoa.getIdPessoa());
+
+            //Executa a Query
+            pstm.execute();
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }finally{
+            try{
+
+                //Fechar as conexões que foram abertas
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null) {
+                    conn.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Metodo faz o update da pessoa se ela está ativa ou não, para melhor controle
+     * @param pessoa
+     */
+    public void updateAtiva(Pessoa pessoa, String mudanca){
+
+        String sql = "UPDATE pessoa SET ativa = ?"+
+                "WHERE idPessoa = ?";
+
+        Connection conn = null;
+
+        PreparedStatement pstm = null;
+
+        try{
+            //Cria a conexão com o banco de dados
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //Criamos uma PreparedStatement para executar uma query
+            pstm = conn.prepareStatement(sql);
+
+            //Adicina os valores para atualizar
+            pstm.setString(1, mudanca);
+
+            //Qual o ID do registro que deseja atualizar? passando o id de pessoa para atualizar o registro
+            pstm.setInt(2, pessoa.getIdPessoa());
 
             //Executa a Query
             pstm.execute();
