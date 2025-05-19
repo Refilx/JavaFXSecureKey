@@ -176,7 +176,7 @@
               <items>
                   <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: transparent;">
                      <content>
-                        <VBox prefHeight="310.0" prefWidth="350.0" spacing="20.0">
+                        <VBox spacing="20.0">
                            <children>
                               <Button mnemonicParsing="false" onMouseClicked="#getCadastroPessoaScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Cadastro de Pessoa" textAlignment="RIGHT" textFill="#1e3a8a">
                                  <font>
@@ -223,6 +223,28 @@
                                  </graphic>
                               </Button>
                               <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#getUsuariosCadastradosScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Usuários Cadastrados" textAlignment="RIGHT" textFill="#1e3a8a">
+                                 <font>
+                                    <Font name="Arial Bold" size="26.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow offsetY="6.0">
+                                       <input>
+                                          <InnerShadow />
+                                       </input>
+                                    </DropShadow>
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="55.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../imgs/usuarios-cadastrados.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#getPessoasCadastradasScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Pessoas Cadastradas" textAlignment="RIGHT" textFill="#1e3a8a">
                                  <font>
                                     <Font name="Arial Bold" size="26.0" />
                                  </font>

@@ -102,6 +102,12 @@ public class FXMLNavigationPanelController implements Initializable {
     }
 
     @FXML
+    void getPessoasCadastradasScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLPessoasCadastradas");
+        GPMenu.hide();
+    }
+
+    @FXML
     void getUsuariosCadastradosScreen(MouseEvent event) throws IOException {
         loadPage("FXMLUsuariosCadastradosScreen");
         GPMenu.hide();
