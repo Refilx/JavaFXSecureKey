@@ -22,6 +22,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -29,9 +30,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class FXMLEmprestimosFeitosController implements Initializable {
 
@@ -223,33 +222,24 @@ public class FXMLEmprestimosFeitosController implements Initializable {
     @FXML
     void exportToPDFOnMouseClicked(MouseEvent event) throws Exception {
 
-        // Caminho do arquivo de imagem dentro do classpath
-        InputStream logoStream = getClass().getResourceAsStream("/br/com/passabus/view/imgs/logo.png");
-        InputStream mainStream = getClass().getResourceAsStream("/br/com/passabus/view/imgs/mainbus.png");
-
-        if (logoStream == null) {
-            throw new RuntimeException("Imagem não encontrada: logo.png");
-        }
-
-        // Criamos um mapa de parâmetros para passar ao relatório
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("logo", logoStream); // Passa a imagem como parâmetro
-        parameters.put("mainbus", mainStream);
-
         // Carregamos o relatório por meio de um InputStream
-        InputStream jasperStream = getClass().getResourceAsStream("/br/com/passabus/relatorios/JAVAFXFXMLRelatórioPassagem.jasper");
+        InputStream jasperStream = getClass().getResourceAsStream("/br/com/javafxsecurekey/model/reports/JAVAFXFXMLRelatorioEmprestimoChaves.jasper");
 
         if (jasperStream == null) {
             throw new JRException("Arquivo do relatório não encontrado!");
         }
 
-
         // O objeto JasperReport serve para carregar o arquivo do relatório.jarper
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
 
-        // JasperPrint irá buscar os valores que serão passados para a impressão no banco de dados
-        // null: caso não existam filtros
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ConnectionFactory.createConnectionToMySQL());
+        ObservableList<Historico> dadosVisiveis = tvHistEmprestimo.getItems();
+        List<Historico> listaEmprestimos = new ArrayList<>(dadosVisiveis);
+
+        // Fonte de dados: a lista convertida da TableView
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaEmprestimos);
+
+        // Geração do relatório com a fonte de dados personalizada
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
 
         // JasperViewer serve para poder exibir o relatório e carregá-lo em uma página visualizável
         // false: serve para não deixar fechar a aplicação principal
