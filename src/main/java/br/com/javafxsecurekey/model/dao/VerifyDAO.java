@@ -4,6 +4,7 @@ import br.com.javafxsecurekey.model.domain.Chave;
 import br.com.javafxsecurekey.model.domain.Log;
 import br.com.javafxsecurekey.model.domain.Usuario;
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
+import javafx.scene.control.Alert;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
 import javax.swing.*;
@@ -222,7 +223,9 @@ public class VerifyDAO {
      */
     public boolean verifyPass(String user, String pass){
 
-        String sql = "SELECT idUsuario, password FROM usuario WHERE username = ?";
+        String sql = "SELECT U.idUsuario, U.password, P.ativa FROM usuario U" +
+                "\nJOIN pessoa P ON (P.idPessoa = U.idPessoa)" +
+                "\nWHERE U.username = ? AND P.ativa = 'Sim';";
 
         boolean resultadoValidacao = false;
 
@@ -281,7 +284,9 @@ public class VerifyDAO {
                     JOptionPane.showMessageDialog(null, "Senha incorreta! Tente novamente.");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "O nome de usuário digitado está incorreto ou\nNão existe usuário com esse username cadastrado!");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Nenhum usuário ativo, com esse username e senha, foi encontrado!\nVerifique se os dados foram inseridos corretamente!\n\nEm caso de bloqueio é necessário entrar em contato com o Administrador!");
+                alert.showAndWait();
+                //JOptionPane.showMessageDialog(null, "Nenhum usuário ativo, com esse username e senha, foi encontrado!\nVerifique se os dados foram inseridos corretamente!\n\nEm caso de bloqueio é necessário entrar em contato com o Administrador!");
             }
 
         }catch(Exception e){
