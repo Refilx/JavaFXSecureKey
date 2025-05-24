@@ -244,6 +244,8 @@ public class PessoaDAO {
                 //Recupera o data de registro da Pessoa
                 pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
 
+                pessoa.setCPF(pessoa.getCPF().substring(0, 3)+".***.***-"+pessoa.getCPF().substring(12, 14));
+
                 //Adiciona a Pessoa com todos os dados registrados à lista de Pessoas
                 mapPessoa.putIfAbsent(pessoa.getIdPessoa(), pessoa);
             }
@@ -325,6 +327,8 @@ public class PessoaDAO {
                 //Recupera o data de registro da Pessoa
                 pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
 
+                pessoa.setCPF(pessoa.getCPF().substring(0, 3)+".***.***-"+pessoa.getCPF().substring(12, 14));
+
                 //Adiciona a Pessoa com todos os dados registrados à lista de Pessoas
                 mapPessoa.putIfAbsent(pessoa.getIdPessoa(), pessoa);
             }
@@ -356,9 +360,9 @@ public class PessoaDAO {
     /**
      * O método executa o comando UPDATE no banco de dados
      */
-    public void update(Pessoa pessoa){
+    public static void update(Pessoa pessoa){
 
-        String sql = "UPDATE pessoa SET nome = ?, cpf = ?, email = ?, telefone = ?, empresa = ?, cargo = ?, DtRegistro = ?"+
+        String sql = "UPDATE pessoa SET email = ?, telefone = ?, empresa = ?, cargo = ?"+
                 "WHERE idPessoa = ?";
 
         Connection conn = null;
@@ -373,19 +377,21 @@ public class PessoaDAO {
             pstm = conn.prepareStatement(sql);
 
             //Adicina os valores para atualizar
-            pstm.setString(1, pessoa.getNome());
-            pstm.setString(2, pessoa.getCPF());
-            pstm.setString(3, pessoa.getEmail());
-            pstm.setString(4, pessoa.getTelefone());
-            pstm.setString(5, pessoa.getEmpresa());
-            pstm.setString(6, pessoa.getCargo());
-            pstm.setDate(7, new Date(pessoa.getDtRegistro().getTime()));
+            pstm.setString(1, pessoa.getEmail());
+            pstm.setString(2, pessoa.getTelefone());
+            pstm.setString(3, pessoa.getEmpresa());
+            pstm.setString(4, pessoa.getCargo());
 
             //Qual o ID do registro que deseja atualizar? passando o id de pessoa para atualizar o registro
-            pstm.setInt(8, pessoa.getIdPessoa());
+            pstm.setInt(5, pessoa.getIdPessoa());
 
             //Executa a Query
-            pstm.execute();
+            int rowsUpdated = pstm.executeUpdate();
+
+            if(rowsUpdated > 0)
+            {
+                result = true;
+            }
 
         }catch(Exception e) {
             e.printStackTrace();
@@ -410,7 +416,7 @@ public class PessoaDAO {
      * Metodo faz o update da pessoa se ela está ativa ou não, para melhor controle
      * @param pessoa
      */
-    public void updateAtiva(Pessoa pessoa, String mudanca){
+    public static void updateAtiva(Pessoa pessoa, String ativa){
 
         String sql = "UPDATE pessoa SET ativa = ?"+
                 "WHERE idPessoa = ?";
@@ -427,14 +433,18 @@ public class PessoaDAO {
             pstm = conn.prepareStatement(sql);
 
             //Adicina os valores para atualizar
-            pstm.setString(1, mudanca);
+            pstm.setString(1, ativa);
 
             //Qual o ID do registro que deseja atualizar? passando o id de pessoa para atualizar o registro
             pstm.setInt(2, pessoa.getIdPessoa());
 
             //Executa a Query
-            pstm.execute();
+            int rowUpdated = pstm.executeUpdate();
 
+            if(rowUpdated > 0)
+            {
+                result = true;
+            }
         }catch(Exception e) {
             e.printStackTrace();
         }finally{
