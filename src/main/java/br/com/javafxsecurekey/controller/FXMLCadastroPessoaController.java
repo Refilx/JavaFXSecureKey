@@ -74,7 +74,7 @@ public class FXMLCadastroPessoaController implements Initializable {
                             int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja cadastrar uma nova pessoa?", "Confirmação final",
                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
 
-                            // Se o botão sim for apertado, cadastramos o novo usuário
+                            // Se o botão sim for apertado, cadastramos a nova pessoa
                             if (opcao == 0) {
                                 pessoa.setNome(tfNome.getText());
                                 pessoa.setEmail(tfEmail.getText());
@@ -97,7 +97,7 @@ public class FXMLCadastroPessoaController implements Initializable {
                                 }
                             }
                             else {
-                                JOptionPane.showMessageDialog(null, "Já existe um usuário com esse username cadastrado\n Digite um username diferente, por favor",
+                                JOptionPane.showMessageDialog(null, "A pessoa ainda NÃO foi cadastrada!",
                                         "Erro tentar realizar cadastro", JOptionPane.WARNING_MESSAGE);
                             }
                         }
