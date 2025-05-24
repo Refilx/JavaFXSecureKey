@@ -153,4 +153,18 @@ public class Historico implements Comparable<Historico> {
         else
             return 0;
     }
+
+    /**
+     * O metodo faz a verificação se o objeto comparado é da classe histórico, retornando um valor booleano
+     * @return true se o objeto for da classe histórico e false, caso contrário
+     */
+    public boolean isHistorico() {
+        if(this.getClass() == Historico.class)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

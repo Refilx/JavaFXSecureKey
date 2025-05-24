@@ -261,7 +261,7 @@
                                  <graphic>
                                     <ImageView fitHeight="40.0" fitWidth="55.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../imgs/usuarios-cadastrados.png" />
+                                          <Image url="@../imgs/lupa-c-pessoa-s-fundo.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
