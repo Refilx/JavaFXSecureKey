@@ -39,6 +39,7 @@ public class Pessoa implements Comparable<Pessoa> {
     private String empresa;
     private String cargo;
     private Timestamp dtRegistro;
+    private String ativa;
 
     public void setIdPessoa(int id){
         idPessoa = id;
@@ -102,6 +103,14 @@ public class Pessoa implements Comparable<Pessoa> {
 
     public Timestamp getDtRegistro() {
         return dtRegistro;
+    }
+
+    public String getAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(String ativa) {
+        this.ativa = ativa;
     }
 
     /**

@@ -57,9 +57,10 @@ public class PessoaDAO {
      */
     public static void save(Pessoa pessoa){
 
-        String sql = "INSERT INTO pessoa(nome, cpf, email, telefone, empresa, cargo, dtRegistro) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pessoa(nome, cpf, email, telefone, empresa, cargo, dtRegistro, ativa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         pessoa.setDtRegistro(new Timestamp(System.currentTimeMillis()));
+        pessoa.setAtiva("Sim");
 
         Connection conn = null;
 
@@ -82,6 +83,7 @@ public class PessoaDAO {
             pstm.setString(5, pessoa.getEmpresa());
             pstm.setString(6, pessoa.getCargo());
             pstm.setTimestamp(7, pessoa.getDtRegistro());
+            pstm.setString(8, pessoa.getAtiva());
 
             //Executa a Query
             pstm.execute();
@@ -90,7 +92,7 @@ public class PessoaDAO {
             Alert sucesso = new Alert(Alert.AlertType.INFORMATION, "Pessoa cadastrada com sucesso!");
             sucesso.showAndWait();
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Ocorreru um erro ao tentar cadastrar a pessoa!\nDetalhes: "+e.getMessage(),
+            JOptionPane.showMessageDialog(null,"Ocorreu um erro ao tentar cadastrar a pessoa!\nDetalhes: "+e.getMessage(),
                     "Erro de Cadastro", JOptionPane.WARNING_MESSAGE);
         }finally{
 
@@ -243,6 +245,9 @@ public class PessoaDAO {
 
                 //Recupera o data de registro da Pessoa
                 pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
+
+                //Recupera atributo ativa da Pessoa
+                pessoa.setAtiva(rset.getString("ativa"));
 
                 pessoa.setCPF(pessoa.getCPF().substring(0, 3)+".***.***-"+pessoa.getCPF().substring(12, 14));
 
