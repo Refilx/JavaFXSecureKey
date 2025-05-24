@@ -15,7 +15,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLPessoasCadastradasController">
    <children>
-      <TableView fx:id="tvPessoasCadastradas" fixedCellSize="50.0" layoutX="9.0" layoutY="69.0" prefHeight="615.0" prefWidth="1060.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
+      <TableView fx:id="tvPessoasCadastradas" fixedCellSize="50.0" layoutX="9.0" layoutY="69.0" onMouseClicked="#tvPessoasCadastradasOnMouseClicked" prefHeight="615.0" prefWidth="1060.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
          <columns>
             <TableColumn fx:id="tc_nomePessoa" editable="false" prefWidth="338.4000062942505" resizable="false" sortable="false" text="NOME DA PESSOA" />
             <TableColumn fx:id="tc_CPF" editable="false" prefWidth="136.00006103515625" sortable="false" text="CPF" />
@@ -45,7 +45,7 @@
             <Image url="@../imgs/lupa-s-fundo.png" />
          </image>
       </ImageView>
-      <Button disable="true" layoutX="829.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#btnEditarDadosOnMouseClicked" prefHeight="50.0" prefWidth="199.0" style="-fx-background-color: #c8cbd4; -fx-background-radius: 16;" text="Editar Dados" textAlignment="CENTER" textFill="#1e3a8a">
+      <Button fx:id="btnEditarDados" disable="true" layoutX="829.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#btnEditarDadosOnMouseClicked" prefHeight="50.0" prefWidth="199.0" style="-fx-background-color: #c8cbd4; -fx-background-radius: 16;" text="Editar Dados" textAlignment="CENTER" textFill="#1e3a8a">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
