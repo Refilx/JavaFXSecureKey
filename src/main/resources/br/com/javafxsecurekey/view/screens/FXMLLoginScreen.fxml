@@ -8,6 +8,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -97,6 +98,16 @@
       <Pane fx:id="rightPane" prefHeight="371.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <Pane fx:id="bottomPane" prefHeight="150.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="bottomPane" prefHeight="150.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="3.0" layoutY="131.0" prefHeight="18.0" prefWidth="201.0" text="Desenvolvido por Bruno Silva" textFill="#154659">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+               <effect>
+                  <Glow level="0.8" />
+               </effect>
+            </Label>
+         </children></Pane>
    </bottom>
 </BorderPane>
