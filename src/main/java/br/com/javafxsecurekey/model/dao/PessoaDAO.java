@@ -25,7 +25,6 @@ package br.com.javafxsecurekey.model.dao;
 
 import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.domain.Pessoa;
-import br.com.javafxsecurekey.model.util.Arvore;
 import javafx.scene.control.Alert;
 
 import javax.swing.*;

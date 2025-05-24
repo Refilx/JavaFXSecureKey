@@ -37,6 +37,8 @@ public class FXMLPessoasCadastradasController implements Initializable {
     @FXML
     private TableColumn<?, ?> tc_CPF;
     @FXML
+    private TableColumn<?, ?> tc_ativa;
+    @FXML
     private TableColumn<?, ?> tc_cargo;
     @FXML
     private TableColumn<?, ?> tc_email;
@@ -83,6 +85,7 @@ public class FXMLPessoasCadastradasController implements Initializable {
         tc_cargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
         tc_empresa.setCellValueFactory(new PropertyValueFactory<>("empresa"));
         tc_CPF.setCellValueFactory(new PropertyValueFactory<>("CPF"));
+        tc_ativa.setCellValueFactory(new PropertyValueFactory<>("ativa"));
 
         // Pegando a lista de viagens do banco
         mapPessoas = PessoaDAO.getMapPessoa();
@@ -116,6 +119,8 @@ public class FXMLPessoasCadastradasController implements Initializable {
                 } else if (pessoa.getEmpresa().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } else if (pessoa.getCPF().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (pessoa.getAtiva().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
 
@@ -167,6 +172,7 @@ public class FXMLPessoasCadastradasController implements Initializable {
 
         // Chamar tela de edição de dados de pessoa
         abrirTelaPopUp();
+        prepararListaTabela();
     }
 
     @FXML
@@ -186,37 +192,28 @@ public class FXMLPessoasCadastradasController implements Initializable {
         ) {
             // Valida o e-mail digitado para saber se é um e-mail válido
             if(EmailValidator.isValidEmail(tfEmail.getText())) {
+                // Pergunto se a pessoa deseja mesmo realizar a atualização
+                int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja Atualizar os dados de %s ?".formatted(dadosDaPessoaEscolhida.getNome()), "Confirmação final",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
 
-                // Verificar se o email já foi cadastrado no banco de dados
-                if(!VerifyDAO.verifyEmail(tfEmail.getText())) {
-                    // Pergunto se a pessoa deseja mesmo realizar a atualização
-                    int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja Atualizar os dados de %s ?".formatted(dadosDaPessoaEscolhida.getNome()), "Confirmação final",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
+                // Se o botão sim for apertado, atualizamos os dados da pessoa
+                if (opcao == 0) {
+                    dadosDaPessoaEscolhida.setEmail(tfEmail.getText());
+                    dadosDaPessoaEscolhida.setEmpresa(tfEmpresa.getText());
+                    dadosDaPessoaEscolhida.setCargo(tfCargo.getText());
+                    dadosDaPessoaEscolhida.setTelefone(tfTelefone.getText());
 
-                    // Se o botão sim for apertado, atualizamos os dados da pessoa
-                    if (opcao == 0) {
-                        dadosDaPessoaEscolhida.setEmail(tfEmail.getText());
-                        dadosDaPessoaEscolhida.setEmpresa(tfEmpresa.getText());
-                        dadosDaPessoaEscolhida.setCargo(tfCargo.getText());
-                        dadosDaPessoaEscolhida.setTelefone(tfTelefone.getText());
+                    PessoaDAO.setDefaultResult();
 
+                    PessoaDAO.update(dadosDaPessoaEscolhida);
+
+                    if(PessoaDAO.getResult())
+                    {
+                        Alert a = new Alert(Alert.AlertType.INFORMATION, "Dados atualizados com Sucesso!");
+                        a.showAndWait();
+                        btnCancelarMouseClicked(null);
                         PessoaDAO.setDefaultResult();
-
-                        PessoaDAO.update(dadosDaPessoaEscolhida);
-
-                        if(PessoaDAO.getResult())
-                        {
-                            Alert a = new Alert(Alert.AlertType.INFORMATION, "Dados atualizados com Sucesso!");
-                            a.showAndWait();
-                            btnCancelarMouseClicked(null);
-                            PessoaDAO.setDefaultResult();
-                        }
                     }
-
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "O E-mail digitado já está em uso\nPor favor, digite tente com outro E-mail",
-                            "Erro tentar realizar cadastro", JOptionPane.WARNING_MESSAGE);
                 }
             }
             else {
@@ -280,6 +277,7 @@ public class FXMLPessoasCadastradasController implements Initializable {
         onPopUpScreen = false;
         Stage stageAtual = (Stage) ((Node) (btnCancelar)).getScene().getWindow();
         stageAtual.close();
+
     }
 
     @FXML
