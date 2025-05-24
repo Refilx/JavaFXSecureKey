@@ -134,7 +134,7 @@ public class FXMLEmprestarChaveController implements Initializable {
 
         // Passando alguns dados específicos para listas auxiliares que exibirão os dados na ListView
         for(Map.Entry<Integer, Pessoa> mapEntry : mapPessoas.entrySet())
-            mapLvPessoaValues.putIfAbsent(mapEntry.getValue().getNome()+" - "+mapEntry.getValue().getCPF().substring(0, 3)+".***.***-"+mapEntry.getValue().getCPF().substring(12, 14), mapEntry.getKey()); // formatando a exibição dos dados: Nome da pessoa + CPF: 000.***.***-00
+            mapLvPessoaValues.putIfAbsent(mapEntry.getValue().getNome()+" - "+mapEntry.getValue().getCPF(), mapEntry.getKey()); // formatando a exibição dos dados: Nome da pessoa + CPF: 000.***.***-00
 
         for(Map.Entry<Integer, Chave> mapEntry : mapChaves.entrySet())
             mapLvChaveValues.putIfAbsent("Chave: "+mapEntry.getValue().getNumeroChave()+" - Sala: "+mapEntry.getValue().getSala(), mapEntry.getKey());

@@ -3,7 +3,6 @@ package br.com.javafxsecurekey.controller;
 import br.com.javafxsecurekey.model.dao.ChaveDAO;
 import br.com.javafxsecurekey.model.dao.HistoricoDAO;
 import br.com.javafxsecurekey.model.domain.Historico;
-import br.com.javafxsecurekey.model.factory.ConnectionFactory;
 import br.com.javafxsecurekey.model.util.TableViewToExcelPOI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -108,6 +107,11 @@ public class FXMLEmprestimosFeitosController implements Initializable {
         // Configurando a tabela após a pesquisa
         tvHistEmprestimo.setItems(filteredData);
 
+        tfPesquisa.setOnMouseClicked(event -> {
+            // Aqui você pode colocar o que quiser que ocorra no clique
+            btnDevolucao.setDisable(true);
+        });
+
         // Agora vamos colocar o listener no TextField
         tfPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(historico -> {
@@ -194,22 +198,39 @@ public class FXMLEmprestimosFeitosController implements Initializable {
 
     @FXML
     void btnDevolucaoMouseClicked(MouseEvent event) {
-        dadosDoHistoricoEscolhido = tvHistEmprestimo.getSelectionModel().getSelectedItem();
+        if(tvHistEmprestimo.getSelectionModel().getSelectedItem() != null)
+        {
+            // Verifica se o item selecionado é da classe histórico
+            if(tvHistEmprestimo.getSelectionModel().getSelectedItem().isHistorico())
+            {
+                dadosDoHistoricoEscolhido = tvHistEmprestimo.getSelectionModel().getSelectedItem();
 
-        int opcao = JOptionPane.showOptionDialog(null, "Deseja mesmo devolver essa chave?", "Confirmação",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Sim","Não"}, null);
+                if(dadosDoHistoricoEscolhido != null)
+                {
+                    int opcao = JOptionPane.showOptionDialog(null, "Deseja mesmo devolver essa chave?", "Confirmação",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Sim","Não"}, null);
 
-        //Testa se o campo dataFechamento está vazio e a opcao foi Sim
-        if(dadosDoHistoricoEscolhido.getDataFechamento() == null && opcao == 0) {
-            //
-            ChaveDAO.devolverChave(dadosDoHistoricoEscolhido);
+                    //Testa se o campo dataFechamento está vazio e a opcao foi Sim
+                    if(dadosDoHistoricoEscolhido.getDataFechamento() == null && opcao == 0)
+                    {
+                        //
+                        ChaveDAO.devolverChave(dadosDoHistoricoEscolhido);
 
-            mapEmprestimos = HistoricoDAO.getMapHistorico();
+                        mapEmprestimos = HistoricoDAO.getMapHistorico();
 
-            prepararListaTabela(mapEmprestimos);
+                        prepararListaTabela(mapEmprestimos);
 
-        } else if(dadosDoHistoricoEscolhido.getDataFechamento() != null && opcao == 0) {
-            JOptionPane.showMessageDialog(null, "A chave já foi devolvida");
+                    }
+                    else if(dadosDoHistoricoEscolhido.getDataFechamento() != null && opcao == 0)
+                    {
+                        JOptionPane.showMessageDialog(null, "A chave já foi devolvida");
+                    }
+                }
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Selecione um registro da tabela corretamente para realizar a devolução!");
         }
     }
 
@@ -223,7 +244,7 @@ public class FXMLEmprestimosFeitosController implements Initializable {
     void exportToPDFOnMouseClicked(MouseEvent event) throws Exception {
 
         // Carregamos o relatório por meio de um InputStream
-        InputStream jasperStream = getClass().getResourceAsStream("/br/com/javafxsecurekey/model/reports/JAVAFXFXMLRelatorioEmprestimoChaves.jasper");
+        InputStream jasperStream = getClass().getResourceAsStream("/br/com/javafxsecurekey/reports/JAVAFXFXMLRelatorioEmprestimoChaves.jasper");
 
         if (jasperStream == null) {
             throw new JRException("Arquivo do relatório não encontrado!");
