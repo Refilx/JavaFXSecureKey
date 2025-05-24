@@ -341,9 +341,9 @@ public class UsuarioDAO {
      * @author Bruno Sousa da Silva
      */
     public static void getIdUsuarioByEmail(Usuario usuario) {
-        String sql = "SELECT U.idUsuario, P.email FROM pessoa P\n" +
+        String sql = "SELECT U.idUsuario, P.email, P.ativa FROM pessoa P\n" +
                 "JOIN usuario U ON (P.idPessoa = U.idPessoa)\n" +
-                "WHERE email = ?";
+                "WHERE P.email = ? AND P.ativa = 'Sim';";
 
         Connection conn =  null;
         PreparedStatement pstm = null;
