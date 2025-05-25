@@ -27,7 +27,7 @@
                </VBox.margin>
             </Label>
             <Separator prefWidth="200.0" />
-            <TextField fx:id="tfNome" editable="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 10;">
+            <TextField fx:id="tfNome" disable="true" editable="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 10;">
                <VBox.margin>
                   <Insets left="50.0" right="50.0" top="25.0" />
                </VBox.margin>
@@ -73,7 +73,7 @@
             </TextField>
             <HBox layoutX="10.0" layoutY="374.0" prefHeight="45.0" prefWidth="500.0">
                <children>
-                  <TextField fx:id="tfCPF" editable="false" onKeyReleased="#tfCPFKeyReleased" prefHeight="46.0" prefWidth="225.0" style="-fx-background-radius: 10;">
+                  <TextField fx:id="tfCPF" disable="true" editable="false" onKeyReleased="#tfCPFKeyReleased" prefHeight="46.0" prefWidth="225.0" style="-fx-background-radius: 10;">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>
@@ -105,7 +105,7 @@
                   <Insets left="50.0" top="30.0" />
                </VBox.margin>
                <children>
-                  <Button fx:id="btnBloquear" mnemonicParsing="false" onMouseClicked="#btnBloquearMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #c8cbd4; -fx-background-radius: 10;" text="Bloquear" textFill="WHITE">
+                  <Button fx:id="btnBloquear" mnemonicParsing="false" onMouseClicked="#btnBloquearMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #c8cbd4; -fx-background-radius: 10;" text="Bloquear" textFill="#1e3a8a">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -126,7 +126,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseClicked="#btnDesbloquearMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #c8cbd4; -fx-background-radius: 10;" text="Desbloquear" textFill="WHITE">
+                  <Button mnemonicParsing="false" onMouseClicked="#btnDesbloquearMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #c8cbd4; -fx-background-radius: 10;" text="Desbloquear" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
