@@ -131,4 +131,19 @@ public class Pessoa implements Comparable<Pessoa> {
         else
             return 0;
     }
+
+    /**
+     * O metodo faz a verificação se o objeto comparado é da classe pessoa, retornando um valor booleano
+     * @return true se o objeto for da classe pessoa e false, caso contrário
+     */
+    public boolean isPessoa() {
+        if(this.getClass() == Pessoa.class)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

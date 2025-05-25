@@ -232,6 +232,7 @@ public class FXMLEmprestimosFeitosController implements Initializable {
         {
             JOptionPane.showMessageDialog(null,"Selecione um registro da tabela corretamente para realizar a devolução!");
         }
+        btnDevolucao.setDisable(true);
     }
 
     @FXML

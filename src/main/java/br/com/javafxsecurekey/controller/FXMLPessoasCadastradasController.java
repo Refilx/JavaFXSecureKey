@@ -99,6 +99,11 @@ public class FXMLPessoasCadastradasController implements Initializable {
         // Configurando a tabela após a pesquisa
         tvPessoasCadastradas.setItems(filteredData);
 
+        tfPesquisa.setOnMouseClicked(event -> {
+            // Aqui você pode colocar o que quiser que ocorra no clique
+            btnEditarDados.setDisable(true);
+        });
+
         // Agora vamos colocar o listener no TextField
         tfPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(pessoa -> {
@@ -133,7 +138,7 @@ public class FXMLPessoasCadastradasController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(!onPopUpScreen)
             prepararListaTabela();
-        else
+        else if(dadosDaPessoaEscolhida != null)
         {
             tfNome.setText(dadosDaPessoaEscolhida.getNome());
             tfCPF.setText(dadosDaPessoaEscolhida.getCPF());
@@ -168,11 +173,23 @@ public class FXMLPessoasCadastradasController implements Initializable {
 
     @FXML
     void btnEditarDadosOnMouseClicked(MouseEvent event) throws IOException {
-        dadosDaPessoaEscolhida = tvPessoasCadastradas.getSelectionModel().getSelectedItem();
+        if(tvPessoasCadastradas.getSelectionModel().getSelectedItem() != null)
+        {
+            if(tvPessoasCadastradas.getSelectionModel().getSelectedItem().isPessoa())
+            {
 
-        // Chamar tela de edição de dados de pessoa
-        abrirTelaPopUp();
-        prepararListaTabela();
+                dadosDaPessoaEscolhida = tvPessoasCadastradas.getSelectionModel().getSelectedItem();
+
+                // Chamar tela de edição de dados de pessoa
+                abrirTelaPopUp();
+                prepararListaTabela();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Selecione um registro da tabela corretamente para realizar a edição dos dados!");
+        }
+        btnEditarDados.setDisable(true);
     }
 
     @FXML

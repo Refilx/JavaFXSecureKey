@@ -163,7 +163,8 @@ public class Historico implements Comparable<Historico> {
         {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
