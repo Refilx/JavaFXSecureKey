@@ -65,11 +65,41 @@ public class FXMLNavigationPanelAplication extends Application {
 
     }
 
-//    public void trocarDeTela(Stage stageAtual, String novaTela) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource(novaTela));
-//        Scene novaCena = new Scene(loader.load());
-//        stageAtual.setScene(novaCena);
-//    }
+    public void trocarDeTela(Stage novoStage, String novaTela) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/javafxsecurekey/view/screens/"+novaTela+".fxml"));
+        Parent root = fxmlLoader.load();
+
+        Scene scene = new Scene(root);
+
+        novoStage.setScene(scene);
+        novoStage.initStyle(StageStyle.DECORATED);
+        usuarioLogado = logDoUsuario.getUltimoLogado();
+        novoStage.setOnCloseRequest(event -> {
+
+            int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Confirmação",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Sim", "Não"}, null);
+
+            //Se o usuário selecionar a opção "Sim", a aplicação irá fechar a tela de dashboard e voltar para a tela de login
+            if(opcao == 0){
+                LogDAO logDAO = new LogDAO();
+                logDAO.saveLogout(usuarioLogado);
+
+                novoStage.close(); // fecha a tela de dashboard
+
+                // Chama a tela de login e reinicia a aplicação
+                FXMLLoginScreenAplication login = new FXMLLoginScreenAplication();
+                try {
+                    login.start(new Stage());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                event.consume();
+            }
+        });
+        novoStage.show();
+    }
     
     /**
      * @param args the command line arguments
