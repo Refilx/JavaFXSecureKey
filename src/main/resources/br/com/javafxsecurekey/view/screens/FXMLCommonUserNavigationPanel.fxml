@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.javafxsecurekey.controller.FXMLNavigationPanelController">
+    <left>
+        <VBox fx:id="vbox" prefHeight="750.0" prefWidth="392.0" spacing="20.0" style="-fx-background-color: #15CE52;" BorderPane.alignment="CENTER">
+            <children>
+                <Pane prefHeight="100.0" prefWidth="500.0">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <children>
+                        <ImageView fitHeight="108.0" fitWidth="393.0" layoutY="-4.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../imgs/barra-de-fundo.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="labelUsername" layoutX="102.0" layoutY="25.0" prefHeight="30.0" prefWidth="223.0" text="Username.usuário" textFill="#1e3a8a">
+                            <font>
+                                <Font name="Arial Bold" size="25.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="labelRole" layoutX="104.0" layoutY="49.0" prefHeight="23.0" prefWidth="220.0" text="cargo" textFill="#1e3a8a">
+                            <font>
+                                <Font name="Arial" size="20.0" />
+                            </font>
+                        </Label>
+                        <Circle fx:id="imgCircle" fill="DODGERBLUE" layoutX="50.0" layoutY="50.0" radius="44.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                    </children>
+                </Pane>
+                <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../imgs/logo.png" />
+                    </image>
+                    <VBox.margin>
+                        <Insets left="150.0" />
+                    </VBox.margin>
+                </ImageView>
+                <Button fx:id="btnDashboard" mnemonicParsing="false" onMouseClicked="#getDashboardScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Dashboard" textAlignment="CENTER" textFill="#1e3a8a">
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font name="Arial Bold" size="26.0" />
+                    </font>
+                    <effect>
+                        <DropShadow offsetY="6.0" />
+                    </effect>
+                    <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../imgs/dashboard.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <MenuButton fx:id="GCMenu" alignment="CENTER" focusTraversable="false" layoutX="25.0" layoutY="406.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Gestão de Chaves" textAlignment="CENTER" textFill="#1e3a8a">
+                    <items>
+                        <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: transparent;">
+                            <content>
+                                <VBox prefHeight="225.0" prefWidth="360.0" spacing="20.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" onMouseClicked="#getCadastroChaveScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Cadastro de Chave" textAlignment="RIGHT" textFill="#1e3a8a">
+                                            <font>
+                                                <Font name="Arial Bold" size="26.0" />
+                                            </font>
+                                            <effect>
+                                                <DropShadow offsetY="6.0">
+                                                    <input>
+                                                        <InnerShadow />
+                                                    </input>
+                                                </DropShadow>
+                                            </effect>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                            <graphic>
+                                                <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true">
+                                                    <image>
+                                                        <Image url="@../imgs/adicionar-chave2.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <Button mnemonicParsing="false" onMouseClicked="#getChavesCadastradasScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Chaves Cadastradas" textAlignment="RIGHT" textFill="#1e3a8a">
+                                            <font>
+                                                <Font name="Arial Bold" size="26.0" />
+                                            </font>
+                                            <effect>
+                                                <DropShadow offsetY="6.0">
+                                                    <input>
+                                                        <InnerShadow />
+                                                    </input>
+                                                </DropShadow>
+                                            </effect>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                            <graphic>
+                                                <ImageView fitHeight="40.0" fitWidth="57.0" pickOnBounds="true">
+                                                    <image>
+                                                        <Image url="@../imgs/chaves-cadastradas.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <Button mnemonicParsing="false" onMouseClicked="#getEmprestimosFeitosScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Empréstimos Feitos" textAlignment="RIGHT" textFill="#1e3a8a">
+                                            <font>
+                                                <Font name="Arial Bold" size="26.0" />
+                                            </font>
+                                            <effect>
+                                                <DropShadow offsetY="6.0">
+                                                    <input>
+                                                        <InnerShadow />
+                                                    </input>
+                                                </DropShadow>
+                                            </effect>
+                                            <graphic>
+                                                <ImageView fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../imgs/prancheta-de-historico-s-fundo.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </Button>
+                                    </children>
+                                </VBox>
+                            </content>
+                        </SeparatorMenuItem>
+                    </items>
+                    <font>
+                        <Font name="Arial Bold" size="26.0" />
+                    </font>
+                    <effect>
+                        <DropShadow offsetY="6.0" />
+                    </effect>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <graphic>
+                        <ImageView fitHeight="56.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../imgs/historico-de-emprestimo.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                </MenuButton>
+                <MenuButton fx:id="GPMenu" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" popupSide="RIGHT" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Gestão de Pessoas" textAlignment="CENTER" textFill="#1e3a8a">
+                    <items>
+                        <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false" style="-fx-background-radius: 16; -fx-background-color: transparent;">
+                            <content>
+                                <VBox spacing="20.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" onMouseClicked="#getCadastroPessoaScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Cadastro de Pessoa" textAlignment="RIGHT" textFill="#1e3a8a">
+                                            <font>
+                                                <Font name="Arial Bold" size="26.0" />
+                                            </font>
+                                            <effect>
+                                                <DropShadow offsetY="6.0">
+                                                    <input>
+                                                        <InnerShadow />
+                                                    </input>
+                                                </DropShadow>
+                                            </effect>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                            <graphic>
+                                                <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true">
+                                                    <image>
+                                                        <Image url="@../imgs/adicionar-pessoa.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#getPessoasCadastradasScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Pessoas Cadastradas" textAlignment="RIGHT" textFill="#1e3a8a">
+                                            <font>
+                                                <Font name="Arial Bold" size="26.0" />
+                                            </font>
+                                            <effect>
+                                                <DropShadow offsetY="6.0">
+                                                    <input>
+                                                        <InnerShadow />
+                                                    </input>
+                                                </DropShadow>
+                                            </effect>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                            <graphic>
+                                                <ImageView fitHeight="40.0" fitWidth="55.0" pickOnBounds="true">
+                                                    <image>
+                                                        <Image url="@../imgs/lupa-c-pessoa-s-fundo.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                </VBox>
+                            </content>
+                        </SeparatorMenuItem>
+                    </items>
+                    <font>
+                        <Font name="Arial Bold" size="26.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                    <effect>
+                        <DropShadow offsetY="6.0" />
+                    </effect>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <graphic>
+                        <ImageView fitHeight="56.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../imgs/gestao-de-pessoas.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuButton>
+                <Button fx:id="btnEmprestarChave" layoutX="25.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#getEmprestarChaveScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Emprestar Chave" textAlignment="CENTER" textFill="#1e3a8a">
+                    <font>
+                        <Font name="Arial Bold" size="26.0" />
+                    </font>
+                    <effect>
+                        <DropShadow offsetY="6.0" />
+                    </effect>
+                    <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../imgs/emprestimo.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="btnSair" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="55.0" prefWidth="150.0" style="-fx-background-radius: 16; -fx-background-color: #EF4444;" text="Sair" textAlignment="RIGHT" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Bold" size="26.0" />
+                    </font>
+                    <effect>
+                        <DropShadow offsetY="6.0" />
+                    </effect>
+                    <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../imgs/logout-door.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <VBox.margin>
+                        <Insets left="120.0" top="90.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <AnchorPane fx:id="dashboardScreen" prefHeight="749.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+            <children>
+                <Pane layoutX="74.0" layoutY="59.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #15CE52; -fx-background-radius: 15;">
+                    <effect>
+                        <DropShadow offsetY="3.0" />
+                    </effect>
+                    <children>
+                        <Label layoutX="10.0" layoutY="51.0" prefHeight="95.0" prefWidth="330.0" text="Chave mais requisitada do mês:" textFill="WHITE" wrapText="true">
+                            <font>
+                                <Font name="Arial Bold" size="26.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfChaveRequisitadaMes" alignment="CENTER" editable="false" layoutX="113.0" layoutY="146.0" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                            <font>
+                                <Font name="Arial Bold" size="30.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="DEFAULT" />
+                            </cursor>
+                        </TextField>
+                    </children>
+                </Pane>
+                <Pane layoutX="613.0" layoutY="59.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #15CE52; -fx-background-radius: 15;">
+                    <effect>
+                        <DropShadow offsetY="3.0" />
+                    </effect>
+                    <children>
+                        <Label layoutX="10.0" layoutY="51.0" prefHeight="95.0" prefWidth="330.0" text="Sala mais acessada do mês:" textFill="WHITE" wrapText="true">
+                            <font>
+                                <Font name="Arial Bold" size="26.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfSalaMaisAcessada" alignment="CENTER" editable="false" layoutX="12.0" layoutY="146.0" prefHeight="57.0" prefWidth="328.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                            <font>
+                                <Font name="Arial Bold" size="20.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="DEFAULT" />
+                            </cursor>
+                        </TextField>
+                    </children>
+                </Pane>
+                <ImageView fitHeight="373.0" fitWidth="441.0" layoutX="314.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../imgs/chave 3.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="315.0" layoutY="641.0" prefHeight="95.0" prefWidth="370.0" text="BEM VINDO AO SECUREKEY" wrapText="true">
+                    <font>
+                        <Font name="Arial Bold" size="26.0" />
+                    </font>
+                    <effect>
+                        <Glow level="0.86" />
+                    </effect>
+                </Label>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
