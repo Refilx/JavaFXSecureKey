@@ -158,8 +158,9 @@ public class FXMLCadastroUserController implements Initializable {
         listPessoas = PessoaDAO.getPessoa();
 
         // Passando alguns dados específicos para listas auxiliares que exibirão os dados na ListView
+        // p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)
         for(Pessoa p : listPessoas)
-            listAuxPessoa.add(p.getNome()+" - "+p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)); // formatando a exibição dos dados: Nome da pessoa + CPF: 000.***.***-00
+            listAuxPessoa.add(p.getNome()+" - "+p.getCPF()); // formatando a exibição dos dados: Nome da pessoa + CPF: 000.***.***-00
 
         // Carregamos as listas auxiliares com os dados exibíveis
         obsPessoas = FXCollections.observableArrayList(listAuxPessoa);
@@ -185,7 +186,7 @@ public class FXMLCadastroUserController implements Initializable {
 
             for(Pessoa p : listPessoas) // Procurando o item na lista, se for encontrado, armazenamos os dados da pessoa escolhida
             {
-                if((p.getNome()+" - "+p.getCPF().substring(0, 3)+".***.***-"+p.getCPF().substring(12, 14)).equals(selected)) // Comparando a formatação do item da vez com o item selecionado
+                if((p.getNome()+" - "+p.getCPF()).equals(selected)) // Comparando a formatação do item da vez com o item selecionado
                 {
                     pessoaEscolhida = p;
                     break;
