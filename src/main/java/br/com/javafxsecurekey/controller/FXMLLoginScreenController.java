@@ -106,16 +106,19 @@ public class FXMLLoginScreenController implements Initializable {
 
             Stage stageAtual = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            FXMLLoginScreenAplication loginScreen = new FXMLLoginScreenAplication();
+            //FXMLLoginScreenAplication loginScreen = new FXMLLoginScreenAplication();
+            FXMLNavigationPanelAplication navPanel = new FXMLNavigationPanelAplication();
 
             if (new VerifyDAO().verifySuperUser()) {
                 stageAtual.close(); // fecha a tela de login
 
                 // Chama a tela de Navegação do usuário admininstrador
-                FXMLNavigationPanelAplication navPanel = new FXMLNavigationPanelAplication();
                 navPanel.start(new Stage());
             } else {
-                loginScreen.trocarDeTela(stageAtual, "/br/com/javafxsecurekey/view/screens/FXMLCommonUserNavigationPaneScreen.fxml");
+                stageAtual.close(); // fecha a tela de login
+
+                // Chama a tela de Navegação do usuário comum
+                navPanel.trocarDeTela(new Stage(), "FXMLCommonUserNavigationPanel");
             }
         }
     }
