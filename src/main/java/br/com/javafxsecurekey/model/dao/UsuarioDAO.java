@@ -62,7 +62,7 @@ public class UsuarioDAO {
      */
     public static void save(Usuario usuario){
 
-        String sql = "INSERT INTO usuario(username, password, role, dtRegistro, idPessoa) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario(username, password, email, role, dtRegistro, idPessoa) VALUES (?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
 
@@ -86,9 +86,10 @@ public class UsuarioDAO {
             //Adicionar valores que são esperados pela Query
             pstm.setString(1, usuario.getUsername());
             pstm.setString(2, senhaCriptografada);
-            pstm.setString(3, usuario.getRole());
-            pstm.setDate(4, new Date(System.currentTimeMillis()));
-            pstm.setInt(5, usuario.getIdPessoa());
+            pstm.setString(3, usuario.getEmail());
+            pstm.setString(4, usuario.getRole());
+            pstm.setDate(5, new Date(System.currentTimeMillis()));
+            pstm.setInt(6, usuario.getIdPessoa());
 
             //Executa a Query
             pstm.execute();
@@ -196,7 +197,7 @@ public class UsuarioDAO {
      */
     public static Map<Integer, Usuario> getMapUsuario(){
 
-        String sql = "SELECT P.email, P.cargo, P.empresa, U.* FROM usuario U" +
+        String sql = "SELECT U.email, P.cargo, U.* FROM usuario U" +
                 "\nJOIN pessoa P ON (P.idPessoa = U.idPessoa)" +
                 "\nORDER BY idUsuario DESC;";
 
@@ -233,9 +234,6 @@ public class UsuarioDAO {
 
                 //Recupera o email do usuário no banco de dados
                 usuario.setEmail(rset.getString("email"));
-
-                //Recupera o nome da empresa do usuário no banco de dados
-                usuario.setEmpresa(rset.getString("empresa"));
 
                 //Recupera o nome do cargo do usuário no banco de dados
                 usuario.setCargo(rset.getString("cargo"));
