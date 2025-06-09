@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2024 Bruno Sousa da Silva.
+ * Copyright 2025 Bruno Sousa da Silva.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ public class Usuario extends Pessoa {
     private int idUsuario;
     private String username;
     private String password;
+    private String email;
     private String role;
     private Timestamp DtRegistro;
     private String status;
@@ -60,6 +61,14 @@ public class Usuario extends Pessoa {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setRole(String role) {
