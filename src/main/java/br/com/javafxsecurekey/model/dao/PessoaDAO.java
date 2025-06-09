@@ -29,9 +29,7 @@ import javafx.scene.control.Alert;
 
 import javax.swing.*;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Essa Classe faz a manipulação dos dados sobre pessoas com o banco de dados
@@ -56,10 +54,15 @@ public class PessoaDAO {
      */
     public static void save(Pessoa pessoa){
 
-        String sql = "INSERT INTO pessoa(nome, cpf, email, telefone, empresa, cargo, dtRegistro, ativa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pessoa(nome, cpf, cargo, chavesPermitidas, dtRegistro, ativa) VALUES (?, ?, ?, ?, ?, ?)";
 
         pessoa.setDtRegistro(new Timestamp(System.currentTimeMillis()));
         pessoa.setAtiva("Sim");
+
+        // Converter para List<String>
+        List<String> chavesPermitidasToString = pessoa.getChavesPermitidas().stream()
+                .map(String::valueOf)
+                .toList();
 
         Connection conn = null;
 
@@ -77,12 +80,10 @@ public class PessoaDAO {
             //Adicionar os valores que são esperados pela Query
             pstm.setString(1, pessoa.getNome());
             pstm.setString(2, pessoa.getCPF());
-            pstm.setString(3, pessoa.getEmail());
-            pstm.setString(4, pessoa.getTelefone());
-            pstm.setString(5, pessoa.getEmpresa());
-            pstm.setString(6, pessoa.getCargo());
-            pstm.setTimestamp(7, pessoa.getDtRegistro());
-            pstm.setString(8, pessoa.getAtiva());
+            pstm.setString(3, pessoa.getCargo());
+            pstm.setString(4, String.join(",", chavesPermitidasToString));
+            pstm.setTimestamp(5, pessoa.getDtRegistro());
+            pstm.setString(6, pessoa.getAtiva());
 
             //Executa a Query
             pstm.execute();
@@ -109,87 +110,6 @@ public class PessoaDAO {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * O método executa o SELECT no banco de dados
-     */
-    public static LinkedList<Pessoa> getPessoa(){
-
-        String sql = "SELECT * FROM pessoa";
-
-        LinkedList<Pessoa> listaPessoa = new LinkedList<>();
-
-        Connection conn = null;
-
-        PreparedStatement pstm = null;
-
-        // Classe que vai recuperar os dados do banco.  *** SELECT ***
-        ResultSet rset = null;
-
-        try{
-            //Cria a conexão com o banco de dados
-            conn = ConnectionFactory.createConnectionToMySQL();
-
-            //Criamos uma PreparedStatement para executar uma query
-            pstm = conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            //Enquanto houver um próximo dado para ser armazenado pelo ResultSet, os comandos serão executados
-            while(rset.next()){
-                Pessoa pessoa = new Pessoa();
-
-                //Recupera o id da Pessoa
-                pessoa.setIdPessoa(rset.getInt("idPessoa"));
-
-                //Recupera o nome da Pessoa
-                pessoa.setNome(rset.getString("nome"));
-
-                //Recupera o cpf da Pessoa
-                pessoa.setCPF(rset.getString("cpf"));
-
-                //Recupera o email da Pessoa
-                pessoa.setEmail(rset.getString("email"));
-
-                //Recupera o telefone da Pessoa
-                pessoa.setTelefone(rset.getString("telefone"));
-
-                //Recupera o empresa da Pessoa
-                pessoa.setEmpresa(rset.getString("empresa"));
-
-                //Recupera o cargo da Pessoa
-                pessoa.setCargo(rset.getString("cargo"));
-
-                //Recupera o data de registro da Pessoa
-                pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
-
-                //Adiciona a Pessoa com todos os dados registrados à lista de Pessoas
-                listaPessoa.add(pessoa);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-
-            try{
-                //Fecha as conexões que foram abertas com o banco de dados
-                if(rset!=null){
-                    rset.close();
-                }
-
-                if(pstm!=null){
-                    pstm.close();
-                }
-
-                if(conn!=null){
-                    conn.close();
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-
-        return listaPessoa;
     }
 
     /**
@@ -230,17 +150,17 @@ public class PessoaDAO {
                 //Recupera o cpf da Pessoa
                 pessoa.setCPF(rset.getString("cpf"));
 
-                //Recupera o email da Pessoa
-                pessoa.setEmail(rset.getString("email"));
-
-                //Recupera o telefone da Pessoa
-                pessoa.setTelefone(rset.getString("telefone"));
-
-                //Recupera o empresa da Pessoa
-                pessoa.setEmpresa(rset.getString("empresa"));
-
                 //Recupera o cargo da Pessoa
                 pessoa.setCargo(rset.getString("cargo"));
+
+                // Recupera a lista de chaves que a pessoa está permitida a pegar no formato de string,
+                // depois convertemos cadas valor para int e colocamos na lista da pessoa
+                LinkedList<String> list = new LinkedList<>(Arrays.asList(rset.getString("chavesPermitidas").split(",")));
+
+                for(String num : list) {
+                    if (!num.isEmpty())
+                        pessoa.getChavesPermitidas().add(Integer.parseInt(num));
+                }
 
                 //Recupera o data de registro da Pessoa
                 pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
@@ -316,14 +236,14 @@ public class PessoaDAO {
                 //Recupera o cpf da Pessoa
                 pessoa.setCPF(rset.getString("cpf"));
 
-                //Recupera o email da Pessoa
-                pessoa.setEmail(rset.getString("email"));
+                // Recupera a lista de chaves que a pessoa está permitida a pegar no formato de string,
+                // depois convertemos cadas valor para int e colocamos na lista da pessoa
+                LinkedList<String> list = new LinkedList<>(Arrays.asList(rset.getString("chavesPermitidas").split(",")));
 
-                //Recupera o telefone da Pessoa
-                pessoa.setTelefone(rset.getString("telefone"));
-
-                //Recupera o empresa da Pessoa
-                pessoa.setEmpresa(rset.getString("empresa"));
+                for(String num : list) {
+                    if (!num.isEmpty())
+                        pessoa.getChavesPermitidas().add(Integer.parseInt(num));
+                }
 
                 //Recupera o cargo da Pessoa
                 pessoa.setCargo(rset.getString("cargo"));
@@ -331,7 +251,8 @@ public class PessoaDAO {
                 //Recupera o data de registro da Pessoa
                 pessoa.setDtRegistro(rset.getTimestamp("dtRegistro"));
 
-                pessoa.setCPF(pessoa.getCPF().substring(0, 3)+".***.***-"+pessoa.getCPF().substring(12, 14));
+                if(!pessoa.getCPF().isEmpty())
+                    pessoa.setCPF(pessoa.getCPF().substring(0, 3)+".***.***-"+pessoa.getCPF().substring(12, 14));
 
                 //Adiciona a Pessoa com todos os dados registrados à lista de Pessoas
                 mapPessoa.putIfAbsent(pessoa.getIdPessoa(), pessoa);
@@ -366,8 +287,13 @@ public class PessoaDAO {
      */
     public static void update(Pessoa pessoa){
 
-        String sql = "UPDATE pessoa SET email = ?, telefone = ?, empresa = ?, cargo = ?"+
+        String sql = "UPDATE pessoa SET chavesPermitidas = ?"+
                 "WHERE idPessoa = ?";
+
+        // Converter para List<String>
+        List<String> chavesPermitidasToString = pessoa.getChavesPermitidas().stream()
+                .map(String::valueOf)
+                .toList();
 
         Connection conn = null;
 
@@ -381,13 +307,10 @@ public class PessoaDAO {
             pstm = conn.prepareStatement(sql);
 
             //Adicina os valores para atualizar
-            pstm.setString(1, pessoa.getEmail());
-            pstm.setString(2, pessoa.getTelefone());
-            pstm.setString(3, pessoa.getEmpresa());
-            pstm.setString(4, pessoa.getCargo());
+            pstm.setString(1, String.join(",", chavesPermitidasToString));
 
             //Qual o ID do registro que deseja atualizar? passando o id de pessoa para atualizar o registro
-            pstm.setInt(5, pessoa.getIdPessoa());
+            pstm.setInt(2, pessoa.getIdPessoa());
 
             //Executa a Query
             int rowsUpdated = pstm.executeUpdate();
