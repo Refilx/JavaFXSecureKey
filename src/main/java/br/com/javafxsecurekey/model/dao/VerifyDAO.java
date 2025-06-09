@@ -152,7 +152,7 @@ public class VerifyDAO {
      * @param cpf
      * @return
      */
-    public boolean verifyCPF(String cpf) {
+            public static boolean verifyCPF(String cpf) {
 
         String sql = "SELECT CPF FROM pessoa";
 
@@ -185,6 +185,77 @@ public class VerifyDAO {
                 //
                 if(cpf.equalsIgnoreCase(cpfDoBanco)){
                     resultadoVerify = false;
+                    break;
+                }
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            try {
+                //
+                if(rset!=null){
+                    rset.close();
+                }
+
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return resultadoVerify;
+
+    }
+
+    /**
+     *  O metodo verifica se o CPF de uma pessoa específica no banco de dados é identico ao informado no parâmetro
+     *  Para servir de confirmação para a tela de confirmação com o CPF, por isso retorna true (caso seja igual)
+     * @param cpf digitado
+     * @param id da pessoa específica
+     * @return
+     */
+    public static boolean verifyCPFConfirmacaoParaEmprestimo(String cpf, int id) {
+
+        String sql = "SELECT CPF FROM pessoa WHERE idPessoa = ?";
+
+        //
+        boolean resultadoVerify = false;
+
+        Connection conn = null;
+
+        //
+        PreparedStatement pstm = null;
+
+        //
+        ResultSet rset = null;
+
+        try{
+            //
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            //
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+
+            //
+            rset = pstm.executeQuery();
+
+            //
+            while(rset.next()){
+                //
+                String cpfDoBanco = rset.getString("CPF");
+
+                //
+                if(cpf.equalsIgnoreCase(cpfDoBanco)){
+                    resultadoVerify = true;
                     break;
                 }
             }
@@ -320,7 +391,7 @@ public class VerifyDAO {
      * @return true (se existir no banco) e false (se NÃO existir no banco)
      */
     public static boolean verifyEmail(String email) {
-        String sql = "SELECT email FROM pessoa WHERE email = ?";
+        String sql = "SELECT email FROM usuario WHERE email = ?";
 
         boolean resultVerify = false;
 
@@ -405,7 +476,7 @@ public class VerifyDAO {
 
                 //Se o status da chave for disponível, a quantidade for maior ou igual que 1 (um), o resultado recebe um valor true
                 if (
-                        (chave.getQuantChave() > 1 &&
+                        (chave.getQuantChave() >= 1 &&
                                 chave.getStatus().equalsIgnoreCase("DISPONÍVEL") &&
                                 chave.getPossuiReserva().equalsIgnoreCase("Sim"))
                                 ||
@@ -422,24 +493,24 @@ public class VerifyDAO {
                     //
                     ChaveDAO.updateStatusChave(idChave);
 
-                    //Mensagem de erro ao tentar emprestar a chave, estando ela indisponível
-                    JOptionPane.showMessageDialog(null, "Você não pode emprestar esta chave, pois ela está INDISPONÍVEL!",
-                            "ERRO AO EMPRESTAR CHAVE!", JOptionPane.ERROR_MESSAGE);
+//                    //Mensagem de erro ao tentar emprestar a chave, estando ela indisponível
+//                    JOptionPane.showMessageDialog(null, "Você não pode emprestar esta chave, pois ela está INDISPONÍVEL!",
+//                            "ERRO AO EMPRESTAR CHAVE!", JOptionPane.ERROR_MESSAGE);
                 }
-                //Tratamento de emprestimo de chave reserva
-                else if (chave.getQuantChave() == 1 && chave.getPossuiReserva().equalsIgnoreCase("Sim")) {
-
-                    //Mensagem de confirmação de emprestimo de chave reserva
-                    int opcao = JOptionPane.showOptionDialog(null, "Você está emprestando uma Chave RESERVA! \n Tem certeza que deseja continuar?",
-                            "Chave Reserva Identificada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, null);
-
-                    if (opcao == 0) {
-                        resultadoVerify = true;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "A Chave NÃO foi emprestada!",
-                                "Cancelado!", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                }
+//                //Tratamento de emprestimo de chave reserva
+//                else if (chave.getQuantChave() == 1 && chave.getPossuiReserva().equalsIgnoreCase("Sim")) {
+//
+//                    //Mensagem de confirmação de emprestimo de chave reserva
+//                    int opcao = JOptionPane.showOptionDialog(null, "Você está emprestando uma Chave RESERVA! \n Tem certeza que deseja continuar?",
+//                            "Chave Reserva Identificada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, null);
+//
+//                    if (opcao == 0) {
+//                        resultadoVerify = true;
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "A Chave NÃO foi emprestada!",
+//                                "Cancelado!", JOptionPane.INFORMATION_MESSAGE);
+//                    }
+//                }
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -576,11 +647,11 @@ public class VerifyDAO {
             }
             // Se a pessoa já tiver pego a chave emprestada, então não poderá pegar a mesma chave emprestada novamente
             // enquanto não devolver a que foi pega
-            else {
-                //Mensagem de erro ao tentar emprestar a chave, estando ela indisponível
-                JOptionPane.showMessageDialog(null, "Essa pessou já está com essa chave!",
-                        "ERRO AO EMPRESTAR CHAVE!", JOptionPane.ERROR_MESSAGE);
-            }
+//            else {
+//                //Mensagem de erro ao tentar emprestar a chave, estando ela indisponível
+//                JOptionPane.showMessageDialog(null, "Essa pessoa já está com essa chave!",
+//                        "ERRO AO EMPRESTAR CHAVE!", JOptionPane.ERROR_MESSAGE);
+//            }
 
         }catch(Exception e){
             e.printStackTrace();
