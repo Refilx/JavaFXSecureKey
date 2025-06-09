@@ -17,12 +17,10 @@
    <children>
       <TableView fx:id="tvPessoasCadastradas" fixedCellSize="50.0" layoutX="9.0" layoutY="69.0" onMouseClicked="#tvPessoasCadastradasOnMouseClicked" prefHeight="615.0" prefWidth="1080.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
          <columns>
-            <TableColumn fx:id="tc_nomePessoa" editable="false" prefWidth="301.60003089904785" resizable="false" sortable="false" text="NOME DA PESSOA" />
-            <TableColumn fx:id="tc_CPF" editable="false" prefWidth="129.60003662109375" sortable="false" text="CPF" />
-            <TableColumn fx:id="tc_email" editable="false" prefWidth="287.2000427246094" resizable="false" sortable="false" text="EMAIL" />
-            <TableColumn fx:id="tc_empresa" editable="false" minWidth="0.0" prefWidth="139.2000732421875" resizable="false" sortable="false" text="EMPRESA" />
-            <TableColumn fx:id="tc_cargo" editable="false" minWidth="0.0" prefWidth="154.39990234375" resizable="false" sortable="false" text="CARGO" />
-            <TableColumn fx:id="tc_ativa" prefWidth="64.800048828125" text="ATIVA" />
+            <TableColumn fx:id="tc_nomePessoa" editable="false" prefWidth="497.5999755859375" resizable="false" sortable="false" text="NOME DA PESSOA" />
+            <TableColumn fx:id="tc_CPF" editable="false" minWidth="0.0" prefWidth="195.20004272460938" sortable="false" text="CPF" />
+            <TableColumn fx:id="tc_cargo" editable="false" minWidth="0.0" prefWidth="238.39996337890625" resizable="false" sortable="false" text="VINCULO" />
+            <TableColumn fx:id="tc_ativa" prefWidth="142.40008544921875" text="ATIVA" />
          </columns>
       </TableView>
       <Label layoutX="380.0" layoutY="14.0" text="Pessoas Cadastradas">

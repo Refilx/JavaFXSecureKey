@@ -1,7 +1,9 @@
 package br.com.javafxsecurekey.controller;
 
+import br.com.javafxsecurekey.model.dao.ChaveDAO;
 import br.com.javafxsecurekey.model.dao.PessoaDAO;
 import br.com.javafxsecurekey.model.dao.VerifyDAO;
+import br.com.javafxsecurekey.model.domain.Chave;
 import br.com.javafxsecurekey.model.domain.Pessoa;
 import br.com.javafxsecurekey.model.util.TextFieldFormatter;
 import br.com.javafxsecurekey.model.validator.CPFValidator;
@@ -71,19 +73,99 @@ public class FXMLPessoasCadastradasController implements Initializable {
     @FXML
     private TextField tfCargo;
     @FXML
-    private TextField tfEmail;
-    @FXML
-    private TextField tfEmpresa;
-    @FXML
     private TextField tfNome;
     @FXML
-    private TextField tfTelefone;
+    private Button btnToLeft;
+    @FXML
+    private Button btnToRight;
+    @FXML
+    private ListView<String> leftList;
+    @FXML
+    private ListView<String> rightList;
+
+    private ObservableList<String> leftItems;
+    private ObservableList<String> rightItems;
+    private Map<Integer, Chave> mapChaves = new HashMap<>();
+    private Map<String, Integer> mapLvLeftChaveValues = new HashMap<>();
+    private Map<String, Integer> mapLvRightChaveValues = new HashMap<>();
+    private boolean naoPodeUtilizarChave = true;
+
+    private void carregarDadosNasLVdeChaves() {
+        // Listas principais recebem os dados do banco
+        mapChaves = ChaveDAO.getMapChave();
+
+        // Percorrendo todos os registros de chaves presentes no mapChaves para preencher as listViews à esquerda e à direita
+        for(Map.Entry<Integer, Chave> mapEntry : mapChaves.entrySet()) {
+
+            if(!dadosDaPessoaEscolhida.getChavesPermitidas().isEmpty())
+            {
+                // Percorrendo a linkedlist que contém a lista de ids das chaves permitidas para a determinada pessoa
+                for(int keyJaPermitida : dadosDaPessoaEscolhida.getChavesPermitidas())
+                {
+                    // Se a chave da vez pode ser utilizada pela pessoa, então o boleano é falso
+                    if(mapEntry.getKey() == keyJaPermitida)
+                    {
+                        naoPodeUtilizarChave = false;
+                        break;
+                    }
+                    naoPodeUtilizarChave = true;
+                }
+                // Se não pode utilizar a chave, armazena na lista da esquerda
+                if(naoPodeUtilizarChave)
+                {
+                    // carregando dados na lista com todas as chaves que a pessoa não tem permissão de usar
+                    mapLvLeftChaveValues.putIfAbsent("Chave: " + mapEntry.getValue().getNumeroChave() + " - Sala: " + mapEntry.getValue().getSala(), mapEntry.getKey());
+                }
+                else  // Se pode utilizar a chave, armazena na lista da direita
+                {
+                    // carregando dados na lista com todas as chaves que a pessoa tem permissão de usar
+                    mapLvRightChaveValues.putIfAbsent("Chave: " + mapEntry.getValue().getNumeroChave() + " - Sala: " + mapEntry.getValue().getSala(), mapEntry.getKey());
+                }
+            }
+            else
+            {
+                // carregando dados na lista com todas as chaves que a pessoa não tem permissão de usar
+                mapLvLeftChaveValues.putIfAbsent("Chave: " + mapEntry.getValue().getNumeroChave() + " - Sala: " + mapEntry.getValue().getSala(), mapEntry.getKey());
+            }
+        }
+
+        // Carregamos as listas auxiliares com os dados exibíveis
+        leftItems = FXCollections.observableArrayList(mapLvLeftChaveValues.keySet());
+        rightItems = FXCollections.observableArrayList(mapLvRightChaveValues.keySet());
+
+        // Associa as listas observaveis às ListViews
+        leftList.setItems(leftItems);
+        rightList.setItems(rightItems);
+
+        // Ação para mover item selecionado para a direita
+        btnToRight.setOnAction(e -> {
+            String selected = leftList.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                leftItems.remove(selected);
+                rightItems.add(selected);
+                mapLvRightChaveValues.putIfAbsent(selected, mapLvLeftChaveValues.get(selected));
+                dadosDaPessoaEscolhida.getChavesPermitidas().add(mapChaves.get(mapLvLeftChaveValues.get(selected)).getIdChave());
+                mapLvLeftChaveValues.remove(selected);
+            }
+        });
+
+        // Ação para mover item selecionado para a esquerda
+        btnToLeft.setOnAction(e -> {
+            String selected = rightList.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                rightItems.remove(selected);
+                leftItems.add(selected);
+                mapLvLeftChaveValues.putIfAbsent(selected, mapLvRightChaveValues.get(selected));
+                dadosDaPessoaEscolhida.getChavesPermitidas().remove((Object) mapChaves.get(mapLvRightChaveValues.get(selected)).getIdChave());
+                mapLvRightChaveValues.remove(selected);
+            }
+        });
+
+    }
 
     void prepararListaTabela() {
         tc_nomePessoa.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tc_email.setCellValueFactory(new PropertyValueFactory<>("email"));
         tc_cargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
-        tc_empresa.setCellValueFactory(new PropertyValueFactory<>("empresa"));
         tc_CPF.setCellValueFactory(new PropertyValueFactory<>("CPF"));
         tc_ativa.setCellValueFactory(new PropertyValueFactory<>("ativa"));
 
@@ -117,11 +199,7 @@ public class FXMLPessoasCadastradasController implements Initializable {
                 // Adapte os campos conforme os atributos da sua classe Historico
                 if (pessoa.getNome().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (pessoa.getEmail().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
                 } else if (pessoa.getCargo().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (pessoa.getEmpresa().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } else if (pessoa.getCPF().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
@@ -142,10 +220,8 @@ public class FXMLPessoasCadastradasController implements Initializable {
         {
             tfNome.setText(dadosDaPessoaEscolhida.getNome());
             tfCPF.setText(dadosDaPessoaEscolhida.getCPF());
-            tfEmail.setText(dadosDaPessoaEscolhida.getEmail());
-            tfEmpresa.setText(dadosDaPessoaEscolhida.getEmpresa());
-            tfTelefone.setText(dadosDaPessoaEscolhida.getTelefone());
             tfCargo.setText(dadosDaPessoaEscolhida.getCargo());
+            carregarDadosNasLVdeChaves();
         }
 
     }
@@ -177,7 +253,6 @@ public class FXMLPessoasCadastradasController implements Initializable {
         {
             if(tvPessoasCadastradas.getSelectionModel().getSelectedItem().isPessoa())
             {
-
                 dadosDaPessoaEscolhida = tvPessoasCadastradas.getSelectionModel().getSelectedItem();
 
                 // Chamar tela de edição de dados de pessoa
@@ -200,47 +275,24 @@ public class FXMLPessoasCadastradasController implements Initializable {
     // ----------------Metodos da tela de edição de dados-----------------------
     @FXML
     void btnAtualizarOnMouseClicked(MouseEvent event) {
-        // Verifico se todos os campos estão preenchidos
-        if(
-            !tfEmail.getText().isEmpty() &&
-            !tfEmpresa.getText().isEmpty() &&
-            !tfCargo.getText().isEmpty() &&
-            !tfTelefone.getText().isEmpty()
-        ) {
-            // Valida o e-mail digitado para saber se é um e-mail válido
-            if(EmailValidator.isValidEmail(tfEmail.getText())) {
-                // Pergunto se a pessoa deseja mesmo realizar a atualização
-                int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja Atualizar os dados de %s ?".formatted(dadosDaPessoaEscolhida.getNome()), "Confirmação final",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
+        // Pergunto se a pessoa deseja mesmo realizar a atualização
+        int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja Atualizar os dados de %s ?".formatted(dadosDaPessoaEscolhida.getNome()), "Confirmação final",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
 
-                // Se o botão sim for apertado, atualizamos os dados da pessoa
-                if (opcao == 0) {
-                    dadosDaPessoaEscolhida.setEmail(tfEmail.getText());
-                    dadosDaPessoaEscolhida.setEmpresa(tfEmpresa.getText());
-                    dadosDaPessoaEscolhida.setCargo(tfCargo.getText());
-                    dadosDaPessoaEscolhida.setTelefone(tfTelefone.getText());
+        // Se o botão sim for apertado, atualizamos os dados da pessoa
+        if (opcao == 0) {
 
-                    PessoaDAO.setDefaultResult();
+            PessoaDAO.setDefaultResult();
 
-                    PessoaDAO.update(dadosDaPessoaEscolhida);
+            PessoaDAO.update(dadosDaPessoaEscolhida);
 
-                    if(PessoaDAO.getResult())
-                    {
-                        Alert a = new Alert(Alert.AlertType.INFORMATION, "Dados atualizados com Sucesso!");
-                        a.showAndWait();
-                        btnCancelarMouseClicked(null);
-                        PessoaDAO.setDefaultResult();
-                    }
-                }
+            if(PessoaDAO.getResult())
+            {
+                Alert a = new Alert(Alert.AlertType.INFORMATION, "Dados atualizados com Sucesso!");
+                a.showAndWait();
+                btnCancelarMouseClicked(null);
+                PessoaDAO.setDefaultResult();
             }
-            else {
-                JOptionPane.showMessageDialog(null, "O E-mail digitado é inválido\nPor favor, digite um E-mail válido/correto!",
-                        "Erro tentar realizar cadastro", JOptionPane.WARNING_MESSAGE);
-            }
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos, por favor!",
-                    "Erro tentar realizar cadastro", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -303,15 +355,6 @@ public class FXMLPessoasCadastradasController implements Initializable {
         tff.setMask("###.###.###-##");
         tff.setCaracteresValidos("0123456789");
         tff.setTf(tfCPF);
-        tff.formatter();
-    }
-
-    @FXML
-    void tfTelefoneOnKeyReleased(KeyEvent event) {
-        TextFieldFormatter tff = new TextFieldFormatter();
-        tff.setMask("(##)#####-####");
-        tff.setCaracteresValidos("0123456789");
-        tff.setTf(tfTelefone);
         tff.formatter();
     }
 }
