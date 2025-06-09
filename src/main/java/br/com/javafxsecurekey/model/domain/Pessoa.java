@@ -24,6 +24,7 @@
 package br.com.javafxsecurekey.model.domain;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 /**
  * Essa é a Classe model de Pessoa, contendo todos os atributos e métodos sobre Pessoa
@@ -34,12 +35,10 @@ public class Pessoa implements Comparable<Pessoa> {
     private int idPessoa;
     private String nome;
     private String CPF;
-    private String email;
-    private String telefone;
-    private String empresa;
     private String cargo;
     private Timestamp dtRegistro;
     private String ativa;
+    private LinkedList<Integer> chavesPermitidas = new LinkedList<>();
 
     public void setIdPessoa(int id){
         idPessoa = id;
@@ -65,30 +64,6 @@ public class Pessoa implements Comparable<Pessoa> {
         return CPF;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
-    }
-
-    public String getEmpresa() {
-        return empresa;
-    }
-
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
@@ -111,6 +86,10 @@ public class Pessoa implements Comparable<Pessoa> {
 
     public void setAtiva(String ativa) {
         this.ativa = ativa;
+    }
+
+    public LinkedList<Integer> getChavesPermitidas() {
+        return chavesPermitidas;
     }
 
     /**
