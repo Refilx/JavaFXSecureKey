@@ -25,8 +25,8 @@ public class Email {
                 "---------------\n" +
                 "PassaBus Administration";
 
-        String appMail = "securekey.official@gmail.com";
-        String appMailPass = "iziv uuvz cnew zpsq"; // Senha de app gerada pelo google
+        String appMail = "";
+        String appMailPass = ""; // Senha de app gerada pelo google
 
         SimpleEmail email = new SimpleEmail();
         email.setHostName("smtp.gmail.com");
